@@ -42,9 +42,9 @@ inline const Palette LIGHT{
     .value = lv_color_hex(0x000000),
     .label = lv_color_hex(0x5f5f5f),
     .border = lv_color_hex(0xa8a8a8),
-    .fault = lv_color_hex(0xe60000),     // 4.8:1
-    .high_beam = lv_color_hex(0x0044ff), // 6.4:1
-    .signal = lv_color_hex(0x008800),    // 4.6:1
+    .fault = lv_color_hex(0xff0000),     // 4.0:1
+    .high_beam = lv_color_hex(0x0020ff), // 7.9:1
+    .signal = lv_color_hex(0x00a800),    // 3.2:1
     .service = lv_color_hex(0xff6a00),   // 2.9:1, further from the red
 };
 
