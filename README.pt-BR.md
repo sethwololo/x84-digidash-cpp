@@ -119,4 +119,9 @@ dela.
 
 ## Licença
 
-A definir.
+O código está sob a [licença MIT](LICENSE). Ficam fora dela:
+
+- `can/signals-x84.json`, a lista de sinais do CAN usada como referência nos testes: é derivada de dados de
+  terceiros e está aqui só como referência, sem licença concedida.
+- As fontes em `assets/fonts/` (e as fontes em bitmap geradas a partir delas) e o logotipo desenhado a partir da
+  Michroma: SIL Open Font License 1.1.

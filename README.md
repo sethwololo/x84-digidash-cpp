@@ -114,4 +114,9 @@ Renault.
 
 ## License
 
-To be defined.
+The code is under the [MIT License](LICENSE). Not covered by it:
+
+- `can/signals-x84.json`, the reference CAN signal list the tests check against: it is derived from third-party
+  data and is here for reference only, with no license granted.
+- The fonts in `assets/fonts/` (and the bitmap fonts made from them), and the wordmark drawn from Michroma: SIL
+  Open Font License 1.1.
