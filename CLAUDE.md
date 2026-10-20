@@ -3,7 +3,7 @@
 Painel digital do Renault Mégane II (X84) em C++20 + LVGL 9.5 sobre ESP-IDF 6.0.2, numa Waveshare ESP32-P4 com
 tela DSI de 8,8" (480x1920, OTA7290B) usada em paisagem. Port do projeto Rust + Slint em `~/dev/rust/x84-digidash`,
 que é a referência de layout (`ui/*.slint`) e de regras do CAN (`x84-can/`, `docs/can-plan.md`). Comandos e
-estrutura: `README.md`.
+estrutura: `README.pt-BR.md` (em inglês: `README.md`).
 
 ## Convenções
 
