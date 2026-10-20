@@ -7,7 +7,10 @@
 //   widgets/      reusable pieces (bars, readouts, warning lights, alert frames...)
 //   panels/       the screen frame and the three columns, built from the widgets
 //
-// Every value is written on every update; the setters only make LVGL repaint what changed.
+// Every value is written on every update; the setters only make LVGL repaint what changed. By day (no low or high
+// beam) the dashboard uses the light palette, at night the dark one: on a change it rebuilds itself in the new one.
+
+#include <memory>
 
 #include "lvgl.h"
 #include "panels/frame.h"
@@ -25,10 +28,18 @@ public:
     void show(const Screen &screen);
 
 private:
-    Frame frame_;
-    Tachometer tachometer_;
-    Speedometer speedometer_;
-    Telemetry telemetry_;
+    // Everything on the screen, built in the current palette.
+    struct Content {
+        explicit Content(lv_obj_t *screen);
+        Frame frame;
+        Tachometer tachometer;
+        Speedometer speedometer;
+        Telemetry telemetry;
+    };
+
+    void build();
+
+    std::unique_ptr<Content> content_;
 };
 
 } // namespace ui

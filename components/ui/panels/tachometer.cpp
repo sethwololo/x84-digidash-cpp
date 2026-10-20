@@ -41,9 +41,9 @@ int32_t unit_x(size_t digits)
 } // namespace
 
 Tachometer::Tachometer(lv_obj_t *screen)
-    : rpm_(text(screen, theme::TEXT_RPM, theme::VALUE, X, RPM_TOP, "--")),
+    : rpm_(text(screen, theme::TEXT_RPM, theme::palette().value, X, RPM_TOP, "--")),
       // On the digits' baseline.
-      rpm_unit_(text(screen, theme::TEXT_VALUE, theme::LABEL, unit_x(2),
+      rpm_unit_(text(screen, theme::TEXT_VALUE, theme::palette().label, unit_x(2),
                      RPM_TOP + static_cast<int32_t>(theme::BASELINE * (RPM_SIZE - theme::TEXT_VALUE.size)), "RPM")),
       bar_(screen, X, BAR_Y, WIDTH, BAR_HEIGHT),
       // Around the digits, the bar and the scale under it.
@@ -56,7 +56,7 @@ Tachometer::Tachometer(lv_obj_t *screen)
 {
     scale(screen, X, BAR_Y + BAR_HEIGHT + 12, WIDTH, {"0", "1", "2", "3", "4", "5", "6", "7"});
     // Rule between this column and the speed.
-    fill(screen, X + theme::SIDE_WIDTH - 1, Y, 1, theme::CONTENT_HEIGHT, theme::BORDER);
+    fill(screen, X + theme::SIDE_WIDTH - 1, Y, 1, theme::CONTENT_HEIGHT, theme::palette().border);
 
     gear_.set_label("MARCHA");
     gear_.space_label(theme::SPACING_LABEL);
@@ -80,7 +80,7 @@ void Tachometer::show(const Screen &screen, bool blink_on)
     const bool redline = view.rpm && *view.rpm >= theme::RPM_REDLINE;
     const std::string rpm = reading(view.rpm);
     set_text(rpm_, rpm.c_str());
-    set_text_color(rpm_, redline ? theme::FAULT : theme::VALUE);
+    set_text_color(rpm_, redline ? theme::palette().fault : theme::palette().value);
     set_x(rpm_unit_, unit_x(rpm.size()));
     bar_.set(view.rpm ? static_cast<float>(*view.rpm) / theme::RPM_MAX : 0.0f, redline);
     redline_.show(redline);

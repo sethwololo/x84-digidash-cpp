@@ -34,20 +34,20 @@ lv_obj_t *centered(lv_obj_t *screen, const theme::Font &font, lv_color_t color, 
 Speedometer::Speedometer(lv_obj_t *screen)
     : left_(screen, X + 70, Y + 44, false),
       right_(screen, X + WIDTH - 70 - 36, Y + 44, true),
-      speed_(centered(screen, theme::TEXT_SPEED, theme::VALUE, DIGITS_TOP - static_cast<int32_t>(theme::DIGIT_TOP * SPEED_SIZE), "--"))
+      speed_(centered(screen, theme::TEXT_SPEED, theme::palette().value, DIGITS_TOP - static_cast<int32_t>(theme::DIGIT_TOP * SPEED_SIZE), "--"))
 {
-    spaced(centered(screen, theme::TEXT_VALUE, theme::LABEL, Y + 236, "KM/H"), theme::SPACING_UNIT);
+    spaced(centered(screen, theme::TEXT_VALUE, theme::palette().label, Y + 236, "KM/H"), theme::SPACING_UNIT);
 
     // The trip between two short rules, the three centered as one row.
     lv_obj_t *row = box(screen, X, Y + 282, WIDTH, LV_SIZE_CONTENT);
     lv_obj_set_flex_flow(row, LV_FLEX_FLOW_ROW);
     lv_obj_set_flex_align(row, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
     lv_obj_set_style_pad_column(row, 10, 0);
-    fill(row, 0, 0, 28, 1, theme::BORDER);
-    trip_ = spaced(text(row, theme::TEXT_LABEL, theme::LABEL, 0, 0), theme::SPACING_LABEL);
-    fill(row, 0, 0, 28, 1, theme::BORDER);
+    fill(row, 0, 0, 28, 1, theme::palette().border);
+    trip_ = spaced(text(row, theme::TEXT_LABEL, theme::palette().label, 0, 0), theme::SPACING_LABEL);
+    fill(row, 0, 0, 28, 1, theme::palette().border);
 
-    odometer_ = spaced(centered(screen, theme::TEXT_LABEL, theme::LABEL, Y + 308), theme::SPACING_LABEL);
+    odometer_ = spaced(centered(screen, theme::TEXT_LABEL, theme::palette().label, Y + 308), theme::SPACING_LABEL);
 }
 
 void Speedometer::show(const Screen &screen)

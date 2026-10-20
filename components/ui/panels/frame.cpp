@@ -56,11 +56,11 @@ const char *notice_text(x84::Notice notice)
 lv_color_t notice_color(x84::Severity severity)
 {
     switch (severity) {
-    case x84::Severity::fault: return theme::FAULT;
-    case x84::Severity::service: return theme::SERVICE;
-    case x84::Severity::info: return theme::VALUE;
+    case x84::Severity::fault: return theme::palette().fault;
+    case x84::Severity::service: return theme::palette().service;
+    case x84::Severity::info: return theme::palette().value;
     }
-    return theme::VALUE;
+    return theme::palette().value;
 }
 
 } // namespace
@@ -75,25 +75,25 @@ Frame::Frame(lv_obj_t *screen)
     corner(screen, right, bottom, true, true);
 
     // Header
-    lv_obj_t *wordmark = image(screen, &img_wordmark, theme::VALUE, MARGIN, WORDMARK_Y);
-    spaced(text(screen, theme::TEXT_SMALL, theme::LABEL, MARGIN + img_wordmark.header.w + 13,
+    lv_obj_t *wordmark = image(screen, &img_wordmark, theme::palette().value, MARGIN, WORDMARK_Y);
+    spaced(text(screen, theme::TEXT_SMALL, theme::palette().label, MARGIN + img_wordmark.header.w + 13,
                 centered_on_wordmark(theme::TEXT_SMALL), "// K4M 16V"),
            theme::SPACING_LABEL);
     const int32_t status_y = text_y(theme::TEXT_LABEL_BOLD, centered_on_wordmark(theme::TEXT_LABEL_BOLD));
-    notice_ = spaced(text(screen, theme::TEXT_LABEL_BOLD, theme::VALUE, 0, 0), theme::SPACING_LABEL);
+    notice_ = spaced(text(screen, theme::TEXT_LABEL_BOLD, theme::palette().value, 0, 0), theme::SPACING_LABEL);
     lv_obj_align(notice_, LV_ALIGN_TOP_MID, 0, status_y);
-    status_ = spaced(text(screen, theme::TEXT_LABEL_BOLD, theme::LABEL, 0, 0, "SISTEMA OK"), theme::SPACING_LABEL);
+    status_ = spaced(text(screen, theme::TEXT_LABEL_BOLD, theme::palette().label, 0, 0, "SISTEMA OK"), theme::SPACING_LABEL);
     lv_obj_align(status_, LV_ALIGN_TOP_RIGHT, -MARGIN, status_y);
 
     const int32_t rule_width = theme::SCREEN_WIDTH - 2 * MARGIN;
-    fill(screen, MARGIN, theme::HEADER_RULE, rule_width, 1, theme::BORDER);
-    fill(screen, MARGIN, theme::FOOTER_RULE, rule_width, 1, theme::BORDER);
+    fill(screen, MARGIN, theme::HEADER_RULE, rule_width, 1, theme::palette().border);
+    fill(screen, MARGIN, theme::FOOTER_RULE, rule_width, 1, theme::palette().border);
 
     // Footer
-    spaced(text(screen, theme::TEXT_SMALL, theme::BORDER, MARGIN, FOOTER_Y, "SN // MG-2026-0313"), theme::SPACING_CAPTION);
-    can_ = spaced(text(screen, theme::TEXT_SMALL, theme::BORDER, 0, 0), theme::SPACING_CAPTION);
+    spaced(text(screen, theme::TEXT_SMALL, theme::palette().border, MARGIN, FOOTER_Y, "SN // MG-2026-0313"), theme::SPACING_CAPTION);
+    can_ = spaced(text(screen, theme::TEXT_SMALL, theme::palette().border, 0, 0), theme::SPACING_CAPTION);
     lv_obj_align(can_, LV_ALIGN_TOP_MID, 0, text_y(theme::TEXT_SMALL, FOOTER_Y));
-    firmware_ = spaced(text(screen, theme::TEXT_SMALL, theme::BORDER, 0, 0), theme::SPACING_CAPTION);
+    firmware_ = spaced(text(screen, theme::TEXT_SMALL, theme::palette().border, 0, 0), theme::SPACING_CAPTION);
     lv_obj_align(firmware_, LV_ALIGN_TOP_RIGHT, -MARGIN, text_y(theme::TEXT_SMALL, FOOTER_Y));
 }
 
@@ -105,7 +105,7 @@ void Frame::show(const Screen &screen, bool alert)
     if (view.notice) set_text_color(notice_, notice_color(x84::severity(*view.notice)));
 
     set_text(status_, !view.online ? "SEM CAN" : alert ? "ALERTA" : "SISTEMA OK");
-    set_text_color(status_, alert || !view.online ? theme::FAULT : theme::LABEL);
+    set_text_color(status_, alert || !view.online ? theme::palette().fault : theme::palette().label);
 
     switch (screen.can_state) {
     case CanState::ok: set_text(can_, ("CAN // " + std::to_string(screen.can_rate) + " FR/S").c_str()); break;
@@ -113,7 +113,7 @@ void Frame::show(const Screen &screen, bool alert)
     case CanState::bus_off: set_text(can_, "CAN // BUS-OFF"); break;
     case CanState::silent: set_text(can_, "CAN // SEM SINAL"); break;
     }
-    set_text_color(can_, screen.can_state == CanState::ok ? theme::BORDER : theme::FAULT);
+    set_text_color(can_, screen.can_state == CanState::ok ? theme::palette().border : theme::palette().fault);
 
     set_text(firmware_, (std::string("SLN // FIRMWARE ") + screen.firmware_version).c_str());
 }

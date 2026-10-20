@@ -8,17 +8,52 @@
 
 namespace theme {
 
-// Colors. Few levels on purpose: on the real screen, and in sunlight, close grays look the same. Opaque colors
-// only: filling with an opaque color is much cheaper than blending.
-inline const lv_color_t BACKGROUND = lv_color_hex(0x000000);
-inline const lv_color_t VALUE = lv_color_hex(0xffffff);  // numbers, values, filled bars
-inline const lv_color_t LABEL = lv_color_hex(0x9a9a9a);  // labels, units, scales, header and footer, corners
-inline const lv_color_t BORDER = lv_color_hex(0x5a5a5a); // outlines, rules, lamps and arrows off
-// Accents
-inline const lv_color_t FAULT = lv_color_hex(0xfb2c36);     // warning / fault (red)
-inline const lv_color_t HIGH_BEAM = lv_color_hex(0x00a6f4); // high beam (blue)
-inline const lv_color_t SIGNAL = lv_color_hex(0x00bc7d);    // turn signal / fog light (green)
-inline const lv_color_t SERVICE = lv_color_hex(0xfd9a00);   // service / airbag (yellow)
+// Colors, by role. Few levels on purpose: on the real screen, and in sunlight, close grays look the same. Opaque
+// colors only: filling with an opaque color is much cheaper than blending.
+struct Palette {
+    lv_color_t background;
+    lv_color_t value;  // numbers, values, filled bars
+    lv_color_t label;  // labels, units, scales, header and footer, corners
+    lv_color_t border; // outlines, rules, lamps and arrows off
+    // Accents
+    lv_color_t fault;     // warning / fault (red)
+    lv_color_t high_beam; // high beam (blue)
+    lv_color_t signal;    // turn signal / fog light (green)
+    lv_color_t service;   // service / airbag (yellow)
+};
+
+// At night (low or high beam on): light on black, the design's colors.
+inline const Palette DARK{
+    .background = lv_color_hex(0x000000),
+    .value = lv_color_hex(0xffffff),
+    .label = lv_color_hex(0x9a9a9a),
+    .border = lv_color_hex(0x5a5a5a),
+    .fault = lv_color_hex(0xfb2c36),
+    .high_beam = lv_color_hex(0x00a6f4),
+    .signal = lv_color_hex(0x00bc7d),
+    .service = lv_color_hex(0xfd9a00),
+};
+
+// By day: dark on white, readable in sunlight at full backlight. The accents are darker shades of the same hues,
+// to keep their contrast on white.
+inline const Palette LIGHT{
+    .background = lv_color_hex(0xffffff),
+    .value = lv_color_hex(0x000000),
+    .label = lv_color_hex(0x5f5f5f),
+    .border = lv_color_hex(0xa8a8a8),
+    .fault = lv_color_hex(0xe7000b),
+    .high_beam = lv_color_hex(0x0069a8),
+    .signal = lv_color_hex(0x007a55),
+    .service = lv_color_hex(0xe17100),
+};
+
+// The palette in use. Dashboard switches it, and rebuilds the screen with it, when day turns to night.
+inline const Palette *current = &DARK;
+
+inline const Palette &palette()
+{
+    return *current;
+}
 
 // A font and its size in px. The size places texts the way the design does (see ui::text in base.h).
 struct Font {

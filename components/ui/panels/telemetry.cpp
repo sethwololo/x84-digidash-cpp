@@ -66,7 +66,7 @@ Telemetry::Telemetry(lv_obj_t *screen)
 {
     scale(screen, X, FUEL_Y + 48, WIDTH, {"V", "C"});
     // Rule between the speed and this column.
-    fill(screen, COLUMN_X, theme::CONTENT_TOP, 1, theme::CONTENT_HEIGHT, theme::BORDER);
+    fill(screen, COLUMN_X, theme::CONTENT_TOP, 1, theme::CONTENT_HEIGHT, theme::palette().border);
 }
 
 bool Telemetry::alert(const Screen &screen) const
@@ -93,21 +93,21 @@ void Telemetry::show(const Screen &screen, bool blink_on)
     const x84::Lamps &lamps = view.lamps;
     // The headlight chip shows the brightest lights on: yellow, green or blue.
     headlights_.set(lamps.headlights == x84::Headlights::off ? x84::Lamp::off : x84::Lamp::on,
-                    lamps.headlights == x84::Headlights::high_beam  ? theme::HIGH_BEAM
-                    : lamps.headlights == x84::Headlights::low_beam ? theme::SIGNAL
-                                                                    : theme::SERVICE,
+                    lamps.headlights == x84::Headlights::high_beam  ? theme::palette().high_beam
+                    : lamps.headlights == x84::Headlights::low_beam ? theme::palette().signal
+                                                                    : theme::palette().service,
                     blink_on);
-    seat_belt_.set(lamps.seat_belt, theme::FAULT, blink_on);
-    front_fog_.set(lamps.front_fog, theme::SIGNAL, blink_on);
-    rear_fog_.set(lamps.rear_fog, theme::SIGNAL, blink_on);
-    brake_.set(lamps.brake, theme::FAULT, blink_on);
-    oil_pressure_.set(lamps.oil_pressure, theme::FAULT, blink_on);
-    engine_.set(lamps.engine, theme::FAULT, blink_on);
-    battery_.set(lamps.battery, theme::FAULT, blink_on);
-    abs_.set(lamps.abs, theme::SERVICE, blink_on);
-    stop_.set(lamps.stop, theme::FAULT, blink_on);
-    service_.set(lamps.service, theme::SERVICE, blink_on);
-    airbag_.set(lamps.airbag, theme::SERVICE, blink_on);
+    seat_belt_.set(lamps.seat_belt, theme::palette().fault, blink_on);
+    front_fog_.set(lamps.front_fog, theme::palette().signal, blink_on);
+    rear_fog_.set(lamps.rear_fog, theme::palette().signal, blink_on);
+    brake_.set(lamps.brake, theme::palette().fault, blink_on);
+    oil_pressure_.set(lamps.oil_pressure, theme::palette().fault, blink_on);
+    engine_.set(lamps.engine, theme::palette().fault, blink_on);
+    battery_.set(lamps.battery, theme::palette().fault, blink_on);
+    abs_.set(lamps.abs, theme::palette().service, blink_on);
+    stop_.set(lamps.stop, theme::palette().fault, blink_on);
+    service_.set(lamps.service, theme::palette().service, blink_on);
+    airbag_.set(lamps.airbag, theme::palette().service, blink_on);
 }
 
 } // namespace ui
