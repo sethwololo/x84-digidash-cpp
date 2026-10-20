@@ -7,5 +7,5 @@
 
 LV_IMAGE_DECLARE(img_arrow_left);  // 36x36 turn signal
 LV_IMAGE_DECLARE(img_arrow_right); // 36x36 turn signal
-LV_IMAGE_DECLARE(img_hazard);      // 14x14 stripes in the corners of an alert frame
+LV_IMAGE_DECLARE(img_hazard);      // 10x10 stripes in the corners of an alert frame
 LV_IMAGE_DECLARE(img_wordmark);    // 98x11 "MEGANE" in Michroma

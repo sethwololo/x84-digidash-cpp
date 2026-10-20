@@ -18,39 +18,36 @@ void corner(lv_obj_t *parent, int32_t x, int32_t y, bool flip_x, bool flip_y)
 
 namespace {
 
-// The hazard stripes stick out of the frame by this much, sideways and up or down.
-constexpr int32_t STRIPES_OUT_X = 1;
-constexpr int32_t STRIPES_OUT_Y = 5;
-constexpr int32_t STRIPES_SIZE = 14;
+constexpr int32_t BORDER = 1;
+constexpr int32_t STRIPES_SIZE = 10;
 // The label's text ends this far from the frame's right edge, clear of the stripes in the corner. Its backing still
-// reaches the edge, hiding what is under it; the stripes are drawn over it.
-constexpr int32_t LABEL_INSET = STRIPES_SIZE - STRIPES_OUT_X + 6;
+// reaches the border, hiding what is under it; the stripes are drawn over it.
+constexpr int32_t LABEL_INSET = BORDER + STRIPES_SIZE + 6;
 
 } // namespace
 
 AlertFrame::AlertFrame(lv_obj_t *parent, int32_t x, int32_t y, int32_t width, int32_t height, const char *label)
 {
-    // LVGL clips children to their parent: the frame and the stripes sit side by side in a slightly bigger group.
-    group_ = box(parent, x - STRIPES_OUT_X, y - STRIPES_OUT_Y, width + 2 * STRIPES_OUT_X, height + 2 * STRIPES_OUT_Y);
-    lv_obj_t *frame = outline(group_, STRIPES_OUT_X, STRIPES_OUT_Y, width, height, theme::palette().fault);
-    image(group_, &img_hazard, theme::palette().fault, 0, 0);
-    image(group_, &img_hazard, theme::palette().fault, width + 2 * STRIPES_OUT_X - STRIPES_SIZE, height + 2 * STRIPES_OUT_Y - STRIPES_SIZE);
+    frame_ = outline(parent, x, y, width, height, theme::palette().fault);
     if (label) {
         // A backing in the background color keeps the label readable over a bar that is also red, and hides what is under it.
-        lv_obj_t *tag = spaced(text(frame, theme::TEXT_LABEL_BOLD, theme::palette().fault, 0, 0, label), theme::SPACING_LABEL);
+        lv_obj_t *tag = spaced(text(frame_, theme::TEXT_LABEL_BOLD, theme::palette().fault, 0, 0, label), theme::SPACING_LABEL);
         lv_obj_set_style_bg_opa(tag, LV_OPA_COVER, 0);
         lv_obj_set_style_bg_color(tag, theme::palette().background, 0);
         lv_obj_set_style_pad_left(tag, 3, 0);
-        lv_obj_set_style_pad_right(tag, LABEL_INSET - 2, 0);
-        lv_obj_align(tag, LV_ALIGN_BOTTOM_RIGHT, -1, -2);
+        lv_obj_set_style_pad_right(tag, LABEL_INSET - BORDER, 0);
+        lv_obj_align(tag, LV_ALIGN_BOTTOM_RIGHT, 0, -2);
     }
-    lv_obj_add_flag(group_, LV_OBJ_FLAG_HIDDEN);
+    // Inside the border, in the top left and bottom right corners (the frame's children start inside its border).
+    image(frame_, &img_hazard, theme::palette().fault, 0, 0);
+    image(frame_, &img_hazard, theme::palette().fault, width - 2 * BORDER - STRIPES_SIZE, height - 2 * BORDER - STRIPES_SIZE);
+    lv_obj_add_flag(frame_, LV_OBJ_FLAG_HIDDEN);
 }
 
 void AlertFrame::show(bool shown)
 {
-    if (shown && lv_obj_has_flag(group_, LV_OBJ_FLAG_HIDDEN)) lv_obj_move_foreground(group_);
-    set_visible(group_, shown);
+    if (shown && lv_obj_has_flag(frame_, LV_OBJ_FLAG_HIDDEN)) lv_obj_move_foreground(frame_);
+    set_visible(frame_, shown);
 }
 
 } // namespace ui
