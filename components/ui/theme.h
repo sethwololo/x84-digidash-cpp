@@ -61,19 +61,20 @@ struct Font {
     int32_t size;
 };
 
-// Type scale (IBM Plex Mono). To add a size, see fonts.h.
-inline const Font TEXT_SMALL{&plex_regular_12, 12};      // captions, scales, footer
-inline const Font TEXT_LABEL{&plex_regular_14, 14};      // column titles, trip, odometer
-inline const Font TEXT_LABEL_BOLD{&plex_bold_14, 14};    // status, warning lights, alert labels
-inline const Font TEXT_VALUE{&plex_regular_18, 18};      // units
-inline const Font TEXT_VALUE_BOLD{&plex_bold_18, 18};    // bar values
-inline const Font TEXT_READOUT{&plex_bold_24, 24};       // values in the readout boxes
-inline const Font TEXT_GEAR{&plex_bold_40, 40};
-inline const Font TEXT_RPM{&plex_bold_80, 80};
-inline const Font TEXT_SPEED{&plex_bold_190, 190};
+// Type scale (Nordwand Mono; the _BOLD sizes are its SemiBold). To add a size, see fonts.h.
+inline const Font TEXT_SMALL{&nordwand_regular_12, 12};      // captions, scales, footer
+inline const Font TEXT_LABEL{&nordwand_regular_14, 14};      // column titles, trip, odometer
+inline const Font TEXT_LABEL_BOLD{&nordwand_semibold_14, 14};    // status, warning lights, alert labels
+inline const Font TEXT_VALUE{&nordwand_regular_18, 18};      // units
+inline const Font TEXT_VALUE_BOLD{&nordwand_semibold_18, 18};    // bar values
+inline const Font TEXT_READOUT{&nordwand_semibold_24, 24};       // values in the readout boxes
+inline const Font TEXT_GEAR{&nordwand_semibold_40, 40};
+inline const Font TEXT_RPM{&nordwand_semibold_80, 80};
+inline const Font TEXT_SPEED{&nordwand_semibold_190, 190};
 
 // How the design places text, in em of the font size: a text box is a line 1.3 em tall, with the baseline 1.025 em
-// from its top; digits start 0.315 em from the top.
+// from its top; digits start 0.315 em from the top. (Measured on the design's first font, IBM Plex Mono; Nordwand
+// Mono has the same advance and ascender, so the layout holds.)
 constexpr float LINE_HEIGHT = 1.3f;
 constexpr float BASELINE = 1.025f;
 constexpr float DIGIT_TOP = 0.315f;

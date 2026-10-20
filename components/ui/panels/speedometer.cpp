@@ -58,7 +58,7 @@ void Speedometer::show(const Screen &screen)
     set_text(speed_, reading(view.speed_kmh).c_str());
 
     const std::string km_per_liter = screen.trip_km_per_liter_tenths ? tenths(*screen.trip_km_per_liter_tenths) : "--";
-    set_text(trip_, ("TRIP " + tenths(screen.trip_hectometers) + " KM · " + km_per_liter + " KM/L").c_str());
+    set_text(trip_, ("TRIP " + tenths(screen.trip_hectometers) + " KM // " + km_per_liter + " KM/L").c_str());
     set_text(odometer_, ("ODO " + (view.odometer_km ? thousands(*view.odometer_km) : std::string("--")) + " KM").c_str());
 }
 
