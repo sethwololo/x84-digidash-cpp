@@ -1,0 +1,6138 @@
+{
+  "baud_rate": 500000,
+  "endian": "Big",
+  "frame_count": 38,
+  "messages": [
+    {
+      "name": "AIRBAGCrash",
+      "id": 35,
+      "id_hex": "023",
+      "dlc": 2,
+      "cycle_ms": 4,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "AIRBAG byte 2",
+          "start_bit": 15,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": {
+            "171": "ABh = AIRBAG byte 2 value"
+          }
+        },
+        {
+          "name": "AIRBAG byte 1",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": {
+            "84": "54h = AIRBAG byte 1 value"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AIRBAG_GeneralStatus",
+      "id": 1617,
+      "id_hex": "651",
+      "dlc": 2,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Driver seat belt switch",
+          "start_bit": 9,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = driver seat belt fastened (switch open)",
+            "1": "01 = driver seat belt not fastened (switch closed)",
+            "2": "10 = reserved",
+            "3": "11 = unavailable"
+          }
+        },
+        {
+          "name": "Passenger on seat",
+          "start_bit": 13,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = Passenger detected on seat",
+            "1": "01 = Passenger not detected on seat",
+            "2": "10 = reserved",
+            "3": "11 = unavailable"
+          }
+        },
+        {
+          "name": "Passenger seat belt switch",
+          "start_bit": 15,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = passenger seat belt fastened (switch open)",
+            "1": "01 = passenger seat belt not fastened (switch closed)",
+            "2": "10 = reserved",
+            "3": "11 = unavailable"
+          }
+        },
+        {
+          "name": "AIRBAG system fault",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = AIRBAG system working correctly",
+            "1": "1 = AIRBAG system faulty"
+          }
+        },
+        {
+          "name": "Passenger AIRBAG off",
+          "start_bit": 1,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Passenger AIRBAG lamp off",
+            "1": "1 = Passenger AIRBAG lamp on"
+          }
+        },
+        {
+          "name": "AIRBAG lamp information available",
+          "start_bit": 2,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = AIRBAG lamps not available",
+            "1": "1 = AIRBAG lamps available"
+          }
+        },
+        {
+          "name": "Airbag reset exit indication",
+          "start_bit": 3,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Crash detection risk",
+          "start_bit": 4,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no risk of non-detection",
+            "1": "1 = risk of non-detection"
+          }
+        },
+        {
+          "name": "Crash detected",
+          "start_bit": 7,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no crash detected",
+            "1": "1 = crash detected"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AT_GeneralStatus",
+      "id": 1381,
+      "id_hex": "565",
+      "dlc": 5,
+      "cycle_ms": 60,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Minimum idle speed setpoint (AT)",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 8.0,
+          "offset": 0.0,
+          "unit": "rpm",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Manual shift mode selected (AT)",
+          "start_bit": 29,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Manual shift mode not selected",
+            "1": "1 = Manual shift mode selected"
+          }
+        },
+        {
+          "name": "Snow mode selected (AT)",
+          "start_bit": 30,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Snow mode not selected",
+            "1": "1 = Snow mode selected"
+          }
+        },
+        {
+          "name": "Eco mode selected (AT)",
+          "start_bit": 31,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Eco mode not selected",
+            "1": "1 = Eco mode selected"
+          }
+        },
+        {
+          "name": "Automatic gearbox alert",
+          "start_bit": 18,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = no automatic gearbox alert",
+            "1": "001 = robotized gearbox door open alert",
+            "2": "010 = Reserved (formerly used by the robotized gearbox)",
+            "3": "011 = automatic gearbox door open alert",
+            "4": "1xx = reserved"
+          }
+        },
+        {
+          "name": "Underdrive",
+          "start_bit": 20,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no underdrive",
+            "1": "1 = underdrive"
+          }
+        },
+        {
+          "name": "Brake pedal press request",
+          "start_bit": 21,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Foot on the brake not needed",
+            "1": "1 = Foot on the brake needed (automatic gearbox lever locked, or start with a gear engaged"
+          }
+        },
+        {
+          "name": "AT reset exit indication",
+          "start_bit": 22,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Gear change refused/accepted",
+          "start_bit": 23,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = gear change accepted",
+            "1": "1 = gear change refused"
+          }
+        },
+        {
+          "name": "AT program selected",
+          "start_bit": 9,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = Normal driving mode",
+            "1": "01 = Eco driving mode",
+            "2": "10 = Manual shift driving mode",
+            "3": "11 = Snow driving mode"
+          }
+        },
+        {
+          "name": "AT position display",
+          "start_bit": 15,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0000 = parking",
+            "1": "0001 = reverse",
+            "2": "0010 = neutral",
+            "3": "0011 = drive",
+            "4": "0100 = gear 4",
+            "5": "0101 = gear 3",
+            "6": "0110 = gear 2",
+            "7": "0111 = gear 1",
+            "8": "1000 = between P/R or N/R",
+            "9": "1001 = between N/D",
+            "10": "1010 = in between",
+            "11": "1011 = Unused",
+            "12": "1100 = gear 6",
+            "13": "1101 = gear 7",
+            "14": "1110 = gear 5",
+            "15": "1111 = CMF out of order."
+          }
+        },
+        {
+          "name": "Gear engaged (copy)",
+          "start_bit": 3,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0000 = declutched",
+            "1": "0001 = gear 1",
+            "2": "0010 = gear 2",
+            "3": "0011 = gear 3",
+            "4": "0100 = gear 4",
+            "5": "0101 = gear 5",
+            "6": "0110 = gear 6",
+            "9": "1001 = reverse",
+            "10": "1010 = neutral",
+            "15": "1111 = gearbox in limp mode"
+          }
+        },
+        {
+          "name": "AT faults/states",
+          "start_bit": 7,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0x1x = AT fault",
+            "1": "000x = no fault",
+            "2": "01xx = oil temperature alert (automatic gearbox) or clutch overheating (robotized gearbox)",
+            "3": "1xxx = reserved"
+          }
+        },
+        {
+          "name": "FullLoad",
+          "start_bit": 19,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "Full Load off",
+            "1": "Full Load on"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "AT_TorqueControl",
+      "id": 373,
+      "id_hex": "175",
+      "dlc": 8,
+      "cycle_ms": 10,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "AT position",
+          "start_bit": 59,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0000 = parking",
+            "1": "0001 = reverse",
+            "2": "0010 = neutral",
+            "3": "0011 = drive",
+            "4": "0100 = gear 4",
+            "5": "0101 = gear 3",
+            "6": "0110 = gear 2",
+            "7": "0111 = gear 1",
+            "8": "1000 = between P/R or N/R",
+            "9": "1001 = between N/D",
+            "10": "1010 = in between",
+            "11": "1011 = manual mode (automatic or robotized gearbox)",
+            "12": "1100 = gear 6",
+            "13": "1101 = gear 7",
+            "14": "1110 = gear 5",
+            "15": "1111 = unavailable (init phase or CMF out of order)"
+          }
+        },
+        {
+          "name": "AT torque control type",
+          "start_bit": 63,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = torque limitation without gear change",
+            "5": "101 = reduction setpoint",
+            "6": "110 = torque increase setpoint",
+            "7": "111 = full torque control"
+          }
+        },
+        {
+          "name": "Powertrain gain",
+          "start_bit": 55,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.25,
+          "offset": 0.0,
+          "unit": "N/Nm",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "AT start authorization",
+          "start_bit": 41,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = start forbidden",
+            "1": "01 = start allowed",
+            "2": "10 = reserved",
+            "3": "11 = unavailable"
+          }
+        },
+        {
+          "name": "Clock AT",
+          "start_bit": 47,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "AT emissions fault",
+          "start_bit": 35,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "xxx0 = no MIL on request",
+            "1": "xxx1 = MIL on request",
+            "2": "0xxx = no misfire algorithm disturbance",
+            "3": "1xxx = misfire algorithm disturbance"
+          }
+        },
+        {
+          "name": "Gear engaged",
+          "start_bit": 39,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0000 = declutched",
+            "1": "0001 = gear 1",
+            "2": "0010 = gear 2",
+            "3": "0011 = gear 3",
+            "4": "0100 = gear 4",
+            "5": "0101 = gear 5",
+            "6": "0110 = gear 6",
+            "9": "1001 = reverse",
+            "10": "1010 = neutral",
+            "15": "1111 = gearbox in limp mode"
+          }
+        },
+        {
+          "name": "Robotized gearbox major fault",
+          "start_bit": 24,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no major fault",
+            "1": "1 = major fault (engine stop request)"
+          }
+        },
+        {
+          "name": "Cooling fan command (AT)",
+          "start_bit": 25,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no cooling fan control",
+            "1": "1 = Cooling fan to control"
+          }
+        },
+        {
+          "name": "AT torque request in progress",
+          "start_bit": 26,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no gear change in progress",
+            "1": "1 = gear change in progress"
+          }
+        },
+        {
+          "name": "Idle speed increase request",
+          "start_bit": 27,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no idle speed increase request",
+            "1": "1 = idle speed increase request"
+          }
+        },
+        {
+          "name": "Clutched/declutched (drag reduction)",
+          "start_bit": 29,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = park/neutral or clutch open",
+            "1": "01 = declutched at standstill (drag reduction requested) or bite point",
+            "2": "10 = fully clutched or full drag",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "Torque converter state",
+          "start_bit": 31,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = converter unlocked",
+            "1": "01 = converter regulating or slipping",
+            "2": "10 = converter locked or closed",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "Torque drawn from the engine by the AT",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": 0.0,
+          "unit": "Nm",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Slow torque limit/setpoint",
+          "start_bit": 15,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Fast torque setpoint",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "AnticipatedRGBPumpState",
+          "start_bit": 43,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "Unavailable value",
+            "1": "BVR Pump Active",
+            "2": "BVR Pump Inactive",
+            "3": "Not Used"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "UCH_Filling",
+      "id": 117,
+      "id_hex": "075",
+      "dlc": 2,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Filling byte 2",
+          "start_bit": 15,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Filling byte 1",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "UCH_GeneralStatus",
+      "id": 1549,
+      "id_hex": "60D",
+      "dlc": 8,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Trip computer scroll request",
+          "start_bit": 57,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = not pressed",
+            "1": "01 = scroll + direction",
+            "2": "10 = scroll - direction",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "Card battery to replace",
+          "start_bit": 58,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = card battery OK",
+            "1": "1 = card battery to replace"
+          }
+        },
+        {
+          "name": "Keyless information display",
+          "start_bit": 63,
+          "length": 5,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00000 = no display",
+            "1": "00001 = welcome",
+            "2": "00010 = Insert card",
+            "3": "00011 = card not detected",
+            "4": "00100 = hands-free - failure",
+            "5": "00101 = hands-free - failure - see the manual",
+            "6": "00110 = Card not detected + buzzer",
+            "7": "00111 = press stop twice",
+            "8": "01000 = card holder failed - see the manual",
+            "9": "01001 = press Brake + start",
+            "10": "01010 = Remove card + buzzer",
+            "11": "01011 = restricted card mode",
+            "12": "01100 = reserved",
+            "13": "01101 = reserved",
+            "14": "01110 = press brake + start or declutch",
+            "15": "01111 = gearbox in P or N",
+            "16": "10000 = Shift to neutral or declutch",
+            "17": "10001 = Remove card",
+            "18": "10010 = start with the trunk open -> insert card",
+            "19": "10011 = confirm engine stop",
+            "20": "10100 = starting",
+            "21": "10101 = pedal not held",
+            "22": "10110 = card holder failure",
+            "28": "11100 = Full HMI - cluster extinction"
+          }
+        },
+        {
+          "name": "Card or key number",
+          "start_bit": 51,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "1": "0001 = card / key no. 1 recognized by the UCH",
+            "2": "0010 = card / key no. 2 recognized by the UCH",
+            "4": "0100 = card / key no. 3 recognized by the UCH",
+            "8": "1000 = card / key no. 4 recognized by the UCH",
+            "15": "1111 = invalid"
+          }
+        },
+        {
+          "name": "Reverse gear engaged",
+          "start_bit": 53,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = reverse gear not engaged",
+            "1": "01 = reverse gear engaged",
+            "2": "10 = invalid",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "DRL request",
+          "start_bit": 54,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = DRL not requested",
+            "1": "1 = DRL requested"
+          }
+        },
+        {
+          "name": "Blown air temperature setpoint freeze",
+          "start_bit": 55,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no blown air temperature setpoint freeze",
+            "1": "1 = blown air temperature setpoint freeze"
+          }
+        },
+        {
+          "name": "Engine coolant temperature (copy)",
+          "start_bit": 47,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": -40.0,
+          "unit": "°C",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Outside temperature",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": -40.0,
+          "unit": "°C",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Trailer present",
+          "start_bit": 24,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no trailer detected",
+            "1": "1 = trailer detected"
+          }
+        },
+        {
+          "name": "Buzzer request",
+          "start_bit": 29,
+          "length": 5,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00000 = no buzzer requested",
+            "1": "00001 = lights left on",
+            "2": "00010 = locking while driving activated",
+            "3": "00011 = locking while driving deactivated",
+            "4": "00100 = child lock failure",
+            "5": "00101 = reserved",
+            "6": "00110 = reserved",
+            "7": "00111 = reserved",
+            "16": "10000 = key removal forbidden (to be confirmed)",
+            "17": "10001 = trunk open",
+            "18": "10010 = switch on mode (to be confirmed)",
+            "19": "10011 = key forgotten alert",
+            "20": "10100 = reverse alert",
+            "21": "10101 = forgotten seat belt alert",
+            "22": "10110 = DRL active",
+            "23": "10111 = DRL deactivated",
+            "25": "11001 = Reserved Nissan: flat tire alarm",
+            "26": "11010 = Reserved Nissan: transmitter ID registration confirmation"
+          }
+        },
+        {
+          "name": "Heated rear window state requested manually",
+          "start_bit": 30,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = heated rear window not requested manually",
+            "1": "1 = heated rear window requested manually"
+          }
+        },
+        {
+          "name": "Automatic wiping fault",
+          "start_bit": 31,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = automatic wiping OK",
+            "1": "1 = automatic wiping faulty"
+          }
+        },
+        {
+          "name": "Wiping fault",
+          "start_bit": 16,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no wiping fault",
+            "1": "1 = wiping fault"
+          }
+        },
+        {
+          "name": "Rear fog light state",
+          "start_bit": 18,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = fog light OFF",
+            "1": "1 = fog light ON"
+          }
+        },
+        {
+          "name": "Door and trunk locking state",
+          "start_bit": 20,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "x0 = trunk not locked",
+            "1": "x1 = trunk locked",
+            "2": "0x = doors not locked",
+            "3": "1x = doors locked"
+          }
+        },
+        {
+          "name": "Column lock or UCH fault",
+          "start_bit": 23,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = no lock fault",
+            "1": "001 = UCH/STOP electronic failure",
+            "2": "010 = locking not done (after engine stop)",
+            "3": "011 = reserved",
+            "4": "100 = unlocking not done (before start)",
+            "6": "110 = UCH/SERV electronic failure",
+            "7": "111 = reserved"
+          }
+        },
+        {
+          "name": "Front fog lights request",
+          "start_bit": 8,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = front fog lights not requested",
+            "1": "1 = front fog lights requested"
+          }
+        },
+        {
+          "name": "Power supply state by UCH",
+          "start_bit": 9,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = SERV OFF",
+            "1": "1 = SERV ON"
+          }
+        },
+        {
+          "name": "APC distribution state (copy)",
+          "start_bit": 10,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = APC lines not distributed",
+            "1": "1 = APC lines distributed"
+          }
+        },
+        {
+          "name": "High beam request",
+          "start_bit": 11,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = high beam not requested",
+            "1": "1 = high beam requested"
+          }
+        },
+        {
+          "name": "TPMS inhibition",
+          "start_bit": 12,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = TPMS function present in the vehicle",
+            "1": "1 = TPMS function inhibited in the vehicle"
+          }
+        },
+        {
+          "name": "Turn signal states",
+          "start_bit": 15,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = no turn signal active",
+            "1": "001 = left turn signal ON and right OFF",
+            "2": "010 = left turn signal OFF and right ON",
+            "3": "011 = left turn signal ON and right ON",
+            "7": "111 = invalid"
+          }
+        },
+        {
+          "name": "UCH reset exit indication",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Low beam request",
+          "start_bit": 1,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = low beam not requested",
+            "1": "1 = low beam requested"
+          }
+        },
+        {
+          "name": "Position lights request",
+          "start_bit": 2,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = position lights not requested",
+            "1": "1 = position lights requested"
+          }
+        },
+        {
+          "name": "Openings state",
+          "start_bit": 7,
+          "length": 5,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "xxxx0 = front left door closed",
+            "1": "xxxx1 = front left door open",
+            "2": "xxx0x = front right door closed",
+            "3": "xxx1x = front right door open",
+            "4": "xx0xx = rear left door closed",
+            "5": "xx1xx = rear left door open",
+            "6": "x0xxx = rear right door closed",
+            "7": "x1xxx = rear right door open",
+            "8": "0xxxx = trunk, tailgate and opening rear window closed",
+            "9": "1xxxx = trunk, tailgate or opening rear window open"
+          }
+        }
+      ]
+    },
+    {
+      "name": "UCH_PowerManagement",
+      "id": 1533,
+      "id_hex": "5FD",
+      "dlc": 8,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Extinction codes (copy)",
+          "start_bit": 57,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = No code extinction request",
+            "1": "01 = Left code extinction",
+            "2": "10 = Right code extinction",
+            "3": "11 = Right and left code extinction"
+          }
+        },
+        {
+          "name": "Load controlled by UCH about to be switched",
+          "start_bit": 58,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No new load planned for switching",
+            "1": "1 = New load planned for switching"
+          }
+        },
+        {
+          "name": "Wake-up type",
+          "start_bit": 59,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Customer wake-up",
+            "1": "1 = System wake-up"
+          }
+        },
+        {
+          "name": "Vehicle speed for UPC",
+          "start_bit": 63,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0000 = 0 <= V < 6",
+            "1": "0001 = 6 <= V <12",
+            "2": "0010 = 12 <= V < 18",
+            "3": "0011 = 18 <= V < 24",
+            "4": "0100 = 24 <= V < 30",
+            "5": "0101 = 30 <= V < 36",
+            "6": "0110 = 36 <= V < 42",
+            "7": "0111 = 42 <= V < 48",
+            "8": "1000 = 48 <= V < 54",
+            "9": "1001 = 54 <= V < 60",
+            "10": "1010 = 60 <= V < 66",
+            "11": "1011 = 66 <= V < 72",
+            "12": "1100 = 72 <= V < 78",
+            "13": "1101 = 78 <= V < 84",
+            "14": "1110 = 84 <= V"
+          }
+        },
+        {
+          "name": "Maximum delay before switching",
+          "start_bit": 51,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "s",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Absolute time since first APC",
+          "start_bit": 19,
+          "length": 24,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "min",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Total distance travelled",
+          "start_bit": 7,
+          "length": 20,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "km",
+          "inferred_width": false,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "UCH_SystemControl",
+      "id": 861,
+      "id_hex": "35D",
+      "dlc": 8,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Emergency engine stop",
+          "start_bit": 63,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": {
+            "188": "BCh = Engine stop request"
+          }
+        },
+        {
+          "name": "DiagMuxOn_UCH",
+          "start_bit": 48,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = counting and storing of CAN mute/absent faults masked",
+            "1": "1 = counting and storing of CAN mute/absent faults not masked"
+          }
+        },
+        {
+          "name": "Vehicle with or without key",
+          "start_bit": 49,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Keyless vehicle",
+            "1": "1 = Vehicle with key"
+          }
+        },
+        {
+          "name": "Keyless push button state",
+          "start_bit": 50,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Not pressed",
+            "1": "1 = Push pressed"
+          }
+        },
+        {
+          "name": "Sunroof position (copy)",
+          "start_bit": 52,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = roof closed (out)",
+            "1": "01 = roof open (in)",
+            "2": "10 = vehicle not equipped",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "A/C compressor state (copy)",
+          "start_bit": 53,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = A/C compressor not engaged",
+            "1": "1 = A/C compressor engaged"
+          }
+        },
+        {
+          "name": "Start authorization (Verlog)",
+          "start_bit": 54,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = start forbidden",
+            "1": "1 = start allowed"
+          }
+        },
+        {
+          "name": "Immobilizer fault",
+          "start_bit": 55,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = immobilizer OK",
+            "1": "1 = immobilizer failure"
+          }
+        },
+        {
+          "name": "Day/night information",
+          "start_bit": 40,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = day",
+            "1": "1 = night"
+          }
+        },
+        {
+          "name": "Child lock fault alert",
+          "start_bit": 41,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No child lock fault alert",
+            "1": "1 = Child lock fault alert"
+          }
+        },
+        {
+          "name": "Dealer parking mode",
+          "start_bit": 33,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = customer mode",
+            "1": "1 = delivery mode"
+          }
+        },
+        {
+          "name": "Clutch end-of-travel switch",
+          "start_bit": 35,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = pedal released (end of travel not reached)",
+            "1": "01 = pedal pressed (end of travel threshold passed)",
+            "2": "10 = vehicle not equipped",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "Brake pedal normally open switch (UCH)",
+          "start_bit": 37,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = brake not applied",
+            "1": "01 = brake applied",
+            "2": "10 = reserved",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "Vehicle moving",
+          "start_bit": 38,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = vehicle stopped",
+            "1": "1 = vehicle moving"
+          }
+        },
+        {
+          "name": "PowerLatchTA",
+          "start_bit": 39,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no PowerLatch hold request",
+            "1": "1 = PowerLatch hold request"
+          }
+        },
+        {
+          "name": "Commanded electrical power (UCH)",
+          "start_bit": 28,
+          "length": 5,
+          "byte_order": "big_endian",
+          "factor": 100.0,
+          "offset": 0.0,
+          "unit": "W",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Dongle_command_BCM",
+          "start_bit": 30,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Headlamp washer selection",
+          "start_bit": 31,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = left or high pressure headlamp washer selected",
+            "1": "1 = right headlamp washer selected"
+          }
+        },
+        {
+          "name": "Headlamp washer pump activation",
+          "start_bit": 16,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = headlamp washer pump activation not requested",
+            "1": "1 = headlamp washer pump activation requested"
+          }
+        },
+        {
+          "name": "Dongle_ID_BCM_2",
+          "start_bit": 20,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Front wiping request",
+          "start_bit": 23,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = front wiper park stop",
+            "1": "001 = front wiper forced stop",
+            "2": "010 = one low speed wipe",
+            "3": "011 = one high speed wipe",
+            "4": "100 = invalid",
+            "5": "101 = reserved",
+            "6": "110 = low speed",
+            "7": "111 = high speed"
+          }
+        },
+        {
+          "name": "UCH sleep order",
+          "start_bit": 9,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = sleep requested",
+            "1": "01 = reserved",
+            "2": "10 = reserved",
+            "3": "11 = wake-up confirmation"
+          }
+        },
+        {
+          "name": "Dongle_ID_BCM_1",
+          "start_bit": 15,
+          "length": 6,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Air conditioning request",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = A/C clutch OFF",
+            "1": "1 = A/C clutch ON"
+          }
+        },
+        {
+          "name": "Heated rear window requested",
+          "start_bit": 2,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = Heated rear window not requested",
+            "1": "01 = Reserved",
+            "2": "10 = Heated rear window requested by INJ",
+            "3": "11 = Heated rear window requested for the customer"
+          }
+        },
+        {
+          "name": "ALS fault",
+          "start_bit": 3,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = working correctly",
+            "1": "1 = ALS fault"
+          }
+        },
+        {
+          "name": "ALS active",
+          "start_bit": 4,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = ALS not active",
+            "1": "1 = ALS active"
+          }
+        },
+        {
+          "name": "Fast idle request (UCH)",
+          "start_bit": 5,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no fast idle request",
+            "1": "1 = fast idle request"
+          }
+        },
+        {
+          "name": "Start mode (UCH)",
+          "start_bit": 7,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = engine stop request",
+            "1": "01 = reserved",
+            "2": "10 = APC on request",
+            "3": "11 = start request"
+          }
+        },
+        {
+          "name": "BlowerState",
+          "start_bit": 32,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "Blower fan OFF",
+            "1": "Blower fan ON"
+          },
+          "source": "complementary"
+        },
+        {
+          "name": "BrakePadWear",
+          "start_bit": 47,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "no fault",
+            "1": "short circuit 12 V",
+            "2": "pad to be changed"
+          },
+          "source": "complementary"
+        },
+        {
+          "name": "CustomerEngIddleSpeedReq",
+          "start_bit": 45,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "no engine iddle speed request by",
+            "1": "engine iddle speed request by cu"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "UCH_VERLOG",
+      "id": 1280,
+      "id_hex": "500",
+      "dlc": 5,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Verlog data",
+          "start_bit": 15,
+          "length": 32,
+          "byte_order": "little_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Verlog data check field",
+          "start_bit": 4,
+          "length": 5,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "UCH_to_ESCL3",
+      "id": 1285,
+      "id_hex": "505",
+      "dlc": 4,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Lock code reset",
+          "start_bit": 16,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset",
+            "1": "1 = reset"
+          }
+        },
+        {
+          "name": "Column lock request",
+          "start_bit": 17,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no column lock request",
+            "1": "1 = column lock request"
+          }
+        },
+        {
+          "name": "Column unlock request",
+          "start_bit": 18,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no column unlock request",
+            "1": "1 = column unlock request"
+          }
+        },
+        {
+          "name": "+APC",
+          "start_bit": 21,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = APC OFF",
+            "1": "1 = APC ON"
+          }
+        },
+        {
+          "name": "UCH alive",
+          "start_bit": 22,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "= 1/0 alternately"
+          }
+        },
+        {
+          "name": "Column lock code",
+          "start_bit": 7,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "Brake_GeneralData",
+      "id": 852,
+      "id_hex": "354",
+      "dlc": 8,
+      "cycle_ms": 40,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "VSU present",
+          "start_bit": 56,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = ABS or ESP unit",
+            "1": "1 = VSU unit"
+          }
+        },
+        {
+          "name": "Wheel lock detection",
+          "start_bit": 63,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No lock detected, or ABS/ESP present",
+            "1": "1 = Lock detected"
+          }
+        },
+        {
+          "name": "Filling state",
+          "start_bit": 49,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = waiting (ready to receive the filling frame)",
+            "1": "01 = acknowledgement (order received and being executed)",
+            "2": "10 = finished (solenoid valve control sequence finished)",
+            "3": "11 = risk of not filling after a fault detection"
+          }
+        },
+        {
+          "name": "ABS hazard lights request",
+          "start_bit": 51,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = reserved",
+            "1": "01 = hazard lights not requested by the ABS",
+            "2": "10 = hazard lights requested by the ABS",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "Brake pedal normally open switch (ABS)",
+          "start_bit": 53,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = brake not applied",
+            "1": "01 = brake applied",
+            "2": "10 = reserved",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "ABS regulating",
+          "start_bit": 54,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = ABS not regulating",
+            "1": "1 = ABS regulating"
+          }
+        },
+        {
+          "name": "ABS fault",
+          "start_bit": 55,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = ABS working correctly",
+            "1": "1 = ABS out of order"
+          }
+        },
+        {
+          "name": "VSU lamp state",
+          "start_bit": 46,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = VSU operational or vehicle not equipped (lamp off)",
+            "1": "01 = VSU fault",
+            "2": "10 = VSU operational but not programmed",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "EBD regulating",
+          "start_bit": 47,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = EBD not regulating",
+            "1": "1 = EBD regulating"
+          }
+        },
+        {
+          "name": "ABS reset exit indication",
+          "start_bit": 32,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "EBD lamp state",
+          "start_bit": 34,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = EBD operational or vehicle not equipped (lamp off)",
+            "1": "01 = EBD fault",
+            "2": "10 = reserved",
+            "3": "11 = EBD calibrating (diagnostic mode)"
+          }
+        },
+        {
+          "name": "ABS lamp state",
+          "start_bit": 36,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = ABS operational or vehicle not equipped (lamp off)",
+            "1": "01 = ABS fault",
+            "2": "10 = ABS operational (not programmed)",
+            "3": "11 = ABS calibrating (diagnostic mode)"
+          }
+        },
+        {
+          "name": "ESP lamp state",
+          "start_bit": 39,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = ESP operational or vehicle not equipped (lamp off)",
+            "1": "001 = ESP fault",
+            "2": "010 = ESP off",
+            "3": "011 = ESP fault (not programmed)",
+            "4": "100 = ESP regulating without fault",
+            "5": "101 = ESP regulating with fault",
+            "7": "111 = ESP calibrating (diagnostic mode)"
+          }
+        },
+        {
+          "name": "Distance travelled",
+          "start_bit": 23,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.1,
+          "offset": 0.0,
+          "unit": "m",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Vehicle speed (front wheel average)",
+          "start_bit": 7,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.01,
+          "offset": 0.0,
+          "unit": "km/h",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "HDCStateLamp",
+          "start_bit": 62,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "Not lighting",
+            "1": "Flashing",
+            "2": "Lighting",
+            "3": "Not used"
+          },
+          "source": "complementary"
+        },
+        {
+          "name": "ECBStateLamp",
+          "start_bit": 60,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "Brake is not failed",
+            "1": "Finished calibration",
+            "2": "Under calibration",
+            "3": "Brake is failed or lamp check"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "Brake_StabilityControl",
+      "id": 580,
+      "id_hex": "244",
+      "dlc": 7,
+      "cycle_ms": 20,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Transferred torque setpoint",
+          "start_bit": 55,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 3.0,
+          "offset": 0.0,
+          "unit": "Nm",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "TCP stop request",
+          "start_bit": 40,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = TCP stop not requested",
+            "1": "1 = TCP stop requested"
+          }
+        },
+        {
+          "name": "ShiftMapChangeRequest",
+          "start_bit": 42,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = No Request",
+            "1": "01 = Request to use TCS map in warm",
+            "2": "10 = Request to use TCS map in cold",
+            "3": "11 = not use"
+          }
+        },
+        {
+          "name": "ASRMalfunction",
+          "start_bit": 43,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = ASR not faulty",
+            "1": "1 = ASR fault"
+          }
+        },
+        {
+          "name": "MSR off",
+          "start_bit": 44,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = MSR active",
+            "1": "1 = MSR deactivated"
+          }
+        },
+        {
+          "name": "MSR regulating",
+          "start_bit": 45,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = MSR not regulating",
+            "1": "1 = MSR regulating"
+          }
+        },
+        {
+          "name": "AYC regulating",
+          "start_bit": 46,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = AYC not regulating",
+            "1": "1 = AYC regulating"
+          }
+        },
+        {
+          "name": "ASR regulating",
+          "start_bit": 47,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = ASR not regulating",
+            "1": "1 = ASR regulating"
+          }
+        },
+        {
+          "name": "Clock ESP",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "ESP off",
+          "start_bit": 24,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = ESP available",
+            "1": "1 = ESP deactivated"
+          }
+        },
+        {
+          "name": "ESP fault",
+          "start_bit": 25,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = ESP operational",
+            "1": "1 = ESP fault"
+          }
+        },
+        {
+          "name": "Gear upshift request",
+          "start_bit": 26,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no gear upshift request",
+            "1": "1 = gear upshift request"
+          }
+        },
+        {
+          "name": "Gear change authorization",
+          "start_bit": 28,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = change forbidden",
+            "1": "01 = downshift allowed",
+            "2": "10 = upshift allowed",
+            "3": "11 = downshift or upshift allowed"
+          }
+        },
+        {
+          "name": "Torque control type",
+          "start_bit": 31,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = no torque control",
+            "5": "101 = ASR type setpoints",
+            "6": "110 = MSR type setpoints"
+          }
+        },
+        {
+          "name": "MSR torque setpoint",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "ASR dynamic torque setpoint",
+          "start_bit": 15,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "ASR static torque setpoint",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "CLIM_ControlFrame",
+      "id": 884,
+      "id_hex": "374",
+      "dlc": 3,
+      "cycle_ms": 50,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Evaporator temperature",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -40.0,
+          "unit": "°C",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Heated rear window button press validity bit",
+          "start_bit": 9,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = heated rear window button press valid",
+            "1": "1 = heated rear window button press invalid"
+          }
+        },
+        {
+          "name": "Heated rear window automatic selection",
+          "start_bit": 10,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = heated rear window not requested by the automatic mode",
+            "1": "1 = heated rear window requested by the automatic mode"
+          }
+        },
+        {
+          "name": "Heated rear window button press",
+          "start_bit": 11,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "= each change of the signal's state is a button press"
+          }
+        },
+        {
+          "name": "A/C selection",
+          "start_bit": 12,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = A/C not requested",
+            "1": "1 = A/C requested"
+          }
+        },
+        {
+          "name": "Cabin fan state",
+          "start_bit": 14,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = cabin fan off",
+            "1": "01 = cabin fan on",
+            "2": "1x = invalid"
+          }
+        },
+        {
+          "name": "Air conditioning reset exit indication",
+          "start_bit": 15,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Blown air temperature setpoint",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": -40.0,
+          "unit": "°C",
+          "inferred_width": true,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "CLUSTER_BackUp",
+      "id": 1813,
+      "id_hex": "715",
+      "dlc": 8,
+      "cycle_ms": 3000,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Oil service range",
+          "start_bit": 47,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 250.0,
+          "offset": 0.0,
+          "unit": "km",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Fuel level (APV)",
+          "start_bit": 39,
+          "length": 7,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "l",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Displayed oil level",
+          "start_bit": 29,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0000 = alert",
+            "1": "0001 = 1 bar graph segment",
+            "2": "0010 = 2 segments",
+            "3": "0011 = 3 segments",
+            "4": "0100 = 4 segments",
+            "5": "0101 = 5 segments",
+            "6": "0110 = 6 segments",
+            "7": "0111 = 7 segments",
+            "8": "1000 = 8 segments",
+            "15": "1111 = unavailable"
+          }
+        },
+        {
+          "name": "MIL lamp state",
+          "start_bit": 31,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = MIL lamp off",
+            "1": "01 = MIL lamp steady on",
+            "2": "10 = MIL lamp blinking",
+            "3": "11 = MIL lamp self-test"
+          }
+        },
+        {
+          "name": "Odometer (APV)",
+          "start_bit": 7,
+          "length": 24,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "km",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "ShortVehicleID",
+          "start_bit": 55,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "15": "Digit not programmed should be c"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "CLUSTER_GeneralStatus",
+      "id": 1477,
+      "id_hex": "5C5",
+      "dlc": 8,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Fuel level",
+          "start_bit": 62,
+          "length": 7,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "l",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Lamp self-test driven by the cluster",
+          "start_bit": 54,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no self-test in progress",
+            "1": "1 = self-test in progress"
+          }
+        },
+        {
+          "name": "Snow mode selected by the customer",
+          "start_bit": 55,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = snow mode not selected (button not pressed)",
+            "1": "1 = snow mode selected (button pressed)"
+          }
+        },
+        {
+          "name": "Cluster sleep request",
+          "start_bit": 43,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = reserved",
+            "1": "01 = reserved",
+            "2": "10 = reserved",
+            "3": "11 = wake-up confirmation"
+          }
+        },
+        {
+          "name": "Vehicle type",
+          "start_bit": 47,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0000 = X74",
+            "1": "0001 = X73",
+            "2": "0010 = X81",
+            "3": "0011 = X65 ph2",
+            "4": "0100 = D66",
+            "5": "0101 = X76",
+            "6": "0110 = X83",
+            "7": "0111 = X70",
+            "8": "1000 = F200",
+            "9": "1001 = X74ph2",
+            "11": "1011 = X85",
+            "12": "1100 = J77",
+            "13": "1101 = B84",
+            "14": "1110 = J84",
+            "15": "1111 = undocumented (end-of-line programming error)"
+          }
+        },
+        {
+          "name": "Passenger AIRBAG off lamp operational",
+          "start_bit": 33,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Passenger AIRBAG off lamp faulty",
+            "1": "1 = Passenger AIRBAG off lamp operational"
+          }
+        },
+        {
+          "name": "AIRBAG fault lamp operational",
+          "start_bit": 34,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = lamp not operational",
+            "1": "1 = lamp operational"
+          }
+        },
+        {
+          "name": "Passenger AIRBAG off lamp state",
+          "start_bit": 35,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Passenger AIRBAG off lamp off",
+            "1": "1 = Passenger AIRBAG off lamp on"
+          }
+        },
+        {
+          "name": "AIRBAG fault lamp state",
+          "start_bit": 36,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = lamp off (AIRBAG system OK)",
+            "1": "1 = lamp steady on (AIRBAG system fault)"
+          }
+        },
+        {
+          "name": "LPG minimum",
+          "start_bit": 37,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = level above the minimum",
+            "1": "1 = minimum reached"
+          }
+        },
+        {
+          "name": "Odometer",
+          "start_bit": 15,
+          "length": 24,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "km",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Fuel gauge diagnostic",
+          "start_bit": 1,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = gauge connection OK",
+            "1": "01 = gauge open circuit",
+            "2": "10 = gauge short circuit",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "Parking brake switch",
+          "start_bit": 2,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = parking brake not applied",
+            "1": "1 = parking brake applied"
+          }
+        },
+        {
+          "name": "Brake circuit fault",
+          "start_bit": 3,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no brake circuit fault",
+            "1": "1 = brake circuit fault"
+          }
+        },
+        {
+          "name": "Cluster reset exit indication",
+          "start_bit": 4,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Low fuel alert",
+          "start_bit": 5,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = minimum not reached",
+            "1": "1 = minimum reached"
+          }
+        },
+        {
+          "name": "Cluster refuses to sleep",
+          "start_bit": 7,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = reserved",
+            "1": "01 = Cluster not ready to sleep",
+            "2": "10 = Cluster ready to sleep",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "MuteRadioOrder",
+          "start_bit": 63,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "No mute radio order",
+            "1": "Mute radio order"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "CLUSTER_GeneralStatus_2",
+      "id": 1605,
+      "id_hex": "645",
+      "dlc": 5,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Displayed speed",
+          "start_bit": 31,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.01,
+          "offset": 0.0,
+          "unit": "km/h",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Day dimmer maximum lighting percentage",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.4,
+          "offset": 0.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Night dimmer maximum lighting percentage",
+          "start_bit": 15,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.4,
+          "offset": 0.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Seat belt lamp state",
+          "start_bit": 7,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = lamp off (seat belt fastened)",
+            "1": "01 = lamp on (seat belt not fastened)",
+            "2": "10 = lamp blinking (seat belt not fastened and V > 15 km/h and timer < 10 s)",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "PositionLightsStatus",
+          "start_bit": 5,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "position lights off",
+            "1": "position lights on"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "DSU_GeneralData",
+      "id": 1701,
+      "id_hex": "6A5",
+      "dlc": 1,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "BAE reset exit indication",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Right turn signal activation request (BAE)",
+          "start_bit": 1,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = right turn signal not requested",
+            "1": "1 = right turn signal requested"
+          }
+        },
+        {
+          "name": "Left turn signal activation request (BAE)",
+          "start_bit": 2,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = left turn signal not requested",
+            "1": "1 = left turn signal requested"
+          }
+        },
+        {
+          "name": "High beam request (BAE)",
+          "start_bit": 3,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = high beam not requested",
+            "1": "1 = high beam requested"
+          }
+        },
+        {
+          "name": "Low beam request (BAE)",
+          "start_bit": 4,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = low beam not requested",
+            "1": "1 = low beam requested"
+          }
+        },
+        {
+          "name": "Position lights request (BAE)",
+          "start_bit": 5,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = position lights not requested",
+            "1": "1 = position lights requested"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ECM_GeneralStatus",
+      "id": 1361,
+      "id_hex": "551",
+      "dlc": 8,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Nominal fuel consumption",
+          "start_bit": 63,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 80.0,
+          "offset": 0.0,
+          "unit": "mm3",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Engine temperature downward transition",
+          "start_bit": 48,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No downward transition in progress",
+            "1": "1 = Downward transition in progress"
+          }
+        },
+        {
+          "name": "Engine regulation temperature",
+          "start_bit": 51,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = 90 °C",
+            "1": "001 = 95 °C",
+            "2": "010 = 100 °C",
+            "3": "011 = 105 °C",
+            "4": "100 = 110 °C",
+            "5": "101 = 80 °C",
+            "6": "110 = 85 °C",
+            "7": "111 = unavailable"
+          }
+        },
+        {
+          "name": "Particulate filter state",
+          "start_bit": 52,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No alert message",
+            "1": "1 = Clogged filter alert"
+          }
+        },
+        {
+          "name": "Water in diesel detected",
+          "start_bit": 53,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no water detected in the diesel",
+            "1": "1 = water detected in the diesel"
+          }
+        },
+        {
+          "name": "Economy mode lamp",
+          "start_bit": 54,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = lamp off",
+            "1": "1 = lamp on"
+          }
+        },
+        {
+          "name": "Air conditioning cut-off",
+          "start_bit": 55,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = cut-off requested",
+            "1": "1 = no cut-off requested"
+          }
+        },
+        {
+          "name": "Engine states (copy)",
+          "start_bit": 41,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = engine stopped",
+            "1": "01 = engine stalled",
+            "2": "10 = engine running on its own",
+            "3": "11 = engine running, driven"
+          }
+        },
+        {
+          "name": "Fuel consumption type",
+          "start_bit": 42,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = petrol consumption",
+            "1": "1 = LPG consumption"
+          }
+        },
+        {
+          "name": "Overspeed cut-off threshold",
+          "start_bit": 43,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = low threshold",
+            "1": "1 = high threshold"
+          }
+        },
+        {
+          "name": "Cruise/limiter state display",
+          "start_bit": 46,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = cruise control and speed limiter OFF",
+            "1": "001 = limiter active",
+            "2": "010 = (limiter ON and inactive) or suspended",
+            "3": "011 = limiter requested and faulty",
+            "4": "100 = cruise control active",
+            "5": "101 = (cruise control ON and inactive) or suspended",
+            "6": "110 = cruise control requested and faulty",
+            "7": "111 = cruise control/limiter functions not present on the vehicle"
+          }
+        },
+        {
+          "name": "Cruise/limiter set speed blinking",
+          "start_bit": 47,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = steady display",
+            "1": "1 = blinking display"
+          }
+        },
+        {
+          "name": "Set speed",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "km/h",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "INJ reset exit indication",
+          "start_bit": 24,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Injection fault severity 2",
+          "start_bit": 25,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no severity 2 injection fault linked to the engine stop",
+            "1": "1 = severity 2 injection fault linked to the engine stop"
+          }
+        },
+        {
+          "name": "Injection fault severity 1",
+          "start_bit": 26,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no severity 1 injection fault",
+            "1": "1 = severity 1 injection fault"
+          }
+        },
+        {
+          "name": "Diesel preheating",
+          "start_bit": 27,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = lamp off",
+            "1": "1 = lamp on"
+          }
+        },
+        {
+          "name": "Coolant temperature alert",
+          "start_bit": 28,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no coolant temperature alert",
+            "1": "1 = coolant temperature alert"
+          }
+        },
+        {
+          "name": "Emissions fault lamp",
+          "start_bit": 30,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = MIL lamp off",
+            "1": "01 = MIL lamp steady on",
+            "2": "10 = MIL lamp blinking",
+            "3": "11 = lamp self-test"
+          }
+        },
+        {
+          "name": "DiagMuxOn(copy)",
+          "start_bit": 31,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = counting and storing of CAN mute/absent faults not allowed",
+            "1": "1 = counting and storing of CAN mute/absent faults allowed"
+          }
+        },
+        {
+          "name": "Idle speed setpoint",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 8.0,
+          "offset": 0.0,
+          "unit": "rpm",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Fuel consumption",
+          "start_bit": 15,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 80.0,
+          "offset": 0.0,
+          "unit": "mm3",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Engine coolant temperature",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": -40.0,
+          "unit": "°C",
+          "inferred_width": true,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "ECM_SystemControl",
+      "id": 505,
+      "id_hex": "1F9",
+      "dlc": 6,
+      "cycle_ms": 10,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Maximum alternator power",
+          "start_bit": 47,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 40.0,
+          "offset": 0.0,
+          "unit": "W",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Start authorization (INJ)",
+          "start_bit": 33,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = start forbidden",
+            "1": "01 = start allowed",
+            "2": "10 = starter stop request",
+            "3": "11 = start forbidden: ECM fault"
+          }
+        },
+        {
+          "name": "AT start authorization via INJ",
+          "start_bit": 35,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = start forbidden",
+            "1": "01 = start allowed",
+            "2": "10 = vehicle with a manual gearbox",
+            "3": "11 = unavailable (AT frame missing)"
+          }
+        },
+        {
+          "name": "Allowed power slope",
+          "start_bit": 39,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 40.0,
+          "offset": 0.0,
+          "unit": "W/s",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Engine speed (copy)",
+          "start_bit": 23,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.125,
+          "offset": 0.0,
+          "unit": "rpm",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Maximum allowed mechanical power",
+          "start_bit": 12,
+          "length": 5,
+          "byte_order": "big_endian",
+          "factor": 100.0,
+          "offset": 0.0,
+          "unit": "W",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Electrical consumers freeze/cut-off",
+          "start_bit": 1,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = no request",
+            "1": "01 = state changes forbidden",
+            "2": "10 = consumers cut-off request",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "Heated rear window activation request by INJ",
+          "start_bit": 2,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no heated rear window activation request",
+            "1": "1 = heated rear window activation request"
+          }
+        },
+        {
+          "name": "A/C compressor command",
+          "start_bit": 3,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = A/C compressor deactivation",
+            "1": "1 = compressor activation requested"
+          }
+        },
+        {
+          "name": "Engine states",
+          "start_bit": 5,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = engine stopped",
+            "1": "01 = engine stalled",
+            "2": "10 = engine running on its own",
+            "3": "11 = engine running, driven"
+          }
+        },
+        {
+          "name": "Engine cooling fan activation setpoint",
+          "start_bit": 7,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = No cooling fan start",
+            "1": "01 = low speed start",
+            "2": "10 = medium speed start (Nissan cooling fan)",
+            "3": "11 = high speed start"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ECM_TorqueControl",
+      "id": 385,
+      "id_hex": "181",
+      "dlc": 8,
+      "cycle_ms": 10,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Particulate filter failure",
+          "start_bit": 56,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No failed filter alert message",
+            "1": "1 = Failed filter alert"
+          }
+        },
+        {
+          "name": "DiagMuxOn",
+          "start_bit": 57,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = counting and storing of CAN mute/absent faults not allowed",
+            "1": "1 = counting and storing of CAN mute/absent faults allowed"
+          }
+        },
+        {
+          "name": "Resistive torque",
+          "start_bit": 55,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Brake pedal normally closed switch (INJ)",
+          "start_bit": 41,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = brake not applied",
+            "1": "01 = brake applied",
+            "2": "10 = reserved",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "AT torque request acknowledgement",
+          "start_bit": 42,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = incorrect dialogue",
+            "1": "1 = correct dialogue"
+          }
+        },
+        {
+          "name": "Clutch switch",
+          "start_bit": 44,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = foot not pressed (clutched)",
+            "1": "01 = foot pressed",
+            "2": "10 = reserved",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "ASR/MSR acknowledgement",
+          "start_bit": 45,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = incorrect dialogue",
+            "1": "1 = correct dialogue"
+          }
+        },
+        {
+          "name": "Torque setpoint achievement state",
+          "start_bit": 47,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = normal operation",
+            "1": "01 = the exact torque cannot be achieved (measurement inaccuracy)",
+            "2": "10 = the engine is temporarily unable to achieve a torque setpoint",
+            "3": "11 = request cannot be executed"
+          }
+        },
+        {
+          "name": "Anticipated torque",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Raw pedal, real or rebuilt",
+          "start_bit": 31,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Mean effective torque",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Engine speed",
+          "start_bit": 7,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.125,
+          "offset": 0.0,
+          "unit": "rpm",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Reserved_1bit",
+          "start_bit": 63,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "fixed value produced"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "ECM_VERLOG",
+      "id": 1297,
+      "id_hex": "511",
+      "dlc": 7,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Verlog question",
+          "start_bit": 15,
+          "length": 48,
+          "byte_order": "little_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Verlog question check field",
+          "start_bit": 3,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "ECM_to_AT",
+      "id": 353,
+      "id_hex": "161",
+      "dlc": 5,
+      "cycle_ms": 10,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Ergonomic pedal, real or rebuilt",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Kick down active",
+          "start_bit": 24,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = kick down at rest",
+            "1": "1 = kick down active"
+          }
+        },
+        {
+          "name": "Cruise control and speed limiter states",
+          "start_bit": 31,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = Cruise control and speed limiter inactive (OFF, standby or suspended)",
+            "1": "01 = pedal resume",
+            "2": "10 = regulation or limitation active",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "Instantaneous maximum torque",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Instantaneous minimum torque",
+          "start_bit": 15,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Engine torque outside AT setpoint",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "ECM_MechanicalLoadRequest",
+          "start_bit": 29,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "No mechanical load requested by ",
+            "1": "Mechanical load requested by ECM"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "ECM_to_GCU",
+      "id": 97,
+      "id_hex": "061",
+      "dlc": 8,
+      "cycle_ms": 8,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Intake air temperature",
+          "start_bit": 63,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": -40.0,
+          "unit": "°C",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Flow/cylinder correction factor",
+          "start_bit": 55,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.784,
+          "offset": -100.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Engine operating mode",
+          "start_bit": 43,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = LPG",
+            "1": "001 = Petrol forced (LPG out of order)",
+            "2": "010 = LPG -> petrol switching",
+            "3": "011 = Petrol forced (LPG impossible)",
+            "4": "100 = LPG forced",
+            "5": "101 = Petrol -> LPG switching",
+            "6": "110 = Petrol forced (LPG tank empty)",
+            "7": "111 = Petrol"
+          }
+        },
+        {
+          "name": "LPG/CNG button lamp setpoint",
+          "start_bit": 45,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = off",
+            "1": "01 = blinking",
+            "2": "10 = reserved",
+            "3": "11 = on"
+          }
+        },
+        {
+          "name": "LPG/CNG warning lamp setpoint",
+          "start_bit": 47,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = off",
+            "1": "01 = blinking",
+            "2": "10 = reserved",
+            "3": "11 = on"
+          }
+        },
+        {
+          "name": "Manifold pressure",
+          "start_bit": 27,
+          "length": 12,
+          "byte_order": "big_endian",
+          "factor": 3.7,
+          "offset": 103.0,
+          "unit": "mbar",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Cylinder number of the correction factor",
+          "start_bit": 31,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = all cylinders",
+            "1": "001 = 1st cylinder",
+            "2": "010 = 2nd cylinder",
+            "3": "011 = 3rd cylinder",
+            "4": "100 = 4th cylinder",
+            "5": "101 = 5th cylinder",
+            "6": "110 = 6th cylinder",
+            "7": "111 = fault"
+          }
+        },
+        {
+          "name": "Gas mixture type",
+          "start_bit": 17,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = type 1 (LPG 50% propane, 50% butane)",
+            "1": "01 = type 2 (LPG 100% propane)",
+            "2": "10 = type 3 (LPG 100% butane)",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "Cylinder number",
+          "start_bit": 20,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = computation unavailable",
+            "1": "001 = 1st cylinder",
+            "2": "010 = 2nd cylinder",
+            "3": "011 = 3rd cylinder",
+            "4": "100 = 4th cylinder",
+            "5": "101 = 5th cylinder",
+            "6": "110 = 6th cylinder",
+            "7": "111 = fault"
+          }
+        },
+        {
+          "name": "LPG/CNG system operation setpoint",
+          "start_bit": 22,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = Petrol",
+            "1": "01 = LPG/CNG system activation request",
+            "2": "10 = LPG/CNG system deactivation request",
+            "3": "11 = LPG/CNG"
+          }
+        },
+        {
+          "name": "Petrol pump setpoint",
+          "start_bit": 23,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = pump activation request",
+            "1": "1 = pump cut-off request"
+          }
+        },
+        {
+          "name": "LPG/CNG flow setpoint",
+          "start_bit": 7,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 2.0,
+          "offset": 0.0,
+          "unit": "g/h",
+          "inferred_width": false,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "EPS_GeneralStatus",
+      "id": 1508,
+      "id_hex": "5E4",
+      "dlc": 3,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Dongle_ID_EPS",
+          "start_bit": 13,
+          "length": 10,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Dongle_command_EPS",
+          "start_bit": 15,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "DAE reset exit indication",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "DAE fault",
+          "start_bit": 2,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = normal",
+            "1": "01 = DAE minor fault -> Service",
+            "2": "10 = DAE major fault -> stop",
+            "3": "11 = diagnostic mode"
+          }
+        },
+        {
+          "name": "DAE index not detected",
+          "start_bit": 3,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Not calibrated and indexed, or already calibrated",
+            "1": "1 = Not calibrated and not indexed (flashing at 8 Hz, highest priority)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ESCL3_to_UCH",
+      "id": 1409,
+      "id_hex": "581",
+      "dlc": 4,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "250/500 kbit/s configuration",
+          "start_bit": 24,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = 250 kb",
+            "1": "1 = 500 kb"
+          }
+        },
+        {
+          "name": "Configured bit rate",
+          "start_bit": 25,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = bit rate not configured",
+            "1": "1 = bit rate configured"
+          }
+        },
+        {
+          "name": "Configuration attempt counter",
+          "start_bit": 27,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = no configuration attempt",
+            "1": "01 = First configuration attempt",
+            "2": "10 = Second configuration attempt",
+            "3": "11 = Third configuration attempt"
+          }
+        },
+        {
+          "name": "Sensor test time-out",
+          "start_bit": 30,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = sensor test duration correct",
+            "1": "1 = sensor test too long"
+          }
+        },
+        {
+          "name": "Sensor test authorization",
+          "start_bit": 31,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = sensor test forbidden",
+            "1": "1 = sensor test allowed"
+          }
+        },
+        {
+          "name": "Operating voltage out of range",
+          "start_bit": 16,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = supply voltage correct (9 V <= U <= 16 V)",
+            "1": "1 = supply voltage out of range (U < 9 V or U > 16 V)"
+          }
+        },
+        {
+          "name": "UCH_to_ESCL3 frame missing",
+          "start_bit": 17,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = UCH_to_ESCL3 frame present",
+            "1": "1 = UCH_to_ESCL3 frame missing for 1 second on the CAN bus"
+          }
+        },
+        {
+          "name": "Power supply readback",
+          "start_bit": 18,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Hall effect sensor powered",
+            "1": "1 = Hall effect sensor not powered"
+          }
+        },
+        {
+          "name": "UCH message inconsistency",
+          "start_bit": 19,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = data of the CAN frame sent by the UCH consistent",
+            "1": "1 = consistency error in the CAN frame from the UCH"
+          }
+        },
+        {
+          "name": "Safety line inhibition",
+          "start_bit": 20,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = locking allowed (engine not running)",
+            "1": "1 = locking forbidden (engine running)"
+          }
+        },
+        {
+          "name": "Speed inhibition",
+          "start_bit": 23,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = zero speed",
+            "1": "1 = speed > 0 km/h, or speed not received, or speed value received equal to FFFFh"
+          }
+        },
+        {
+          "name": "Internal electronic major fault",
+          "start_bit": 9,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no internal electronic major fault",
+            "1": "1 = internal electronic major fault"
+          }
+        },
+        {
+          "name": "Actuator fault",
+          "start_bit": 10,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no actuator fault",
+            "1": "1 = actuator fault"
+          }
+        },
+        {
+          "name": "Lock position",
+          "start_bit": 13,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "1": "001 = The Hall effect sensor or its wired control is faulty, or sensor",
+            "2": "010 = secured unlocked",
+            "3": "011 = position not defined",
+            "4": "100 = pseudo-armed",
+            "5": "101 = short circuit of the Hall effect sensor or of its control"
+          }
+        },
+        {
+          "name": "Internal electronic minor fault",
+          "start_bit": 14,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no internal electronic minor fault",
+            "1": "1 = internal electronic minor fault"
+          }
+        },
+        {
+          "name": "Lock reset exit indication",
+          "start_bit": 15,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Blank / coded",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = coded",
+            "1": "1 = blank"
+          }
+        },
+        {
+          "name": "Locking finished",
+          "start_bit": 1,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = locking movement not finished",
+            "1": "1 = locking movement finished"
+          }
+        },
+        {
+          "name": "Undefined position",
+          "start_bit": 2,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Position OK (consistent with the computed theoretical position)",
+            "1": "1 = Undefined position (inconsistent with the computed theoretical position)"
+          }
+        },
+        {
+          "name": "Unlocking finished",
+          "start_bit": 3,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = unlocking movement not finished",
+            "1": "1 = unlocking movement finished"
+          }
+        },
+        {
+          "name": "Locking inhibition",
+          "start_bit": 4,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no locking inhibition",
+            "1": "1 = locking inhibition"
+          }
+        },
+        {
+          "name": "Antiscan active",
+          "start_bit": 5,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = antiscan not active",
+            "1": "1 = antiscan active"
+          }
+        },
+        {
+          "name": "Wrong code",
+          "start_bit": 6,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = right code",
+            "1": "1 = wrong code"
+          }
+        },
+        {
+          "name": "Lock alive",
+          "start_bit": 7,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "= 1/0 alternately"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Front_Wheel_Speed_Frame",
+      "id": 644,
+      "id_hex": "284",
+      "dlc": 8,
+      "cycle_ms": 20,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Front wheels checksum",
+          "start_bit": 63,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Front wheels counter",
+          "start_bit": 55,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Vehicle speed (copy)",
+          "start_bit": 39,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.01,
+          "offset": 0.0,
+          "unit": "km/h",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Front left wheel speed",
+          "start_bit": 23,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.0417,
+          "offset": 0.0,
+          "unit": "rpm",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Front right wheel speed",
+          "start_bit": 7,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.0417,
+          "offset": 0.0,
+          "unit": "rpm",
+          "inferred_width": false,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "GCU_GeneralStatus",
+      "id": 1329,
+      "id_hex": "531",
+      "dlc": 8,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "LPG/CNG system major fault",
+          "start_bit": 56,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no LPG/CNG system major fault",
+            "1": "1 = LPG/CNG system major fault"
+          }
+        },
+        {
+          "name": "LPG/CNG system minor fault",
+          "start_bit": 57,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no LPG/CNG system minor fault",
+            "1": "1 = LPG/CNG system minor fault"
+          }
+        },
+        {
+          "name": "LPG/CNG temperature",
+          "start_bit": 55,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": -40.0,
+          "unit": "°",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "LPG/CNG pressure",
+          "start_bit": 35,
+          "length": 12,
+          "byte_order": "big_endian",
+          "factor": 5.0,
+          "offset": 0.0,
+          "unit": "mbar",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "LPG/CNG emissions fault",
+          "start_bit": 36,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no LPG/CNG system emissions fault",
+            "1": "1 = LPG/CNG system emissions fault"
+          }
+        },
+        {
+          "name": "LPG/CNG consumption invalid",
+          "start_bit": 38,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = LPG/CNG consumption valid",
+            "1": "1 = LPG/CNG consumption invalid"
+          }
+        },
+        {
+          "name": "LPG/CNG",
+          "start_bit": 39,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = LPG",
+            "1": "1 = CNG"
+          }
+        },
+        {
+          "name": "LPG/CNG flow achieved",
+          "start_bit": 23,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 2.0,
+          "offset": 0.0,
+          "unit": "g/h",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "LPG/CNG gauge information",
+          "start_bit": 0,
+          "length": 9,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "Ohm",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "LPG/CNG system ready",
+          "start_bit": 1,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = LPG/CNG not ready",
+            "1": "1 = LPG/CNG ready"
+          }
+        },
+        {
+          "name": "LPG/CNG gauge diagnostic",
+          "start_bit": 3,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = LPG/CNG gauge OK",
+            "1": "01 = LPG/CNG gauge open circuit",
+            "2": "10 = LPG/CNG gauge short circuit",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "LPG/CNG tank empty",
+          "start_bit": 4,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = LPG/CNG tank not empty",
+            "1": "1 = LPG/CNG tank empty"
+          }
+        },
+        {
+          "name": "LPG/CNG system faulty",
+          "start_bit": 5,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no fault",
+            "1": "1 = LPG/CNG system faulty"
+          }
+        },
+        {
+          "name": "Customer LPG-CNG/petrol operation",
+          "start_bit": 6,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = running on petrol",
+            "1": "1 = running on LPG or CNG"
+          }
+        },
+        {
+          "name": "Fuel system type",
+          "start_bit": 7,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = dual fuel",
+            "1": "1 = single fuel"
+          }
+        }
+      ]
+    },
+    {
+      "name": "COSLAD_GeneralStatus",
+      "id": 1669,
+      "id_hex": "685",
+      "dlc": 1,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "COSLAD reset exit indication",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Extinction codes",
+          "start_bit": 7,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = No code extinction request",
+            "1": "01 = Left code extinction",
+            "2": "10 = Right code extinction",
+            "3": "11 = Right and left code extinction"
+          }
+        },
+        {
+          "name": "MBLFailureDisplay",
+          "start_bit": 5,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "No MBL failure display request",
+            "1": "MBL failure display requested"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "NAV_GeneralData",
+      "id": 1764,
+      "id_hex": "6E4",
+      "dlc": 1,
+      "cycle_ms": 1000,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "UCC reset exit indication",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "UCC type",
+          "start_bit": 3,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = reserved",
+            "1": "001 = UCC3",
+            "2": "010 = UCC2",
+            "3": "011 = reserved",
+            "4": "1xx = reserved"
+          }
+        },
+        {
+          "name": "Reserved_1bit",
+          "start_bit": 7,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "fixed value produced"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "Frein_de_Parking",
+      "id": 1886,
+      "id_hex": "75E",
+      "dlc": 4,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Clutch position",
+          "start_bit": 25,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = clutched or pedal not pressed",
+            "1": "01 = declutched or pedal pressed",
+            "2": "10 = clutch zone",
+            "3": "11 = unavailable (fault, computation impossible, automatic gearbox present)"
+          }
+        },
+        {
+          "name": "Buzzer request (FPA)",
+          "start_bit": 26,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No buzzer request",
+            "1": "1 = Buzzer request"
+          }
+        },
+        {
+          "name": "P or N display request",
+          "start_bit": 27,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no \"Lever in P or N\" display request",
+            "1": "1 = \"Lever in P or N\" display request"
+          }
+        },
+        {
+          "name": "Vehicle side slope",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "°",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Vehicle uphill/downhill slope",
+          "start_bit": 15,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.5,
+          "offset": -25.0,
+          "unit": "°",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Parking brake applied state",
+          "start_bit": 1,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = not applied",
+            "1": "01 = applied",
+            "2": "10 = default value at reset",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "Parking brake fault",
+          "start_bit": 3,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = No FPA fault",
+            "1": "01 = FPA minor fault - Service",
+            "2": "10 = FPA major fault - Stop",
+            "3": "11 = Inter-system fault"
+          }
+        },
+        {
+          "name": "Brake actuation command in progress",
+          "start_bit": 5,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = no command in progress",
+            "1": "01 = applying command in progress",
+            "2": "10 = releasing command in progress",
+            "3": "11 = unavailable"
+          }
+        },
+        {
+          "name": "Applied state display on the cluster forbidden",
+          "start_bit": 6,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = applied state display on the cluster allowed",
+            "1": "1 = applied state display on the cluster forbidden"
+          }
+        },
+        {
+          "name": "FPA reset exit indication",
+          "start_bit": 7,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "ClampingAlertToDriver",
+          "start_bit": 31,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "No clamping alert",
+            "1": "Clamping alert to Driver"
+          },
+          "source": "complementary"
+        }
+      ]
+    },
+    {
+      "name": "RADIO_GeneralData",
+      "id": 1765,
+      "id_hex": "6E5",
+      "dlc": 1,
+      "cycle_ms": null,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "RNAV reset exit indication",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Radio type",
+          "start_bit": 3,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "x1x = reserved",
+            "1": "000 = reserved",
+            "2": "001 = entry-level radio-navigation",
+            "3": "1xx = reserved"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rear_Wheel_Speed_Frame",
+      "id": 645,
+      "id_hex": "285",
+      "dlc": 8,
+      "cycle_ms": 20,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Rear wheels checksum",
+          "start_bit": 63,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Rear wheels counter",
+          "start_bit": 55,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Vehicle speed (CVT)",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": "km/h",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Rear left wheel speed",
+          "start_bit": 23,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.0417,
+          "offset": 0.0,
+          "unit": "rpm",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Rear right wheel speed",
+          "start_bit": 7,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.0417,
+          "offset": 0.0,
+          "unit": "rpm",
+          "inferred_width": false,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "SSPP_GeneralStatus",
+      "id": 1584,
+      "id_hex": "630",
+      "dlc": 8,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Run-flat (PAX) range",
+          "start_bit": 63,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 2.0,
+          "offset": 0.0,
+          "unit": "km",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Rear left tire pressure",
+          "start_bit": 55,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 13.725,
+          "offset": 0.0,
+          "unit": "mbar",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Rear right tire pressure",
+          "start_bit": 47,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 13.725,
+          "offset": 0.0,
+          "unit": "mbar",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Front right tire pressure",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 13.725,
+          "offset": 0.0,
+          "unit": "mbar",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Front left tire pressure",
+          "start_bit": 31,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 13.725,
+          "offset": 0.0,
+          "unit": "mbar",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Right/left imbalance",
+          "start_bit": 17,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = normal",
+            "1": "01 = front right-left imbalance",
+            "2": "10 = rear right-left imbalance",
+            "3": "11 = front and rear right-left imbalance"
+          }
+        },
+        {
+          "name": "Rear left wheel state",
+          "start_bit": 20,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = pressure OK",
+            "1": "001 = sensor missing",
+            "2": "010 = tire overinflated",
+            "3": "011 = single tire overinflated",
+            "4": "100 = single tire underinflated",
+            "5": "101 = abnormal air losses",
+            "6": "110 = tire slightly underinflated (below alert threshold 1)",
+            "7": "111 = tire dangerously underinflated (below alert threshold 2)"
+          }
+        },
+        {
+          "name": "Rear right wheel state",
+          "start_bit": 23,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = pressure OK",
+            "1": "001 = sensor missing",
+            "2": "010 = tire overinflated",
+            "3": "011 = single tire overinflated",
+            "4": "100 = single tire underinflated",
+            "5": "101 = abnormal air losses",
+            "6": "110 = tire slightly underinflated (below alert threshold 1)",
+            "7": "111 = tire dangerously underinflated (below alert threshold 2)"
+          }
+        },
+        {
+          "name": "Front right wheel state",
+          "start_bit": 10,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = pressure OK",
+            "1": "001 = sensor missing",
+            "2": "010 = tire overinflated",
+            "3": "011 = single tire overinflated",
+            "4": "100 = single tire underinflated",
+            "5": "101 = abnormal air losses",
+            "6": "110 = tire slightly underinflated (below alert threshold 1)",
+            "7": "111 = tire dangerously underinflated (below alert threshold 2)"
+          }
+        },
+        {
+          "name": "Front left wheel state",
+          "start_bit": 13,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = pressure OK",
+            "1": "001 = sensor missing",
+            "2": "010 = tire overinflated",
+            "3": "011 = single tire overinflated",
+            "4": "100 = single tire underinflated",
+            "5": "101 = abnormal air losses",
+            "6": "110 = tire slightly underinflated (below alert threshold 1)",
+            "7": "111 = tire dangerously underinflated (below alert threshold 2)"
+          }
+        },
+        {
+          "name": "Leak lamp",
+          "start_bit": 14,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = lamp off (no leak)",
+            "1": "1 = lamp on"
+          }
+        },
+        {
+          "name": "Vehicle pressure state",
+          "start_bit": 1,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = OK",
+            "1": "01 = tendency to overinflation",
+            "2": "10 = tendency to underinflation",
+            "3": "11 = TPMS out of order"
+          }
+        },
+        {
+          "name": "Pressure unsuited to the load",
+          "start_bit": 2,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = pressure suited to the load",
+            "1": "1 = pressure unsuited to the load"
+          }
+        },
+        {
+          "name": "TPMS buzzer",
+          "start_bit": 3,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no buzzer",
+            "1": "1 = buzzer"
+          }
+        },
+        {
+          "name": "Overspeed buzzer (PAX)",
+          "start_bit": 4,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no buzzer",
+            "1": "1 = continuous buzzer"
+          }
+        },
+        {
+          "name": "Pressure unsuited to the speed",
+          "start_bit": 5,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = pressure suited to the speed",
+            "1": "1 = pressure unsuited to the speed"
+          }
+        },
+        {
+          "name": "TPMS Service lamp",
+          "start_bit": 6,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = lamp OFF",
+            "1": "1 = lamp ON"
+          }
+        },
+        {
+          "name": "TPMS Stop lamp",
+          "start_bit": 7,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = lamp OFF",
+            "1": "1 = lamp ON"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Steering_Wheel_Angle",
+      "id": 194,
+      "id_hex": "0C2",
+      "dlc": 6,
+      "cycle_ms": 10,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Steering angle checksum",
+          "start_bit": 47,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Steering angle message counter",
+          "start_bit": 35,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Steering angle sensor internal status",
+          "start_bit": 38,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = not calibrated, not indexed",
+            "1": "001 = not calibrated, indexed",
+            "2": "010 = fault",
+            "3": "011 = reserved",
+            "4": "100 = calibrated, not initialized",
+            "5": "101 = calibrated, initialized",
+            "6": "110 = reserved",
+            "7": "111 = reserved"
+          }
+        },
+        {
+          "name": "Steering angle sensor reset exit indication",
+          "start_bit": 39,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Steering wheel rotation speed",
+          "start_bit": 23,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.1,
+          "offset": -3276.7,
+          "unit": "°/s",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Steering wheel angle",
+          "start_bit": 7,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.1,
+          "offset": -3276.7,
+          "unit": "°",
+          "inferred_width": false,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "UCT_GeneralStatus",
+      "id": 1668,
+      "id_hex": "684",
+      "dlc": 2,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "UCT buzzer",
+          "start_bit": 9,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = no buzzer request",
+            "1": "01 = alert buzzer request",
+            "2": "10 = information buzzer request",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "Finish roof maneuver",
+          "start_bit": 13,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Roof in final position, no request",
+            "1": "1 = Finish roof maneuver"
+          }
+        },
+        {
+          "name": "Roof bar failure",
+          "start_bit": 14,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No fault",
+            "1": "1 = Roof bar failure"
+          }
+        },
+        {
+          "name": "Roof misuse",
+          "start_bit": 15,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = Correct use of the roof",
+            "1": "1 = Roof condition(s) missing"
+          }
+        },
+        {
+          "name": "UCT reset exit indication",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Power window command",
+          "start_bit": 2,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = no power window command",
+            "1": "01 = reserved",
+            "2": "10 = all 4 power windows down together",
+            "3": "11 = all 4 power windows up together"
+          }
+        },
+        {
+          "name": "Sunroof fault",
+          "start_bit": 3,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no sunroof fault",
+            "1": "1 = sunroof faulty (roof stuck)"
+          }
+        },
+        {
+          "name": "Blind closing request",
+          "start_bit": 4,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = blind positioning OK",
+            "1": "1 = blind closing request"
+          }
+        },
+        {
+          "name": "Sunroof position",
+          "start_bit": 7,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = roof closed (out)",
+            "1": "001 = roof open (in)",
+            "2": "010 = roof closing",
+            "3": "011 = roof opening",
+            "4": "1xx = invalid"
+          }
+        }
+      ]
+    },
+    {
+      "name": "UPC_Fast_Frame",
+      "id": 533,
+      "id_hex": "215",
+      "dlc": 6,
+      "cycle_ms": 20,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Anticipated alternator mechanical power",
+          "start_bit": 47,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 40.0,
+          "offset": 0.0,
+          "unit": "W",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Instantaneous alternator mechanical power",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 40.0,
+          "offset": 0.0,
+          "unit": "W",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Alternator number",
+          "start_bit": 27,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0000 = invalid",
+            "1": "0001 = alternator 1",
+            "2": "0010 = alternator 2 (TG10)",
+            "3": "0011 = alternator 3 (SG12)",
+            "4": "0100 = alternator 4 (LIE150)",
+            "5": "0101 = alternator 5 (SG15L)",
+            "6": "0110 = reserved",
+            "7": "0111 = reserved",
+            "8": "1000 = reserved",
+            "9": "1001 = reserved",
+            "10": "1010 = reserved",
+            "11": "1011 = reserved",
+            "12": "1100 = reserved",
+            "13": "1101 = reserved",
+            "14": "1110 = reserved",
+            "15": "1111 = special type"
+          }
+        },
+        {
+          "name": "InfoIRotor",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.0472,
+          "offset": 0.0,
+          "unit": "A",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Starter state (copy)",
+          "start_bit": 9,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = start not active",
+            "1": "01 = short relaxation active",
+            "2": "10 = long relaxation active",
+            "3": "11 = start active"
+          }
+        },
+        {
+          "name": "Engine cooling fan state",
+          "start_bit": 11,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = Cooling fans stopped",
+            "1": "01 = Cooling fan low speed engaged",
+            "2": "10 = Cooling fan medium speed engaged",
+            "3": "11 = Cooling fan high speed engaged"
+          }
+        },
+        {
+          "name": "Neutral",
+          "start_bit": 13,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = neutral position not reached",
+            "1": "01 = neutral position reached",
+            "2": "10 = vehicle not equipped",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "Reverse gear engaged (UPC)",
+          "start_bit": 15,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = reverse gear not engaged",
+            "1": "01 = reverse gear engaged",
+            "2": "10 = reserved",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "DF terminal",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.390625,
+          "offset": 0.0,
+          "unit": "%",
+          "inferred_width": true,
+          "choices": null
+        }
+      ]
+    },
+    {
+      "name": "UPC_GeneralStatus",
+      "id": 1573,
+      "id_hex": "625",
+      "dlc": 6,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Dongle_ID_USM",
+          "start_bit": 33,
+          "length": 10,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Dongle_command_USM",
+          "start_bit": 35,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Load switching authorization",
+          "start_bit": 39,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = Switching not allowed",
+            "1": "01 = Network preparing",
+            "2": "10 = Switching allowed",
+            "3": "11 = Invalid (switching allowed)"
+          }
+        },
+        {
+          "name": "UPC refuses to sleep",
+          "start_bit": 25,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = reserved",
+            "1": "01 = UPC not ready to sleep",
+            "2": "10 = UPC ready to sleep",
+            "3": "11 = reserved"
+          }
+        },
+        {
+          "name": "UPC sleep request",
+          "start_bit": 27,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = reserved",
+            "1": "01 = reserved",
+            "2": "10 = reserved",
+            "3": "11 = wake-up confirmation"
+          }
+        },
+        {
+          "name": "APC readback",
+          "start_bit": 28,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No APC",
+            "1": "1 = APC confirmed"
+          }
+        },
+        {
+          "name": "Battery lamp",
+          "start_bit": 29,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = battery lamp off",
+            "1": "1 = battery lamp on"
+          }
+        },
+        {
+          "name": "Headlamp washer pump state",
+          "start_bit": 30,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = headlamp washer pump stopped",
+            "1": "1 = headlamp washer pump active"
+          }
+        },
+        {
+          "name": "Oil pressure switch",
+          "start_bit": 31,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = switch open",
+            "1": "1 = switch closed"
+          }
+        },
+        {
+          "name": "Battery voltage by UPC",
+          "start_bit": 23,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.0625,
+          "offset": 0.0,
+          "unit": "V",
+          "inferred_width": true,
+          "choices": null
+        },
+        {
+          "name": "Front wiper protection",
+          "start_bit": 9,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = front wiper protection inactive",
+            "1": "01 = low speed protection active",
+            "2": "10 = high speed protection active",
+            "3": "11 = front wiper stuck"
+          }
+        },
+        {
+          "name": "UPC reset exit indication",
+          "start_bit": 10,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no reset exit",
+            "1": "1 = reset exit"
+          }
+        },
+        {
+          "name": "Front fog lights state",
+          "start_bit": 11,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = front fog lights off",
+            "1": "1 = fog lights on"
+          }
+        },
+        {
+          "name": "High beam state",
+          "start_bit": 12,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = high beam off",
+            "1": "1 = high beam on"
+          }
+        },
+        {
+          "name": "Low beam state",
+          "start_bit": 13,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = low beam off",
+            "1": "1 = low beam on"
+          }
+        },
+        {
+          "name": "Position lights state",
+          "start_bit": 14,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = position lights off",
+            "1": "1 = position lights on"
+          }
+        },
+        {
+          "name": "A/C compressor state",
+          "start_bit": 15,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = A/C compressor not engaged",
+            "1": "1 = A/C compressor engaged"
+          }
+        },
+        {
+          "name": "Heated rear window state",
+          "start_bit": 0,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = heated rear window stopped",
+            "1": "1 = heated rear window active"
+          }
+        },
+        {
+          "name": "Front wiper park stop by UPC",
+          "start_bit": 1,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = position outside the stop",
+            "1": "1 = stop position"
+          }
+        },
+        {
+          "name": "Front wiper motor state",
+          "start_bit": 3,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = front wiper motor stopped",
+            "1": "01 = front wiper motor low speed",
+            "2": "10 = front wiper motor high speed",
+            "3": "11 = invalid"
+          }
+        },
+        {
+          "name": "Starter state",
+          "start_bit": 5,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = start not active",
+            "1": "01 = short relaxation active",
+            "2": "10 = long relaxation active",
+            "3": "11 = start active"
+          }
+        },
+        {
+          "name": "Low battery alert",
+          "start_bit": 6,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = No alert (battery voltage above the threshold)",
+            "1": "1 = alert (battery voltage below the threshold)"
+          }
+        },
+        {
+          "name": "APC distribution state",
+          "start_bit": 7,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = APC lines not distributed",
+            "1": "1 = APC lines distributed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vehicle_Dynamic",
+      "id": 672,
+      "id_hex": "2A0",
+      "dlc": 5,
+      "cycle_ms": 20,
+      "is_diagnostic": false,
+      "signals": [
+        {
+          "name": "Yaw rate",
+          "start_bit": 31,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.2,
+          "offset": -6553.4,
+          "unit": "°/s",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Lateral acceleration",
+          "start_bit": 15,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 0.004,
+          "offset": -131.068,
+          "unit": "g",
+          "inferred_width": false,
+          "choices": null
+        },
+        {
+          "name": "Computed longitudinal acceleration",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.05,
+          "offset": -10.0,
+          "unit": "m/s2",
+          "inferred_width": true,
+          "choices": null
+        }
+      ]
+    }
+  ]
+}

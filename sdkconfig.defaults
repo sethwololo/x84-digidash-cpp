@@ -1,0 +1,42 @@
+# ESP32-P4 rev 1.x at 360 MHz
+CONFIG_IDF_TARGET="esp32p4"
+CONFIG_ESP32P4_SELECTS_REV_LESS_V3=y
+CONFIG_ESP32P4_REV_MIN_100=y
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_360=y
+
+# 16 MB flash with our partition table (partitions.csv)
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# PSRAM holds the frame buffers and, with XIP, the code; a bigger L2 cache with longer lines speeds both up
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_SPEED_200M=y
+CONFIG_SPIRAM_XIP_FROM_PSRAM=y
+CONFIG_CACHE_L2_CACHE_256KB=y
+CONFIG_CACHE_L2_CACHE_LINE_128B=y
+
+CONFIG_COMPILER_OPTIMIZATION_PERF=y
+# 1 ms ticks: precise LVGL timers
+CONFIG_FREERTOS_HZ=1000
+
+# Waveshare BSP: the 8.8" 480x1920 OTA7290B panel (the default is the 10.1" one), RGB565, 3 frame buffers
+# (needed by the adapter's triple partial mode with rotation)
+CONFIG_BSP_LCD_TYPE_480_1920_8_8_INCH_A=y
+CONFIG_BSP_LCD_COLOR_FORMAT_RGB565=y
+CONFIG_BSP_LCD_DPI_BUFFER_NUMS=3
+
+# LVGL
+CONFIG_LV_COLOR_DEPTH_16=y
+CONFIG_LV_OS_FREERTOS=y
+CONFIG_LV_USE_CLIB_MALLOC=y
+CONFIG_LV_USE_CLIB_STRING=y
+CONFIG_LV_USE_CLIB_SPRINTF=y
+# A frame every 15 ms at most (about 66 fps)
+CONFIG_LV_DEF_REFR_PERIOD=15
+CONFIG_LV_OBJ_STYLE_CACHE=y
+# PPA for fills and blends; the adapter's README asks for a single software draw unit with it
+CONFIG_LV_USE_PPA=y
+CONFIG_LV_DRAW_SW_DRAW_UNIT_CNT=1
+# The PPA reads and writes draw buffers through the cache: they must be aligned to its 128 B lines
+CONFIG_LV_DRAW_BUF_ALIGN=128

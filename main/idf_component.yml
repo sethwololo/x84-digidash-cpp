@@ -1,0 +1,6 @@
+dependencies:
+  idf: ">=6.0"
+  # Waveshare board support: display (OTA7290B over MIPI-DSI), backlight, I2C, LVGL integration.
+  waveshare/esp32_p4_platform: "^2.0.1"
+  # 9.5: has the fixes of the PPA renderer; 9.6 deprecates the headers esp_lvgl_adapter 0.6 still includes.
+  lvgl/lvgl: "~9.5"
