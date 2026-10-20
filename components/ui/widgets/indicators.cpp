@@ -22,78 +22,67 @@ void IconChip::set(x84::Lamp lamp, lv_color_t color, bool blink_on)
     set_text_color(label_, shown ? color : theme::palette().border);
 }
 
-Door::Door(lv_obj_t *parent, lv_point_precise_t closed_from, lv_point_precise_t closed_to, lv_point_precise_t open_from,
-           lv_point_precise_t open_to)
-    : closed_{closed_from, closed_to}, open_{open_from, open_to}
-{
-    line_ = lv_line_create(parent);
-    lv_line_set_points(line_, closed_, 2);
-    lv_obj_set_style_line_width(line_, 3, 0);
-    lv_obj_set_style_line_rounded(line_, true, 0);
-    lv_obj_set_style_line_color(line_, theme::palette().value, 0);
-}
-
-void Door::set(bool open)
-{
-    if (open == is_open_) return;
-    is_open_ = open;
-    lv_line_set_points(line_, open ? open_ : closed_, 2);
-    lv_obj_set_style_line_color(line_, open ? theme::palette().fault : theme::palette().value, 0);
-}
-
 namespace {
 
-// Where things are in the car drawing (176x176 inside the box's 1 px outline): the sides of the body at the doors,
-// and the doors' extent along them. Doors hinge at their front end and swing out by about 35 degrees.
-constexpr float LEFT = 44;
-constexpr float RIGHT = 132;
-constexpr float FRONT_DOOR = 72;
-constexpr float REAR_DOOR = 100;
-constexpr float REAR_DOOR_END = 124;
-constexpr float SWING_OUT = 0.57f;  // sin 35
-constexpr float SWING_BACK = 0.82f; // cos 35
+// The diagram is drawn for 154 px and scaled to the 178 px box.
+constexpr float K = 178.0f / 154.0f;
 
-lv_point_precise_t point(float x, float y)
+int32_t scaled(float px)
 {
-    return {static_cast<lv_value_precise_t>(x), static_cast<lv_value_precise_t>(y)};
+    return static_cast<int32_t>(std::lround(px * K));
 }
 
-// A door on the left (side -1) or right (side 1) side, from `from` to `to` along it.
-Door side_door(lv_obj_t *box, int side, float from, float to)
+// The car's outline in the 154 px drawing: centered, rounded corners. The windows and the trunk lid fill the width
+// between the corners' curves.
+constexpr float CAR_WIDTH = 72;
+constexpr float CAR_HEIGHT = 140;
+constexpr float CAR_RADIUS = 14;
+constexpr float CAR_X = (154 - CAR_WIDTH) / 2;
+constexpr float CAR_Y = 7;
+constexpr float WINDOW_MARGIN = 9; // windshield and rear window lines, from the sides
+
+// A door or the trunk at (x, y) from the car's outline: outlined, filled in the fault color when open. Doors stick
+// out of the car, so they are drawn over it rather than inside it (LVGL clips children to their parent).
+lv_obj_t *opening(lv_obj_t *box, float x, float y, float width, float height)
 {
-    const float x = side < 0 ? LEFT : RIGHT;
-    const float length = to - from - 2;
-    return Door(box, point(x, from + 1), point(x, to - 1), point(x, from + 1),
-                point(x + side * length * SWING_OUT, from + 1 + length * SWING_BACK));
+    lv_obj_t *door = outline(box, scaled(CAR_X + x) - 1, scaled(CAR_Y + y) - 1, scaled(width), scaled(height), theme::palette().label);
+    lv_obj_set_style_bg_opa(door, LV_OPA_COVER, 0);
+    lv_obj_set_style_bg_color(door, theme::palette().background, 0);
+    return door;
 }
 
-lv_obj_t *diagram_box(lv_obj_t *parent, int32_t x, int32_t y)
+void show_open(lv_obj_t *door, bool open)
 {
-    lv_obj_t *box = outline(parent, x, y, 178, 178, theme::palette().border);
-    image(box, &img_car_top, theme::palette().label, 0, 0);
-    return box;
+    set_border_color(door, open ? theme::palette().fault : theme::palette().label);
+    set_fill_color(door, open ? theme::palette().fault : theme::palette().background);
 }
 
 } // namespace
 
 DoorDiagram::DoorDiagram(lv_obj_t *parent, int32_t x, int32_t y)
-    : box_(diagram_box(parent, x, y)),
-      front_left_(side_door(box_, -1, FRONT_DOOR, REAR_DOOR)),
-      front_right_(side_door(box_, 1, FRONT_DOOR, REAR_DOOR)),
-      rear_left_(side_door(box_, -1, REAR_DOOR, REAR_DOOR_END)),
-      rear_right_(side_door(box_, 1, REAR_DOOR, REAR_DOOR_END)),
-      // The trunk lid's rear edge; open, it shows lifted, a little further back.
-      trunk_(box_, point(66, 152), point(110, 152), point(66, 160), point(110, 160))
 {
+    lv_obj_t *frame = outline(parent, x, y, 178, 178, theme::palette().border);
+    lv_obj_t *car = outline(frame, scaled(CAR_X) - 1, scaled(CAR_Y) - 1, scaled(CAR_WIDTH), scaled(CAR_HEIGHT),
+                            theme::palette().label);
+    lv_obj_set_style_radius(car, scaled(CAR_RADIUS), 0);
+    const float window_width = CAR_WIDTH - 2 * WINDOW_MARGIN;
+    fill(car, scaled(WINDOW_MARGIN) - 1, scaled(37) - 1, scaled(window_width), 1, theme::palette().border); // windshield
+    fill(car, scaled(WINDOW_MARGIN) - 1, scaled(101) - 1, scaled(window_width), 1, theme::palette().border); // rear window
+    // Doors straddle the sides; the trunk lid sits on the rear edge, across the straight part between the corners.
+    front_left_ = opening(frame, -3, 41, 6, 26);
+    front_right_ = opening(frame, CAR_WIDTH - 3, 41, 6, 26);
+    rear_left_ = opening(frame, -3, 71, 6, 26);
+    rear_right_ = opening(frame, CAR_WIDTH - 3, 71, 6, 26);
+    trunk_ = opening(frame, CAR_RADIUS, CAR_HEIGHT - 3, CAR_WIDTH - 2 * CAR_RADIUS, 6);
 }
 
 void DoorDiagram::set(const x84::Doors &doors)
 {
-    front_left_.set(doors.front_left);
-    front_right_.set(doors.front_right);
-    rear_left_.set(doors.rear_left);
-    rear_right_.set(doors.rear_right);
-    trunk_.set(doors.trunk);
+    show_open(front_left_, doors.front_left);
+    show_open(front_right_, doors.front_right);
+    show_open(rear_left_, doors.rear_left);
+    show_open(rear_right_, doors.rear_right);
+    show_open(trunk_, doors.trunk);
 }
 
 TurnSignal::TurnSignal(lv_obj_t *parent, int32_t x, int32_t y, bool right)
