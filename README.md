@@ -60,6 +60,8 @@ cmake --build components/x84_can/test/build && components/x84_can/test/build/x84
 - **Uma imagem nova:** o SVG em `assets/images/`, depois `cd tools && npm install && node images.mjs`, e declarar em
   `components/ui/images.h`.
 - **Mover algo na tela:** as posições estão no topo de cada arquivo de `panels/`, como constantes com nome.
+- **Arquivo novo** (`.cpp`, fonte ou imagem): os `CMakeLists.txt` acham os arquivos por pasta, mas só ao configurar.
+  Depois de criar um, rode `./idf.sh reconfigure build` (e `cmake -S sim -B sim/build` para o simulador).
 - Antes de gravar, confira no simulador: `cmake --build sim/build && sim/build/dashboard-sim --screenshot out.png 2`.
 
 ## Editor
