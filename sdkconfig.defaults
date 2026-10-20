@@ -35,8 +35,9 @@ CONFIG_LV_USE_CLIB_SPRINTF=y
 # A frame every 15 ms at most (about 66 fps)
 CONFIG_LV_DEF_REFR_PERIOD=15
 CONFIG_LV_OBJ_STYLE_CACHE=y
-# PPA for fills and blends; the adapter's README asks for a single software draw unit with it
-CONFIG_LV_USE_PPA=y
+# No PPA draw unit: it runs beside the software one and syncs the cache in whole 128 B lines, so it erased pixels
+# the software unit was drawing next to its fills (pieces of glyphs went missing on the panel, never in the simulator)
+CONFIG_LV_USE_PPA=n
 CONFIG_LV_DRAW_SW_DRAW_UNIT_CNT=1
-# The PPA reads and writes draw buffers through the cache: they must be aligned to its 128 B lines
+# The adapter rotates the finished buffers with the PPA: align them to the cache's 128 B lines
 CONFIG_LV_DRAW_BUF_ALIGN=128

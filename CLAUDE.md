@@ -23,14 +23,14 @@ estrutura: `README.md`.
   Slint) e posiciona pela linha de base lida da fonte; `ui::center_text` idem para texto centralizado.
 - **Filhos são recortados pelo pai,** mesmo com `LV_OBJ_FLAG_OVERFLOW_VISIBLE` (só estende ao `ext_draw_size`): o
   que sai de um contorno (portas, listras de perigo) é desenhado ao lado, não dentro.
-- **Fontes por tamanho e conjunto de glifos:** `tools/fonts.sh`. Texto com ASCII + maiúsculas acentuadas + `°` e
-  `·`; 80/190 px só dígitos (o de 190 px completo custaria ~1,5 MB).
+- **Fontes por tamanho e conjunto de glifos:** `tools/fonts.sh` (Nordwand Mono). Texto com ASCII + maiúsculas
+  acentuadas + `°` (a Nordwand não tem `·`); 80/190 px só dígitos (o de 190 px completo custaria ~1,5 MB).
 - **Imagens A8** (`tools/images.mjs`): só opacidade, a cor vem de `image_recolor` (`ui::image`).
-- **Dois aceleradores PPA:** o do LVGL (`CONFIG_LV_USE_PPA`, alinhado aos 128 B do cache) fica ligado; o do
-  `esp_lvgl_adapter` (`enable_ppa_accel`) desalinha buffers e aborta: desligado. A rotação de 90° usa o PPA à
-  parte. Com o PPA do LVGL, `LV_DRAW_SW_DRAW_UNIT_CNT=1` e `LV_DRAW_BUF_ALIGN=128`.
-- **Versões:** LVGL fixo em 9.5 (`main/idf_component.yml`); a 9.6 deprecia headers que o adapter 0.6 inclui. O
-  `CMakeLists.txt` raiz dá ao `esp_lv_decoder` (puxado pelo BSP) a dependência do PPA que falta.
+- **Desenho só por software:** o PPA do LVGL (`CONFIG_LV_USE_PPA`) roda ao lado da unidade de software e
+  sincroniza o cache em linhas inteiras de 128 B, apagando pixels que ela desenhava ao lado (pedaços de letras
+  sumiam na placa, nunca no simulador): desligado. O do `esp_lvgl_adapter` (`enable_ppa_accel`) desalinha buffers
+  e aborta: desligado. Só a rotação de 90° usa o PPA, sobre buffers prontos (`LV_DRAW_BUF_ALIGN=128`).
+- **Versões:** LVGL fixo em 9.5 (`main/idf_component.yml`); a 9.6 deprecia headers que o adapter 0.6 inclui.
 - **Display:** o BSP só cria o painel (`bsp_display_new`); `display.cpp` registra no adapter (o
   `bsp_display_start` desliga o PPA). Modo `TRIPLE_PARTIAL` com rotação: 3 framebuffers
   (`CONFIG_BSP_LCD_DPI_BUFFER_NUMS=3`).

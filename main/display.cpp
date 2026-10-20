@@ -36,8 +36,8 @@ lv_display_t *start()
     esp_lv_adapter_display_config_t config =
         ESP_LV_ADAPTER_DISPLAY_MIPI_DEFAULT_CONFIG(panel, io, BSP_LCD_H_RES, BSP_LCD_V_RES, ROTATION);
     config.tear_avoid_mode = TEAR_AVOID;
-    // LVGL's own PPA renderer (CONFIG_LV_USE_PPA) accelerates fills and blends. The adapter has another one, which
-    // does not align its buffers to the P4's 128 B cache lines and aborts: keep it off. Rotation uses the PPA anyway.
+    // Drawing is software only (see CONFIG_LV_USE_PPA in sdkconfig.defaults). The adapter's PPA drawing does not
+    // align its buffers to the P4's 128 B cache lines and aborts: keep it off. Rotation uses the PPA anyway.
     config.profile.enable_ppa_accel = false;
     config.profile.use_psram = true;
     lv_display_t *display = esp_lv_adapter_register_display(&config);
