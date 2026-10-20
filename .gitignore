@@ -3,5 +3,6 @@ managed_components/
 sdkconfig
 sdkconfig.old
 .cache/
-.vscode/
 tools/node_modules/
+sim/build/
+.vscode/
