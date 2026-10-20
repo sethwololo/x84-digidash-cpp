@@ -34,18 +34,18 @@ inline const Palette DARK{
     .service = lv_color_hex(0xfd9a00),
 };
 
-// By day: dark on white, readable in sunlight at full backlight. The accents are the same hues, fully saturated
+// By day: dark on light gray, readable in sunlight at full backlight. The accents are the same hues, fully saturated
 // (one channel full, one off) so they stay apart from each other on the panel. Darker shades score better on paper
-// but blur into the same brown-black there; the contrast against white is noted.
+// but blur into the same brown-black there; the contrast against the background is noted.
 inline const Palette LIGHT{
-    .background = lv_color_hex(0xffffff),
+    .background = lv_color_hex(0xe6e6e6), // a light gray: the accents look more saturated than on white
     .value = lv_color_hex(0x000000),
     .label = lv_color_hex(0x5f5f5f),
-    .border = lv_color_hex(0xa8a8a8),
-    .fault = lv_color_hex(0xff0000),     // 4.0:1
-    .high_beam = lv_color_hex(0x0020ff), // 7.9:1
-    .signal = lv_color_hex(0x00a800),    // 3.2:1
-    .service = lv_color_hex(0xff6a00),   // 2.9:1, further from the red
+    .border = lv_color_hex(0x969696),
+    .fault = lv_color_hex(0xff0000),     // 3.2:1
+    .high_beam = lv_color_hex(0x0020ff), // 6.3:1
+    .signal = lv_color_hex(0x00a800),    // 2.5:1
+    .service = lv_color_hex(0xff6a00),   // 2.3:1, further from the red
 };
 
 // The palette in use. Dashboard switches it, and rebuilds the screen with it, when day turns to night.
