@@ -1,0 +1,2 @@
+# The simulated data of the bench (CONFIG_X84_SIMULATION), layered over sdkconfig.defaults: see README.md.
+CONFIG_X84_SIMULATION=y

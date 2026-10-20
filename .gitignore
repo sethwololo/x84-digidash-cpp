@@ -7,3 +7,4 @@ tools/node_modules/
 sim/build/
 .vscode/
 components/x84_can/test/build/
+build-sim/

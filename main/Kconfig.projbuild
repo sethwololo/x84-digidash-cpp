@@ -1,0 +1,11 @@
+menu "x84-digidash"
+
+    config X84_SIMULATION
+        bool "Simulated data instead of the CAN bus"
+        default n
+        help
+            Shows the three scenarios of the design, alternating every 12 s, with RPM and speed changing on every
+            frame (the worst case to render), instead of reading the car. For the bench: without the car, the CAN
+            bus shows "--" and "SEM CAN". sdkconfig.simulation turns it on (see README.md).
+
+endmenu
