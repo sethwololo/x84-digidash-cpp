@@ -1,0 +1,11 @@
+# The editor's C++ checker (clangd) reads build/compile_commands.json, which carries GCC flags for the ESP32-P4 that
+# clang does not know: drop them so it only reports real problems.
+CompileFlags:
+  CompilationDatabase: build
+  Remove: [-f*, -m*]
+---
+# Headers here are C++ (the generated ones in fonts/ and images/ are .c).
+If:
+  PathMatch: .*\.h
+CompileFlags:
+  Add: [-xc++, -std=gnu++20]
