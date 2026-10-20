@@ -22,6 +22,9 @@ namespace {
 constexpr int32_t STRIPES_OUT_X = 1;
 constexpr int32_t STRIPES_OUT_Y = 5;
 constexpr int32_t STRIPES_SIZE = 14;
+// The label's text ends this far from the frame's right edge, clear of the stripes in the corner. Its backing still
+// reaches the edge, hiding what is under it; the stripes are drawn over it.
+constexpr int32_t LABEL_INSET = STRIPES_SIZE - STRIPES_OUT_X + 6;
 
 } // namespace
 
@@ -33,13 +36,13 @@ AlertFrame::AlertFrame(lv_obj_t *parent, int32_t x, int32_t y, int32_t width, in
     image(group_, &img_hazard, theme::palette().fault, 0, 0);
     image(group_, &img_hazard, theme::palette().fault, width + 2 * STRIPES_OUT_X - STRIPES_SIZE, height + 2 * STRIPES_OUT_Y - STRIPES_SIZE);
     if (label) {
-        // A black backing keeps the label readable over a bar that is also red, and hides what is under it.
+        // A backing in the background color keeps the label readable over a bar that is also red, and hides what is under it.
         lv_obj_t *tag = spaced(text(frame, theme::TEXT_LABEL_BOLD, theme::palette().fault, 0, 0, label), theme::SPACING_LABEL);
         lv_obj_set_style_bg_opa(tag, LV_OPA_COVER, 0);
         lv_obj_set_style_bg_color(tag, theme::palette().background, 0);
         lv_obj_set_style_pad_left(tag, 3, 0);
-        lv_obj_set_style_pad_right(tag, 1, 0);
-        lv_obj_align(tag, LV_ALIGN_BOTTOM_RIGHT, -3, -2);
+        lv_obj_set_style_pad_right(tag, LABEL_INSET - 2, 0);
+        lv_obj_align(tag, LV_ALIGN_BOTTOM_RIGHT, -1, -2);
     }
     lv_obj_add_flag(group_, LV_OBJ_FLAG_HIDDEN);
 }
