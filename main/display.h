@@ -17,6 +17,9 @@ lv_display_t *start();
 // 0 to 100 %.
 void set_brightness(int percent);
 
+// Logs, every second, the frames drawn and how long each took (render, rotation and copy to the panel).
+void log_frame_rate(lv_display_t *display);
+
 // LVGL is not thread safe: hold this lock around any lv_* call made outside LVGL's own task (its timers and
 // event callbacks already run with it held).
 class Lock {

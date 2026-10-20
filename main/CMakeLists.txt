@@ -1,5 +1,5 @@
 idf_component_register(
-    SRCS "main.cpp" "display.cpp" "benchmark.cpp"
+    SRCS "main.cpp" "display.cpp"
     INCLUDE_DIRS "."
     REQUIRES ui esp_timer
 )
