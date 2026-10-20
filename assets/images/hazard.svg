@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+<!-- Hazard stripes, as the CSS repeating-linear-gradient(45deg, color 0 3px, transparent 3px 6px) -->
+<defs><clipPath id="c"><rect width="14" height="14"/></clipPath></defs>
+<path clip-path="url(#c)" stroke="#ffffff" stroke-width="3" d="M-31.88 -20 L28.12 40 M-23.39 -20 L36.61 40 M-14.91 -20 L45.09 40 M-6.42 -20 L53.58 40"/>
+</svg>

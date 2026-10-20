@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "description": "Asset converters for the dashboard: run `npm install` here once, then the scripts in this folder.",
+  "type": "module",
+  "dependencies": {
+    "@resvg/resvg-js": "2.6.2"
+  }
+}
