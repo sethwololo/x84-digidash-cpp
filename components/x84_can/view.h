@@ -113,7 +113,10 @@ struct View {
     bool clutch_pressed = false;    // for GearDebounce
     Cruise cruise;
     Lamps lamps;
-    int backlight_percent = 100;    // 100 by day; at night (position lights on), the cluster's night dimmer
+    // Low or high beam on (the car's own lamps, not the lamp self-test): the backlight dims and the dashboard
+    // takes its dark theme. Off or position lamps: full backlight and the light theme.
+    bool night = false;
+    int backlight_percent = 100;
     std::optional<uint16_t> distance_counter; // 0x354 rolling distance counter (0.1 m), for the trip
     std::optional<uint8_t> fuel_counter;      // 0x551 rolling fuel counter (80 mm³), for the trip
     bool trip_button = false;       // the trip computer button is pressed (either direction)

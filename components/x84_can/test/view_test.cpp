@@ -406,17 +406,29 @@ TEST_CASE("gear debounce shows a held clutch, and neutral after the release")
     CHECK(debounce.update(NEUTRAL, false, 2300) == NEUTRAL);
 }
 
-TEST_CASE("backlight")
+TEST_CASE("night and backlight follow the headlights")
 {
-    const auto backlight = [](bool position_lamps, int permille) {
+    const auto lights = [](bool position, bool low, bool high, bool self_test = false) {
         Frames frames;
-        frames.cluster_general_status_2 = cluster2(SeatBeltLamp::off, position_lamps, permille);
-        return view(frames).backlight_percent;
+        frames.upc_general_status = power();
+        frames.upc_general_status->position_lamps = position;
+        frames.upc_general_status->low_beam = low;
+        frames.upc_general_status->high_beam = high;
+        if (self_test) {
+            frames.cluster_general_status = cluster();
+            frames.cluster_general_status->lamp_self_test = true;
+        }
+        const View v = view(frames);
+        return std::pair(v.night, v.backlight_percent);
     };
-    CHECK(backlight(false, 400) == 100);
-    CHECK(backlight(true, 400) == 40);
-    CHECK(backlight(true, 1020) == 100);
-    CHECK(backlight(true, 0) == 10);
+    // Off or position lamps: day.
+    CHECK(lights(false, false, false) == std::pair(false, 100));
+    CHECK(lights(true, false, false) == std::pair(false, 100));
+    // Low or high beam: night.
+    CHECK(lights(true, true, false) == std::pair(true, 70));
+    CHECK(lights(false, false, true) == std::pair(true, 70));
+    // The lamp self-test lights the high beam on screen, but it is still day.
+    CHECK(lights(false, false, false, true) == std::pair(false, 100));
     CHECK(view(Frames{}).backlight_percent == 100);
 }
 

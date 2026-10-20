@@ -7,8 +7,6 @@ namespace ui {
 namespace {
 
 constexpr uint32_t SCENARIO_MS = 12000;
-// Backlight on the bench: the car's day/night signals are not there.
-constexpr int BACKLIGHT_PERCENT = 85;
 
 // Per scenario: normal driving, high-RPM warning, low fuel.
 constexpr int OUTSIDE_TEMP_C[] = {18, 24, 9};
@@ -67,7 +65,6 @@ Screen Simulation::screen(uint32_t now_ms)
     if (warning) view.notice = x84::Notice::severe_injection_fault;
     if (low_fuel) view.notice = x84::Notice::card_battery_low;
     view.odometer_km = 187412;
-    view.backlight_percent = BACKLIGHT_PERCENT;
     if (normal) {
         view.cruise.mode = x84::CruiseMode::limiter;
         view.cruise.set_speed_kmh = 118;
@@ -78,6 +75,9 @@ Screen Simulation::screen(uint32_t now_ms)
 
     x84::Lamps &lamps = view.lamps;
     lamps.headlights = normal ? x84::Headlights::low_beam : warning ? x84::Headlights::high_beam : x84::Headlights::position;
+    // As the car does (view.cpp): night, with a dimmer backlight, with the low or high beam on.
+    view.night = !low_fuel;
+    view.backlight_percent = view.night ? 70 : 100;
     lamps.stop = lamp(warning);
     lamps.engine = lamp(warning);
     lamps.airbag = lamp(warning);

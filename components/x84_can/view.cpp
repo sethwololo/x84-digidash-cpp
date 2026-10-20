@@ -26,9 +26,9 @@ constexpr uint32_t GEAR_NONE_DEBOUNCE_MS = 400;
 // With the clutch pressed, a lost gear or neutral is a shift in progress: the last gear stays on screen this long.
 // 400 ms was shorter than a calm shift in the car, which flashed "-" and "N".
 constexpr uint32_t GEAR_SHIFT_HOLD_MS = 1500;
-// Backlight at night, when the dimmer asks for less. Not in the CAN descriptions: a floor so that the dimmer at its
-// minimum does not turn the dashboard off.
-constexpr int NIGHT_MIN_BACKLIGHT_PERCENT = 10;
+// Backlight with the low or high beam on. The cluster's night dimmer (0x645) did not follow the rheostat in the
+// car, so the headlights decide.
+constexpr int NIGHT_BACKLIGHT_PERCENT = 70;
 
 // Affichage informations VSC. Empty for 00000 = pas d'affichage, the reserved and undocumented values, 01111 = boite
 // de vitesse sur P ou N (automatic gearbox only) and 11100 = Extinction totale IHM- TdB.
@@ -137,13 +137,10 @@ View view(const Frames &f)
         v.distance_counter = brake->distance_decimeters;
     }
     std::optional<int> displayed_speed;
-    std::optional<int> night_dimmer_permille;
     // The belt lamp: as the original cluster shows it (0x645), else from the belt switches (0x651).
     SeatBeltLamp cluster_belt = SeatBeltLamp::off;
     if (const auto &cluster = f.cluster_general_status_2) {
         displayed_speed = cluster->displayed_speed_centi_kmh;
-        // The cluster dims with the position lights on, not with the light sensor's day/night.
-        if (cluster->position_lamps) night_dimmer_permille = cluster->night_dimmer_permille;
         cluster_belt = cluster->seat_belt_lamp;
     }
     if (displayed_speed) v.speed_kmh = *displayed_speed / 100;
@@ -279,9 +276,9 @@ View view(const Frames &f)
         v.gear = forward_gear(engine->engine_speed_rpm, *wheel_speed);
     }
 
-    if (night_dimmer_permille) {
-        v.backlight_percent = std::max(std::min(*night_dimmer_permille / 10, 100), NIGHT_MIN_BACKLIGHT_PERCENT);
-    }
+    // From the lamps the car switched on, before the self-test below lights them all.
+    v.night = v.lamps.headlights == Headlights::low_beam || v.lamps.headlights == Headlights::high_beam;
+    v.backlight_percent = v.night ? NIGHT_BACKLIGHT_PERCENT : 100;
 
     // The original cluster tests its lamps: light them all, in step with it.
     if (self_test) {
