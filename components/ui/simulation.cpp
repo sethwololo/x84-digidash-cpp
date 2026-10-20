@@ -41,7 +41,9 @@ Screen Simulation::screen(uint32_t now_ms)
     const float speed = 100.0f + 90.0f * std::sin(t * 0.3f);
     trip_km_ += speed * dt / 3600.0f;
 
-    const int scenario = pinned_ ? *pinned_ : static_cast<int>((now_ms - *start_ms_) / SCENARIO_MS) % SCENARIOS;
+    const uint32_t round = (now_ms - *start_ms_) / SCENARIO_MS;
+    const int scenario = pinned_ ? *pinned_ : static_cast<int>(round % SCENARIOS);
+    const bool night = pinned_ ? pinned_night_ : round / SCENARIOS % 2 == 0;
     const bool normal = scenario == 0;
     const bool warning = scenario == 1;
     const bool low_fuel = scenario == 2;
@@ -74,9 +76,9 @@ Screen Simulation::screen(uint32_t now_ms)
     view.doors.trunk = low_fuel;
 
     x84::Lamps &lamps = view.lamps;
-    lamps.headlights = normal ? x84::Headlights::low_beam : warning ? x84::Headlights::high_beam : x84::Headlights::position;
-    // As the car does (view.cpp): night, with a dimmer backlight, with the low or high beam on.
-    view.night = !low_fuel;
+    // As the car does (view.cpp): night, with a dimmer backlight, when the low or high beam is on.
+    lamps.headlights = !night ? x84::Headlights::position : warning ? x84::Headlights::high_beam : x84::Headlights::low_beam;
+    view.night = night;
     view.backlight_percent = view.night ? 70 : 100;
     lamps.stop = lamp(warning);
     lamps.engine = lamp(warning);

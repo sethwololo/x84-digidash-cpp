@@ -2,6 +2,7 @@
 //
 //   dashboard-sim                          a 1920x480 window (--zoom 0.75 to make it smaller)
 //   dashboard-sim --screenshot out.png 1   scenario 1 (0 normal, 1 warning, 2 low fuel) to out.png
+//   dashboard-sim --screenshot out.png 1 light   the same by day, in the light theme
 
 #include <SDL.h>
 
@@ -30,7 +31,7 @@ uint32_t ticks()
 }
 
 // One frame rendered off screen, like on the board, then written as PNG.
-int screenshot(const char *path, int scenario)
+int screenshot(const char *path, int scenario, bool night)
 {
     static std::vector<uint16_t> pixels(W * H);
     lv_display_t *display = lv_display_create(W, H);
@@ -39,7 +40,7 @@ int screenshot(const char *path, int scenario)
 
     ui::Dashboard dashboard;
     ui::Simulation simulation;
-    simulation.pin(scenario);
+    simulation.pin(scenario, night);
     dashboard.show(simulation.screen(0));
     lv_refr_now(display);
 
@@ -55,7 +56,7 @@ int screenshot(const char *path, int scenario)
         std::fprintf(stderr, "could not write %s\n", path);
         return 1;
     }
-    std::printf("%s: %dx%d, scenario %d\n", path, W, H, scenario);
+    std::printf("%s: %dx%d, scenario %d, %s\n", path, W, H, scenario, night ? "night" : "day");
     return 0;
 }
 
@@ -81,7 +82,7 @@ int main(int argc, char **argv)
     lv_tick_set_cb(ticks);
 
     if (argc >= 3 && std::strcmp(argv[1], "--screenshot") == 0) {
-        return screenshot(argv[2], argc >= 4 ? std::atoi(argv[3]) : 0);
+        return screenshot(argv[2], argc >= 4 ? std::atoi(argv[3]) : 0, !(argc >= 5 && std::strcmp(argv[4], "light") == 0));
     }
     float zoom = 1.0f;
     if (argc >= 3 && std::strcmp(argv[1], "--zoom") == 0) zoom = std::strtof(argv[2], nullptr);

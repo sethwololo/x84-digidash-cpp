@@ -15,7 +15,7 @@ Tudo pelo `./idf.sh`, que carrega o ESP-IDF 6.0.2 e chama o `idf.py`:
 ```
 
 Na bancada, sem o carro, a tela mostra `--` e "SEM CAN". Para ver os dados simulados (os três cenários do design,
-alternando a cada 12 s), use a variante de simulação, que compila em `build-sim/`:
+alternando a cada 12 s; a cada volta pelos três, troca entre noite e dia, tema escuro e claro), use a variante de simulação, que compila em `build-sim/`:
 
 ```sh
 ./idf.sh -B build-sim -D SDKCONFIG=build-sim/sdkconfig -D "SDKCONFIG_DEFAULTS=sdkconfig.defaults;sdkconfig.simulation" build flash
@@ -27,6 +27,7 @@ No Mac, sem a placa:
 cmake -S sim -B sim/build && cmake --build sim/build      # simulador (precisa do SDL2: brew install sdl2)
 sim/build/dashboard-sim                                    # janela com a simulação
 sim/build/dashboard-sim --screenshot out.png 1             # cenário 1 (0 normal, 1 alerta, 2 combustível) em PNG
+sim/build/dashboard-sim --screenshot out.png 1 light       # o mesmo de dia, no tema claro
 
 cmake -S components/x84_can/test -B components/x84_can/test/build
 cmake --build components/x84_can/test/build && components/x84_can/test/build/x84_can_test   # testes do CAN
