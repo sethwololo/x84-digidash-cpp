@@ -13,6 +13,7 @@ estrutura: `README.pt-BR.md` (em inglês: `README.md`).
 - Só `components/ui` chama o LVGL; o firmware entrega um `ui::Screen` ao `Dashboard::show` a cada 10 ms, dentro da
   task do LVGL (um `lv_timer`). Fora dela, segure `display::Lock`.
 - Commits pequenos e coesos, um assunto cada, com o porquê na mensagem.
+- O README avisa que o código foi feito com assistência de IA; mantenha o aviso nas duas línguas.
 
 ## Armadilhas
 
@@ -22,7 +23,8 @@ estrutura: `README.pt-BR.md` (em inglês: `README.md`).
   só dígitos, tem 58 px de linha). `ui::text` recebe o topo da caixa de 1,3 em do design (as coordenadas do
   Slint) e posiciona pela linha de base lida da fonte; `ui::center_text` idem para texto centralizado.
 - **Filhos são recortados pelo pai,** mesmo com `LV_OBJ_FLAG_OVERFLOW_VISIBLE` (só estende ao `ext_draw_size`): o
-  que sai de um contorno (portas, listras de perigo) é desenhado ao lado, não dentro.
+  que sai de um contorno (as portas do carro) é desenhado ao lado, não dentro. As listras de perigo (10x10) ficam
+  dentro da borda da moldura de alerta, e o rótulo dela (RESERVA) termina antes delas.
 - **Fontes por tamanho e conjunto de glifos:** `tools/fonts.sh` (Nordwand Mono). Texto com ASCII + maiúsculas
   acentuadas + `°` (a Nordwand não tem `·`); 80/190 px só dígitos (o de 190 px completo custaria ~1,5 MB).
 - **Imagens A8** (`tools/images.mjs`): só opacidade, a cor vem de `image_recolor` (`ui::image`).
@@ -47,15 +49,21 @@ estrutura: `README.pt-BR.md` (em inglês: `README.md`).
   painel original (`0x645`) não acompanhou no carro e não é usado.
 - `theme.h` tem as duas paletas (`DARK`, `LIGHT`) com os mesmos papéis de cor; os widgets leem
   `theme::palette()`. Na troca, `Dashboard` reconstrói a tela inteira na outra paleta.
+- Paleta clara: fundo cinza-claro (`#e6e6e6`) e acentos saturados (um canal cheio, outro zerado). Tons escuros, que
+  dão mais contraste no papel, viraram um marrom indistinto no painel; o contraste de cada um está anotado.
+- A simulação alterna noite e dia a cada volta pelos três cenários; `--screenshot out.png N light` captura de dia.
 
 ## Desempenho
 
 - Simulação de pior caso (RPM e velocidade mudando a cada quadro): 51 a 61 fps, 10 a 16 ms por quadro (render +
   rotação + cópia). O Rust/Slint fazia cerca de 30 fps no mesmo cenário.
 - Firmware: cerca de 0,9 MB (89 % da partição do app livre).
+- Medido sem ganho (não repetir): buffers de desenho na RAM interna em vez da PSRAM (os de 50 linhas já cabem no
+  cache L2) e `LV_ATTRIBUTE_FAST_MEM_USE_IRAM` (não compila no LVGL 9.5 e, contornado, não cabe na IRAM).
 
 ## Próximos passos
 
 1. Conferido no carro: mensagens do cabeçalho, marcha, cinto, trip (incluindo a gravação). Falta: polaridade da luz
-   de óleo, MOTOR e REG/LIM contra o painel original, o brilho e o tema pelos faróis.
+   de óleo, MOTOR e REG/LIM contra o painel original, o brilho e o tema pelos faróis, a legibilidade do tema
+   claro sob o sol.
 2. O log de FPS só aparece quando há o que redesenhar (tela parada não gera quadros).

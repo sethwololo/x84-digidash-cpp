@@ -117,6 +117,12 @@ compilador da placa, no VS Code acrescente às configurações do usuário
 Renault e Mégane são marcas da Renault. Este é um projeto independente, sem vínculo com a Renault nem aprovação
 dela.
 
+## Assistência de IA
+
+Este projeto foi codificado com assistência de IA (Claude, da Anthropic). O autor dirigiu o trabalho e o testa no
+carro, mas nem toda linha foi escrita ou revisada à mão: leia o código antes de confiar nele e, ao dirigir, não
+deixe de lado os avisos do painel original.
+
 ## Licença
 
 O código está sob a [licença MIT](LICENSE). Ficam fora dela:

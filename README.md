@@ -112,6 +112,12 @@ add `"clangd.arguments": ["--query-driver=**/riscv32-esp-elf-*"]` to your VS Cod
 Renault and Mégane are trademarks of Renault. This is an independent project, not affiliated with or endorsed by
 Renault.
 
+## AI assistance
+
+This project was coded with the assistance of AI (Claude, by Anthropic). The author directed the work and tests it
+in the car, but not every line was written or reviewed by hand: read the code before relying on it, and keep the
+original instrument cluster's warnings in mind while driving.
+
 ## License
 
 The code is under the [MIT License](LICENSE). Not covered by it:
