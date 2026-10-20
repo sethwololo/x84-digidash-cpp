@@ -1,8 +1,8 @@
 #pragma once
 
 // Trip distance and fuel, summed from the rolling counters of 0x354 (distance) and 0x551 (fuel injected), the
-// average consumption from both, and the reset by holding the trip computer button (0x60D "Demande de défilement
-// ADAC").
+// average consumption from both, and the reset by holding the trip computer button (0x60D "Trip computer scroll
+// request").
 
 #include <cstdint>
 #include <optional>
@@ -13,7 +13,7 @@ class Trip {
 public:
     // How long the button must be held to reset the trip.
     static constexpr uint32_t RESET_HOLD_MS = 2000;
-    // One step of the fuel counter (0x551 Consommation carburant), and one turn of it (256 steps, 20.48 mL).
+    // One step of the fuel counter (0x551 Fuel consumption), and one turn of it (256 steps, 20.48 mL).
     static constexpr uint32_t FUEL_UNIT_MM3 = 80;
     static constexpr uint32_t FUEL_TURN_MM3 = 256 * FUEL_UNIT_MM3;
 

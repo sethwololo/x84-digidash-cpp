@@ -113,19 +113,20 @@ constexpr Signal OIL_SERVICE_RANGE{47, 8};
 
 using Data = std::span<const uint8_t>;
 
-// Etats régulateur et limiteur de vitesse: 00 = RV et LV inactifs (OFF, en veille ou suspendu), 01 = reprise pédale,
-// 10 = régulation ou limitation active, 11 = réservé.
+// Cruise control and speed limiter states: 00 = cruise control and speed limiter inactive (OFF, standby or
+// suspended), 01 = pedal resume, 10 = regulation or limitation active, 11 = reserved.
 enum class CruiseState { inactive, pedal_override, active, reserved };
-// Point Mort: 00 = non atteinte, 01 = atteinte, 10 = véhicule non équipé, 11 = invalide.
+// Neutral: 00 = neutral position not reached, 01 = reached, 10 = vehicle not equipped, 11 = invalid.
 enum class NeutralSwitch { not_in_neutral, in_neutral, not_equipped, invalid };
-// Voyant état ABS: 00 = opérationnel ou non équipé (éteint), 01 = en défaut, 10 = absence de programmation,
-// 11 = en calibration (mode diagnostic).
+// ABS lamp state: 00 = ABS operational or vehicle not equipped (lamp off), 01 = ABS fault, 10 = ABS operational
+// (not programmed), 11 = ABS calibrating (diagnostic mode).
 enum class AbsLamp { off, fault, not_programmed, calibration };
-// Voyant défaut dépollution (0x551) and Etat témoin MIL (0x715): 00 = éteint, 01 = allumé permanent,
-// 10 = clignotant, 11 = autotest voyant.
+// Emissions fault lamp (0x551) and MIL lamp state (0x715): 00 = MIL lamp off, 01 = MIL lamp steady on,
+// 10 = MIL lamp blinking, 11 = lamp self-test.
 enum class MilLamp { off, on, blinking, self_test };
-// Affichage état RV/LV: 000 = régulateur et limiteur OFF, 001 = limiteur actif, 010 = (limiteur ON et inactif) ou
-// suspendu, 011 = limiteur demandé et en défaut, 100 to 110 the same for the régulateur, 111 = non présentes.
+// Cruise/limiter state display: 000 = cruise control and speed limiter OFF, 001 = limiter active, 010 = (limiter
+// ON and inactive) or suspended, 011 = limiter requested and faulty, 100 to 110 the same for the cruise control,
+// 111 = cruise control/limiter functions not present on the vehicle.
 enum class CruiseDisplay {
     off,
     limiter_active,
@@ -136,27 +137,28 @@ enum class CruiseDisplay {
     cruise_fault,
     not_equipped,
 };
-// Diagnostic jauge carburant: 00 = connexion OK, 01 = circuit ouvert, 10 = court-circuit, 11 = réservé.
+// Fuel gauge diagnostic: 00 = gauge connection OK, 01 = gauge open circuit, 10 = gauge short circuit, 11 = reserved.
 enum class FuelGauge { ok, open_circuit, short_circuit, reserved };
-// Défaut DAE: 00 = normal, 01 = défaut mineur -> Service, 10 = défaut majeur -> stop, 11 = mode diagnostic.
+// DAE fault: 00 = normal, 01 = DAE minor fault -> Service, 10 = DAE major fault -> stop, 11 = diagnostic mode.
 enum class SteeringFault { none, service, stop, diagnostic };
-// Etats Clignotants: 000 = aucun, 001 = gauche, 010 = droit, 011 = les deux; 111 = invalide, and the undocumented
-// 100 to 110.
+// Turn signal states: 000 = no turn signal active, 001 = left ON and right OFF, 010 = left OFF and right ON,
+// 011 = left ON and right ON; 111 = invalid, and the undocumented 100 to 110.
 enum class TurnSignals { off, left, right, both, invalid };
-// Défaillance verrouillage colonne ou UCH: 000 = pas de défaut, 001 = défaillance électronique UCH/STOP,
-// 010 = verrouillage non effectué (après coupure moteur), 100 = déverrouillage non effectué (avant démarrage),
-// 110 = défaillance électronique UCH/SERV; 011 and 111 = réservé, and the undocumented 101.
+// Column lock or UCH fault: 000 = no lock fault, 001 = UCH/STOP electronic failure, 010 = locking not done (after
+// engine stop), 100 = unlocking not done (before start), 110 = UCH/SERV electronic failure; 011 and 111 = reserved,
+// and the undocumented 101.
 enum class ColumnLockFault { none, stop, not_locked, not_unlocked, service, reserved };
-// Demande de défilement ADAC (trip computer button): 00 = pas d'appui, 01 = sens +, 10 = sens -, 11 = invalide.
+// Trip computer scroll request (its button): 00 = not pressed, 01 = scroll + direction, 10 = scroll - direction,
+// 11 = invalid.
 enum class ScrollRequest { none, forward, backward, invalid };
-// Etat voyant ceinture: 00 = éteint (ceinture mise), 01 = allumé, 10 = clignotant (V > 15 km/h et tempo < 10 s),
-// 11 = réservé.
+// Seat belt lamp state: 00 = lamp off (seat belt fastened), 01 = lamp on (seat belt not fastened), 10 = lamp
+// blinking (seat belt not fastened and V > 15 km/h and timer < 10 s), 11 = reserved.
 enum class SeatBeltLamp { off, on, blinking, reserved };
 
 // 0x181 ECM_TorqueControl (10 ms).
 struct EcmTorqueControl {
-    int engine_speed_rpm;              // Régime moteur, 0.125 rpm per unit, truncated to whole rpm
-    std::optional<bool> clutch_pressed; // Contact embrayage: 00 = pied non appuyé, 01 = appuyé
+    int engine_speed_rpm;              // Engine speed, 0.125 rpm per unit, truncated to whole rpm
+    std::optional<bool> clutch_pressed; // Clutch switch: 00 = foot not pressed, 01 = pressed
     static std::optional<EcmTorqueControl> decode(Data data);
 };
 
@@ -175,45 +177,46 @@ struct UpcFastFrame {
 // 0x354 Brake_GeneralData (40 ms).
 struct BrakeGeneralData {
     AbsLamp abs_lamp;
-    uint16_t distance_decimeters;  // Distance parcourue: rolling counter, 0.1 m per unit
-    uint16_t wheel_speed_centi_kmh; // Vitesse véhicule (moyenne roues avant), 0.01 km/h per unit
+    uint16_t distance_decimeters;  // Distance travelled: rolling counter, 0.1 m per unit
+    uint16_t wheel_speed_centi_kmh; // Vehicle speed (front wheel average), 0.01 km/h per unit
     static std::optional<BrakeGeneralData> decode(Data data);
 };
 
 // 0x35D UCH_SystemControl (100 ms). Always decodes: each signal is empty when the frame is too short for it.
 struct UchSystemControl {
-    // BrakePadWear (complementary database), raw: 0 = no fault, 1 = short circuit 12 V, 2 = pad to be changed. For testing.
+    // BrakePadWear (complementary database), raw: 0 = no fault, 1 = short circuit 12 V, 2 = pad to be changed. For
+    // testing.
     std::optional<int> brake_pad_wear;
-    std::optional<bool> child_lock_fault; // Alerte défaillance sécurité enfant: 1 = alerte
+    std::optional<bool> child_lock_fault; // Child lock fault alert: 1 = alert
     static UchSystemControl decode(Data data);
 };
 
 // 0x551 ECM_GeneralStatus (100 ms).
 struct EcmGeneralStatus {
-    int coolant_temp_c;       // Température eau moteur
-    bool coolant_temp_alert;  // Alerte température eau
-    MilLamp mil;              // Voyant défaut dépollution
-    int set_speed_kmh;        // Vitesse de consigne (cruise control or speed limiter)
-    bool set_speed_blink;     // Clignotement vitesse de consigne RV/LV: 1 = affichage clignotant
+    int coolant_temp_c;       // Engine coolant temperature
+    bool coolant_temp_alert;  // Coolant temperature alert
+    MilLamp mil;              // Emissions fault lamp
+    int set_speed_kmh;        // Set speed (cruise control or speed limiter)
+    bool set_speed_blink;     // Cruise/limiter set speed blinking: 1 = blinking display
     CruiseDisplay cruise_display;
-    // Consommation carburant: rolling counter of the fuel injected, 80 mm³ per unit, wrapping after 255 (every
+    // Fuel consumption: rolling counter of the fuel injected, 80 mm³ per unit, wrapping after 255 (every
     // 20.48 mL). Checked in the car: it only goes up, and wraps.
     uint8_t fuel_counter;
-    bool injection_fault;        // Défaut injection gravité 1
-    bool severe_injection_fault; // Défaut injection gravité 2 lié à l'arrêt moteur
+    bool injection_fault;        // Injection fault severity 1
+    bool severe_injection_fault; // Injection fault severity 2, linked to the engine stop
     static std::optional<EcmGeneralStatus> decode(Data data);
 };
 
 // 0x5C5 CLUSTER_GeneralStatus (100 ms), sent by the original instrument cluster.
 struct ClusterGeneralStatus {
-    int fuel_liters; // Niveau de carburant
+    int fuel_liters; // Fuel level
     FuelGauge fuel_gauge;
-    bool fuel_low;            // Alerte mini carburant: 1 = mini atteint
-    bool parking_brake;       // Contact frein de parking: 1 = actionné
-    bool brake_circuit_fault; // Incident circuit frein
-    bool airbag_lamp;         // Etat témoin Défaut AIRBAG: 1 = allumé fixe
-    bool lamp_self_test;      // Autotest voyants piloté par le TdB: 1 = en cours
-    std::optional<uint32_t> odometer_km; // Totalisation générale; empty if the frame is too short
+    bool fuel_low;            // Low fuel alert: 1 = minimum reached
+    bool parking_brake;       // Parking brake switch: 1 = parking brake applied
+    bool brake_circuit_fault; // Brake circuit fault
+    bool airbag_lamp;         // AIRBAG fault lamp state: 1 = lamp steady on
+    bool lamp_self_test;      // Lamp self-test driven by the cluster: 1 = in progress
+    std::optional<uint32_t> odometer_km; // Odometer; empty if the frame is too short
     static std::optional<ClusterGeneralStatus> decode(Data data);
 };
 
@@ -223,8 +226,8 @@ struct EpsGeneralStatus {
     static std::optional<EpsGeneralStatus> decode(Data data);
 };
 
-// Etat ouvrants: one bit per door, true = open (xxxx1 = porte Av.G., xxx1x = Av.D., xx1xx = Ar.G., x1xxx = Ar.D.,
-// 1xxxx = coffre ou abattant ou lunette arrière ouvrante).
+// Openings state: one bit per opening, true = open (xxxx1 = front left door, xxx1x = front right, xx1xx = rear left,
+// x1xxx = rear right, 1xxxx = trunk, tailgate or opening rear window).
 struct Openings {
     bool front_left = false;
     bool front_right = false;
@@ -238,14 +241,14 @@ struct Openings {
 struct UchGeneralStatus {
     Openings openings;
     TurnSignals turn_signals; // they follow the lamps: the UCH toggles them at the blinking rate
-    bool rear_fog;            // Etat feu de brouillard arrière: 1 = ON
-    bool wiper_fault;         // Défaut essuyage
+    bool rear_fog;            // Rear fog light state: 1 = fog light ON
+    bool wiper_fault;         // Wiping fault
     ColumnLockFault column_lock_fault;
-    int outside_temp_c;           // Température Extérieure
-    std::optional<bool> reverse; // Marche arrière engagée: 00 = non engagée, 01 = engagée
+    int outside_temp_c;           // Outside temperature
+    std::optional<bool> reverse; // Reverse gear engaged: 00 = not engaged, 01 = engaged
     ScrollRequest scroll_request;
-    std::optional<bool> card_battery_low; // Pile carte à changer; empty if the frame is too short, as the next one
-    // Affichage informations VSC, raw: the message on the original cluster's display, mostly about the keyless
+    std::optional<bool> card_battery_low; // Card battery to replace; empty if the frame is too short, as the next one
+    // Keyless information display, raw: the message on the original cluster's display, mostly about the keyless
     // card. The table is in view.cpp.
     std::optional<int> keyless_display;
     static std::optional<UchGeneralStatus> decode(Data data);
@@ -253,24 +256,24 @@ struct UchGeneralStatus {
 
 // 0x625 UPC_GeneralStatus (100 ms), engine compartment fuse box.
 struct UpcGeneralStatus {
-    int battery_millivolts;            // Tension batterie by UPC, 0.0625 V per unit
-    bool oil_pressure_switch_closed;   // Manocontact pression huile: 0 = ouvert, 1 = fermé
-    bool battery_lamp;                 // Témoin Batterie: 1 = allumé
-    bool battery_low;                  // Alerte batterie faible: 1 = tension inférieure au seuil
-    bool high_beam;                    // Etat feux de route: 1 = allumés
-    bool front_fog;                    // Etat feux de brouillard avant
-    bool low_beam;                     // Etat feux de croisement
-    bool position_lamps;               // Etat feux de position
-    bool apc_distributed;              // Etat distribution APC: 1 = lignes APC distribuées (ignition on)
+    int battery_millivolts;            // Battery voltage by UPC, 0.0625 V per unit
+    bool oil_pressure_switch_closed;   // Oil pressure switch: 0 = switch open, 1 = switch closed
+    bool battery_lamp;                 // Battery lamp: 1 = battery lamp on
+    bool battery_low;                  // Low battery alert: 1 = battery voltage below the threshold
+    bool high_beam;                    // High beam state: 1 = high beam on
+    bool front_fog;                    // Front fog lights state
+    bool low_beam;                     // Low beam state
+    bool position_lamps;               // Position lights state
+    bool apc_distributed;              // APC distribution state: 1 = APC lines distributed (ignition on)
     static std::optional<UpcGeneralStatus> decode(Data data);
 };
 
 // 0x645 CLUSTER_GeneralStatus_2 (100 ms), sent by the original instrument cluster.
 struct ClusterGeneralStatus2 {
-    // Vitesse Affichée, 0.01 km/h per unit: the speed the original cluster shows. In the last two bytes, which this
+    // Displayed speed, 0.01 km/h per unit: the speed the original cluster shows. In the last two bytes, which this
     // car does not send (the frame has 3 of the database's 5 bytes), hence optional.
     std::optional<int> displayed_speed_centi_kmh;
-    int night_dimmer_permille; // Pourcentage éclairage max rhéostaté de nuit, 0.4 % per unit, in tenths of a percent
+    int night_dimmer_permille; // Night dimmer maximum lighting percentage, 0.4 % per unit, in tenths of a percent
     bool position_lamps;       // PositionLightsStatus (complementary database): 1 = on, as the cluster sees them
     SeatBeltLamp seat_belt_lamp;
     static std::optional<ClusterGeneralStatus2> decode(Data data);
@@ -279,20 +282,20 @@ struct ClusterGeneralStatus2 {
 // 0x651 AIRBAG_GeneralStatus (100 ms): the belt switches, read by the airbag ECU. The original cluster lights its
 // belt lamp (0x645) from them.
 struct AirbagGeneralStatus {
-    std::optional<bool> driver_unbuckled;    // Contact ceinture conducteur: 00 = bouclée, 01 = non bouclée
-    std::optional<bool> passenger_on_seat;   // Présence passager sur siège: 00 = détecté, 01 = non détecté
-    std::optional<bool> passenger_unbuckled; // Contact ceinture passager: 00 = bouclée, 01 = non bouclée
+    std::optional<bool> driver_unbuckled;    // Driver seat belt switch: 00 = fastened, 01 = not fastened
+    std::optional<bool> passenger_on_seat;   // Passenger on seat: 00 = detected, 01 = not detected
+    std::optional<bool> passenger_unbuckled; // Passenger seat belt switch: 00 = fastened, 01 = not fastened
     static std::optional<AirbagGeneralStatus> decode(Data data);
 };
 
 // 0x715 CLUSTER_BackUp (3000 ms), sent by the original instrument cluster.
 struct ClusterBackup {
-    // Niveau d'huile affiché: 0000 = alerte, 0001 to 1000 = 1 to 8 pavés de barre graphe, 1111 = indisponible (and
+    // Displayed oil level: 0000 = alert, 0001 to 1000 = 1 to 8 bar graph segments, 1111 = unavailable (and
     // the undocumented 1001 to 1110). `oil_bars` is empty for both alert and unavailable.
     bool oil_alert;
     std::optional<int> oil_bars;
-    std::optional<MilLamp> mil;              // Etat témoin MIL, as the cluster shows it; empty if too short
-    std::optional<int> oil_service_range_km; // Autonomie vidange, 250 km per unit. For testing in the car
+    std::optional<MilLamp> mil;              // MIL lamp state, as the cluster shows it; empty if too short
+    std::optional<int> oil_service_range_km; // Oil service range, 250 km per unit. For testing in the car
     static std::optional<ClusterBackup> decode(Data data);
 };
 

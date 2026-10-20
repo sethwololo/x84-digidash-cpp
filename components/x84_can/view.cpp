@@ -7,8 +7,8 @@ namespace x84 {
 
 namespace {
 
-// Which state of the oil pressure switch lights the oil lamp. The descriptions only say "ouvert" / "fermé": check
-// against the original cluster (ignition on, engine off, the lamp must be lit).
+// Which state of the oil pressure switch lights the oil lamp. The descriptions only say "switch open" / "switch
+// closed": check against the original cluster (ignition on, engine off, the lamp must be lit).
 constexpr bool OIL_LAMP_WHEN_SWITCH_CLOSED = true;
 // Step of the RPM shown. Rounding keeps the digits from flickering; 50 looked too coarse in the car.
 constexpr int RPM_STEP = 25;
@@ -30,30 +30,30 @@ constexpr uint32_t GEAR_SHIFT_HOLD_MS = 1500;
 // car, so the headlights decide.
 constexpr int NIGHT_BACKLIGHT_PERCENT = 70;
 
-// Affichage informations VSC. Empty for 00000 = pas d'affichage, the reserved and undocumented values, 01111 = boite
-// de vitesse sur P ou N (automatic gearbox only) and 11100 = Extinction totale IHM- TdB.
+// Keyless information display. Empty for 00000 = no display, the reserved and undocumented values, 01111 = gearbox
+// in P or N (automatic gearbox only) and 11100 = Full HMI - cluster extinction.
 std::optional<Notice> keyless_notice(int raw)
 {
     switch (raw) {
-    case 1: return Notice::welcome;                       // 00001 = bienvenue
-    case 2: return Notice::insert_card;                   // 00010 = Insérer carte
-    case 3:                                               // 00011 = carte non détectée
-    case 6: return Notice::card_not_detected;             // 00110 = Carte non détecté + buzzer
-    case 4:                                               // 00100 = mains libres - défaillance
-    case 5: return Notice::hands_free_fault;              // 00101 = ... - consulter la notice
-    case 7: return Notice::press_stop_twice;              // 00111 = appuyer deux fois sur stop
-    case 8:                                               // 01000 = support repose carte défaillant
-    case 22: return Notice::card_reader_fault;            // 10110 = défaillance repose carte
-    case 9: return Notice::brake_and_start;               // 01001 = appuyer sur Frein + start
-    case 10:                                              // 01010 = Retirer carte + buzzer
-    case 17: return Notice::remove_card;                  // 10001 = Retirer carte
-    case 11: return Notice::restricted_card_mode;         // 01011 = mode carte restreint
-    case 14: return Notice::brake_and_start_or_clutch;    // 01110 = appuyer sur frein + start ou débrayer
-    case 16: return Notice::neutral_or_clutch;            // 10000 = Mettre au point mort ou débrayer
-    case 18: return Notice::trunk_open_insert_card;       // 10010 = démarrage coffre ouvert -> insérer carte
-    case 19: return Notice::confirm_engine_stop;          // 10011 = confirmer arret moteur
-    case 20: return Notice::starting;                     // 10100 = démarrage en cours
-    case 21: return Notice::pedal_not_held;               // 10101 = pédale non maintenu
+    case 1: return Notice::welcome;                       // 00001 = welcome
+    case 2: return Notice::insert_card;                   // 00010 = Insert card
+    case 3:                                               // 00011 = card not detected
+    case 6: return Notice::card_not_detected;             // 00110 = Card not detected + buzzer
+    case 4:                                               // 00100 = hands-free - failure
+    case 5: return Notice::hands_free_fault;              // 00101 = ... - see the manual
+    case 7: return Notice::press_stop_twice;              // 00111 = press stop twice
+    case 8:                                               // 01000 = card holder failed
+    case 22: return Notice::card_reader_fault;            // 10110 = card holder failure
+    case 9: return Notice::brake_and_start;               // 01001 = press Brake + start
+    case 10:                                              // 01010 = Remove card + buzzer
+    case 17: return Notice::remove_card;                  // 10001 = Remove card
+    case 11: return Notice::restricted_card_mode;         // 01011 = restricted card mode
+    case 14: return Notice::brake_and_start_or_clutch;    // 01110 = press brake + start or declutch
+    case 16: return Notice::neutral_or_clutch;            // 10000 = Shift to neutral or declutch
+    case 18: return Notice::trunk_open_insert_card;       // 10010 = start with the trunk open -> insert card
+    case 19: return Notice::confirm_engine_stop;          // 10011 = confirm engine stop
+    case 20: return Notice::starting;                     // 10100 = starting
+    case 21: return Notice::pedal_not_held;               // 10101 = pedal not held
     default: return std::nullopt;
     }
 }

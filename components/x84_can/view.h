@@ -26,7 +26,7 @@ constexpr int REVERSE = -1;
 constexpr int OIL_SEGMENTS = 6;
 
 // A message in the header, in place of the system status: what the original cluster's display shows (0x60D
-// Affichage informations VSC, mostly about the keyless card), then a few faults.
+// Keyless information display, mostly about the keyless card), then a few faults.
 enum class Notice {
     welcome,
     insert_card,
@@ -74,7 +74,7 @@ struct Cruise {
     // brake), and only drops it when the driver clears it with the reset button.
     std::optional<int> set_speed_kmh;
     bool active = false; // actively regulating or limiting, as opposed to suspended
-    bool fault = false;  // "demandé et en défaut"
+    bool fault = false;  // "requested and faulty"
     bool blink = false;  // the set speed blinks, as the car asks
 };
 
@@ -121,7 +121,7 @@ struct View {
     std::optional<uint8_t> fuel_counter;      // 0x551 rolling fuel counter (80 mm³), for the trip
     bool trip_button = false;       // the trip computer button is pressed (either direction)
     std::optional<Notice> notice;   // the message in the header, if any
-    std::optional<uint32_t> odometer_km; // the original cluster's odometer (0x5C5 Totalisation générale)
+    std::optional<uint32_t> odometer_km; // the original cluster's odometer (0x5C5 Odometer)
 };
 
 // What the dashboard shows, from the valid frames. Every value and lamp comes from a documented signal, and a
