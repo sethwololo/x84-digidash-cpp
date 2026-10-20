@@ -34,7 +34,7 @@ int32_t scaled(float px)
 
 // The car's outline in the 154 px drawing: centered, rounded corners. The windows and the trunk lid fill the width
 // between the corners' curves.
-constexpr float CAR_WIDTH = 72;
+constexpr float CAR_WIDTH = 88;
 constexpr float CAR_HEIGHT = 140;
 constexpr float CAR_RADIUS = 14;
 constexpr float CAR_X = (154 - CAR_WIDTH) / 2;
