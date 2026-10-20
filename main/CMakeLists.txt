@@ -1,7 +1,7 @@
 idf_component_register(
-    SRCS "main.cpp" "display.cpp"
+    SRCS "main.cpp" "display.cpp" "can.cpp"
     INCLUDE_DIRS "."
-    REQUIRES ui esp_timer
+    REQUIRES ui x84_can esp_timer esp_driver_twai
 )
 
 # The C configuration macros of ESP-IDF components set some fields and leave the rest at zero, which C++ warns about.
