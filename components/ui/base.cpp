@@ -58,6 +58,12 @@ void center_text(lv_obj_t *label, const theme::Font &font)
     lv_obj_align(label, LV_ALIGN_CENTER, 0, static_cast<int32_t>(std::lround(design - lvgl)));
 }
 
+lv_obj_t *spaced(lv_obj_t *label, int32_t px)
+{
+    lv_obj_set_style_text_letter_space(label, px, 0);
+    return label;
+}
+
 lv_obj_t *image(lv_obj_t *parent, const lv_image_dsc_t *source, lv_color_t color, int32_t x, int32_t y)
 {
     lv_obj_t *object = lv_image_create(parent);

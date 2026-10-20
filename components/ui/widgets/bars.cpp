@@ -55,7 +55,7 @@ BarHeader::BarHeader(lv_obj_t *parent, int32_t x, int32_t y, int32_t width, cons
     lv_obj_align(value_, LV_ALIGN_TOP_RIGHT, 0, text_y(theme::TEXT_VALUE_BOLD, 0));
     // Lowered by the difference of the font sizes times the baseline, to share it with the value.
     const int32_t name_top = static_cast<int32_t>(theme::BASELINE * (theme::TEXT_VALUE_BOLD.size - theme::TEXT_LABEL.size));
-    text(header, theme::TEXT_LABEL, theme::LABEL, 0, name_top, name);
+    spaced(text(header, theme::TEXT_LABEL, theme::LABEL, 0, name_top, name), theme::SPACING_LABEL);
 }
 
 void BarHeader::set(const char *value, bool alert)

@@ -36,7 +36,7 @@ Speedometer::Speedometer(lv_obj_t *screen)
       right_(screen, X + WIDTH - 70 - 36, Y + 44, true),
       speed_(centered(screen, theme::TEXT_SPEED, theme::VALUE, DIGITS_TOP - static_cast<int32_t>(theme::DIGIT_TOP * SPEED_SIZE), "--"))
 {
-    centered(screen, theme::TEXT_VALUE, theme::LABEL, Y + 236, "KM/H");
+    spaced(centered(screen, theme::TEXT_VALUE, theme::LABEL, Y + 236, "KM/H"), theme::SPACING_UNIT);
 
     // The trip between two short rules, the three centered as one row.
     lv_obj_t *row = box(screen, X, Y + 282, WIDTH, LV_SIZE_CONTENT);
@@ -44,10 +44,10 @@ Speedometer::Speedometer(lv_obj_t *screen)
     lv_obj_set_flex_align(row, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
     lv_obj_set_style_pad_column(row, 10, 0);
     fill(row, 0, 0, 28, 1, theme::BORDER);
-    trip_ = text(row, theme::TEXT_LABEL, theme::LABEL, 0, 0);
+    trip_ = spaced(text(row, theme::TEXT_LABEL, theme::LABEL, 0, 0), theme::SPACING_LABEL);
     fill(row, 0, 0, 28, 1, theme::BORDER);
 
-    odometer_ = centered(screen, theme::TEXT_LABEL, theme::LABEL, Y + 308);
+    odometer_ = spaced(centered(screen, theme::TEXT_LABEL, theme::LABEL, Y + 308), theme::SPACING_LABEL);
 }
 
 void Speedometer::show(const Screen &screen)

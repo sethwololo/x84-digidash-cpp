@@ -28,6 +28,11 @@ void Readout::set_label(const char *label)
     set_text(label_, label);
 }
 
+void Readout::space_label(int32_t px)
+{
+    spaced(label_, px);
+}
+
 void Readout::set(const char *value, State state, bool hidden)
 {
     set_text(value_, value);

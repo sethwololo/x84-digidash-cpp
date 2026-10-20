@@ -34,7 +34,7 @@ AlertFrame::AlertFrame(lv_obj_t *parent, int32_t x, int32_t y, int32_t width, in
     image(group_, &img_hazard, theme::FAULT, width + 2 * STRIPES_OUT_X - STRIPES_SIZE, height + 2 * STRIPES_OUT_Y - STRIPES_SIZE);
     if (label) {
         // A black backing keeps the label readable over a bar that is also red, and hides what is under it.
-        lv_obj_t *tag = text(frame, theme::TEXT_LABEL_BOLD, theme::FAULT, 0, 0, label);
+        lv_obj_t *tag = spaced(text(frame, theme::TEXT_LABEL_BOLD, theme::FAULT, 0, 0, label), theme::SPACING_LABEL);
         lv_obj_set_style_bg_opa(tag, LV_OPA_COVER, 0);
         lv_obj_set_style_bg_color(tag, theme::BACKGROUND, 0);
         lv_obj_set_style_pad_left(tag, 3, 0);

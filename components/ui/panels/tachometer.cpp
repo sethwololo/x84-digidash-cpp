@@ -59,6 +59,8 @@ Tachometer::Tachometer(lv_obj_t *screen)
     fill(screen, X + theme::SIDE_WIDTH - 1, Y, 1, theme::CONTENT_HEIGHT, theme::BORDER);
 
     gear_.set_label("MARCHA");
+    gear_.space_label(theme::SPACING_LABEL);
+    spaced(rpm_unit_, theme::SPACING_CAPTION);
     engine_temp_.set_label("TMP MOTOR");
     battery_.set_label("BATERIA");
     outside_temp_.set_label("TMP EXT");

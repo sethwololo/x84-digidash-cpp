@@ -43,6 +43,11 @@ constexpr float LINE_HEIGHT = 1.3f;
 constexpr float BASELINE = 1.025f;
 constexpr float DIGIT_TOP = 0.315f;
 
+// Letter spacing in px, as the design spaces captions, labels and units (ui::spaced).
+constexpr int32_t SPACING_CAPTION = 1; // captions and the footer (1.5 px in the design)
+constexpr int32_t SPACING_LABEL = 2;   // column titles, header, trip and odometer, alert labels
+constexpr int32_t SPACING_UNIT = 6;    // "KM/H"
+
 // Scales of the gauges. Warnings (engine temperature, battery, fuel reserve, oil level) come from the car's own
 // alert signals, not from thresholds here.
 constexpr int RPM_MAX = 7000;

@@ -76,12 +76,13 @@ Frame::Frame(lv_obj_t *screen)
 
     // Header
     lv_obj_t *wordmark = image(screen, &img_wordmark, theme::VALUE, MARGIN, WORDMARK_Y);
-    text(screen, theme::TEXT_SMALL, theme::LABEL, MARGIN + img_wordmark.header.w + 13, centered_on_wordmark(theme::TEXT_SMALL),
-         "// K4M 16V");
+    spaced(text(screen, theme::TEXT_SMALL, theme::LABEL, MARGIN + img_wordmark.header.w + 13,
+                centered_on_wordmark(theme::TEXT_SMALL), "// K4M 16V"),
+           theme::SPACING_LABEL);
     const int32_t status_y = text_y(theme::TEXT_LABEL_BOLD, centered_on_wordmark(theme::TEXT_LABEL_BOLD));
-    notice_ = text(screen, theme::TEXT_LABEL_BOLD, theme::VALUE, 0, 0);
+    notice_ = spaced(text(screen, theme::TEXT_LABEL_BOLD, theme::VALUE, 0, 0), theme::SPACING_LABEL);
     lv_obj_align(notice_, LV_ALIGN_TOP_MID, 0, status_y);
-    status_ = text(screen, theme::TEXT_LABEL_BOLD, theme::LABEL, 0, 0, "SISTEMA OK");
+    status_ = spaced(text(screen, theme::TEXT_LABEL_BOLD, theme::LABEL, 0, 0, "SISTEMA OK"), theme::SPACING_LABEL);
     lv_obj_align(status_, LV_ALIGN_TOP_RIGHT, -MARGIN, status_y);
 
     const int32_t rule_width = theme::SCREEN_WIDTH - 2 * MARGIN;
@@ -89,10 +90,10 @@ Frame::Frame(lv_obj_t *screen)
     fill(screen, MARGIN, theme::FOOTER_RULE, rule_width, 1, theme::BORDER);
 
     // Footer
-    text(screen, theme::TEXT_SMALL, theme::BORDER, MARGIN, FOOTER_Y, "SN // MG-2026-0313");
-    can_ = text(screen, theme::TEXT_SMALL, theme::BORDER, 0, 0);
+    spaced(text(screen, theme::TEXT_SMALL, theme::BORDER, MARGIN, FOOTER_Y, "SN // MG-2026-0313"), theme::SPACING_CAPTION);
+    can_ = spaced(text(screen, theme::TEXT_SMALL, theme::BORDER, 0, 0), theme::SPACING_CAPTION);
     lv_obj_align(can_, LV_ALIGN_TOP_MID, 0, text_y(theme::TEXT_SMALL, FOOTER_Y));
-    firmware_ = text(screen, theme::TEXT_SMALL, theme::BORDER, 0, 0);
+    firmware_ = spaced(text(screen, theme::TEXT_SMALL, theme::BORDER, 0, 0), theme::SPACING_CAPTION);
     lv_obj_align(firmware_, LV_ALIGN_TOP_RIGHT, -MARGIN, text_y(theme::TEXT_SMALL, FOOTER_Y));
 }
 

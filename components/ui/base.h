@@ -29,6 +29,9 @@ int32_t text_y(const theme::Font &font, int32_t top);
 // Centers a label in its parent, its baseline where a centered design text box would have it.
 void center_text(lv_obj_t *label, const theme::Font &font);
 
+// Spreads the letters of a label by `px`, and returns it.
+lv_obj_t *spaced(lv_obj_t *label, int32_t px);
+
 // An A8 image (images.h), drawn in `color`.
 lv_obj_t *image(lv_obj_t *parent, const lv_image_dsc_t *source, lv_color_t color, int32_t x, int32_t y);
 

@@ -19,6 +19,8 @@ public:
     };
 
     void set_label(const char *label);
+    // Spreads the caption's letters (only MARCHA is spaced in the design).
+    void space_label(int32_t px);
     // `hidden` blanks the value (blinking).
     void set(const char *value, State state = State::normal, bool hidden = false);
 
