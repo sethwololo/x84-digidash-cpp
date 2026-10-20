@@ -35,16 +35,16 @@ inline const Palette DARK{
 };
 
 // By day: dark on white, readable in sunlight at full backlight. The accents are darker shades of the same hues,
-// to keep their contrast on white.
+// all about 8:1 against white (WCAG AAA asks 7:1); the orange has to turn almost brown for that.
 inline const Palette LIGHT{
     .background = lv_color_hex(0xffffff),
     .value = lv_color_hex(0x000000),
     .label = lv_color_hex(0x5f5f5f),
     .border = lv_color_hex(0xa8a8a8),
-    .fault = lv_color_hex(0xe7000b),
-    .high_beam = lv_color_hex(0x0069a8),
-    .signal = lv_color_hex(0x007a55),
-    .service = lv_color_hex(0xe17100),
+    .fault = lv_color_hex(0xa30005),     // 8.2:1
+    .high_beam = lv_color_hex(0x004e80), // 8.7:1
+    .signal = lv_color_hex(0x005a3d),    // 8.3:1
+    .service = lv_color_hex(0x853c00),   // 7.9:1
 };
 
 // The palette in use. Dashboard switches it, and rebuilds the screen with it, when day turns to night.
