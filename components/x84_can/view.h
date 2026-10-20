@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <optional>
 
+#include "frames.h"
+
 namespace x84 {
 
 enum class Lamp { off, on, blinking };
@@ -117,6 +119,29 @@ struct View {
     bool trip_button = false;       // the trip computer button is pressed (either direction)
     std::optional<Notice> notice;   // the message in the header, if any
     std::optional<uint32_t> odometer_km; // the original cluster's odometer (0x5C5 Totalisation générale)
+};
+
+// What the dashboard shows, from the valid frames. Every value and lamp comes from a documented signal, and a
+// missing frame never lights a warning (docs/can-plan.md of the Rust version).
+View view(const Frames &frames);
+
+// How long a frame stays valid after it arrives: about 5 cycles, at least 500 ms.
+uint32_t timeout_ms(uint16_t frame_id);
+
+// Debounces View::gear over time. Forward gears and reverse come from unambiguous switches or a wide ratio match,
+// so they replace the displayed gear at once. An empty gear and neutral are treated as unsettled: both can be a
+// moment of an ongoing shift (clutch in, selector crossing the neutral gate) rather than the driver's intent, so the
+// display holds the last gear through them. It shows one of them once the clutch has been released for
+// GEAR_NONE_DEBOUNCE_MS, or held for GEAR_SHIFT_HOLD_MS.
+class GearDebounce {
+public:
+    // `gear` and `clutch_pressed` are this frame's View::gear and View::clutch_pressed; `now_ms` a monotonic clock.
+    std::optional<int> update(std::optional<int> gear, bool clutch_pressed, uint32_t now_ms);
+
+private:
+    std::optional<int> displayed_;
+    std::optional<uint32_t> unsettled_since_ms_;
+    std::optional<uint32_t> clutch_pressed_at_ms_;
 };
 
 } // namespace x84
