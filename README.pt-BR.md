@@ -6,7 +6,7 @@ Painel de instrumentos digital para o Renault Mégane II (plataforma X84), em C+
 Waveshare ESP32-P4 com tela DSI de 8,8" (480x1920, retrato) usada em paisagem (1920x480) e lê o CAN do carro em modo
 listen-only: nunca transmite.
 
-É a versão C++ do projeto Rust + Slint `x84-digidash`: mesma tela, mesma leitura do CAN, cerca do dobro de quadros
+É a versão C++ do projeto privado Rust + Slint `x84-digidash`: mesma tela, mesma leitura do CAN, cerca do dobro de quadros
 por segundo.
 
 ![À noite](docs/night.png)
