@@ -27,7 +27,7 @@ frame rate.
 
 ## Hardware
 
-- [Waveshare ESP32-P4 board](https://www.waveshare.com/) with the 8.8" MIPI-DSI display (OTA7290B controller).
+- [Waveshare ESP32-P4 board](https://www.waveshare.com/esp32-p4-module-dev-kit.htm) with the 8.8" MIPI-DSI display (OTA7290B controller).
 - A 3.3 V CAN transceiver wired to GPIO3 (TX) and GPIO2 (RX), on the car's 500 kbit/s bus. The controller runs in
   listen-only mode.
 
