@@ -22,7 +22,7 @@ public:
     uint32_t decimeters() const { return decimeters_; }
     uint32_t fuel_mm3() const { return fuel_mm3_; }
 
-    // Average consumption since the reset, in tenths of km/L. Empty over the first km, where it jumps around.
+    // Average consumption since the reset, in tenths of km/L. Empty over the first 400 m, where it jumps around.
     std::optional<int> km_per_liter_tenths() const;
 
     // The latest value of the 0.1 m counter, or nothing when its frame is not valid.

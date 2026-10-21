@@ -71,7 +71,7 @@ TEST_CASE("average consumption")
 {
     // 100 km on 8 L: 12,5 km/L.
     CHECK(Trip(1000000, 8000000).km_per_liter_tenths() == 125);
-    // Not before 1 km, nor without fuel.
-    CHECK_FALSE(Trip(9999, 100000).km_per_liter_tenths().has_value());
+    // Not before 400 m, nor without fuel.
+    CHECK_FALSE(Trip(3999, 100000).km_per_liter_tenths().has_value());
     CHECK_FALSE(Trip(20000, 0).km_per_liter_tenths().has_value());
 }

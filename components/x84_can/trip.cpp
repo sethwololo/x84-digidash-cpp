@@ -11,8 +11,9 @@ constexpr uint16_t MAX_STEP_DECIMETERS = 1000;
 // Largest believable step of the fuel counter: half its range, 10 mL. Even at full load the engine burns a fraction
 // of that in 500 ms; a bigger jump means the counter restarted.
 constexpr uint8_t MAX_FUEL_STEP = 128;
-// The average is only shown after this distance.
-constexpr uint32_t MIN_AVERAGE_DECIMETERS = 10000;
+// The average is only shown after this distance, like the original trip computer (workshop manual 83A-17: about
+// 400 m).
+constexpr uint32_t MIN_AVERAGE_DECIMETERS = 4000;
 
 } // namespace
 
