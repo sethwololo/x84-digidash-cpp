@@ -6,7 +6,7 @@ documento registra o que veio de onde e onde o painel novo diverge do original d
 
 ## Contexto
 
-- **Carro:** Mégane II brasileiro, K4M 1.6 16v a gasolina, câmbio manual JH3. Não tem ESP, monitor de pressão dos
+- **Carro:** Mégane II brasileiro, K4M 1.6 16v Hi-Flex (gasolina e etanol), câmbio manual JH3. Não tem ESP, monitor de pressão dos
   pneus, câmbio automático, freio de mão elétrico nem SSPP: as regras desses sistemas ficam de fora.
 - **Leitura:** pela porta OBD. O painel original continua no carro e é a fonte de `0x5C5`, `0x645` e `0x715`
   (combustível, freio de mão, nível do fluido de freio, luz do airbag, nível de óleo, hodômetro), que ele lê por fio
@@ -20,7 +20,7 @@ documento registra o que veio de onde e onde o painel novo diverge do original d
 |---|---|---|
 | Base de sinais | `can/*.json` do projeto Rust | sinais cuja descrição cita Stop ou Service |
 | Manual elétrico 2003 | `~/Documents/Megane Workshop Repairs 2003/MR364MEGANE8.pdf`, seção 83A (PDF p. 90 a 110) | lógica do próprio painel: luzes, mensagens, defect modes |
-| Injeção a gasolina | `~/Documents/Renault-Megane-2-workshop-manual-2003-2009/Engine & Peripherals/MR366X8417B*.pdf` | falha de injeção nível 1 e 2 |
+| Injeção "petrol" (vale para o Hi-Flex) | `~/Documents/Renault-Megane-2-workshop-manual-2003-2009/Engine & Peripherals/MR366X8417B*.pdf` | falha de injeção nível 1 e 2 |
 | ABS Bosch 8.0 | `.../Chassis/MR366X8438C000.pdf`, p. 38C-7 e 38C-8 | tabela das luzes do ABS |
 | Central do motor | `.../Electrical Equipment/MR366X8487G050.pdf` | falha de carga da bateria |
 | Direção elétrica | `.../Chassis/MR366X8436B000.pdf` | SERVICE e "Check steering" |
