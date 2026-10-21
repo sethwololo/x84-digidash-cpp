@@ -28,7 +28,7 @@ por segundo.
 
 ## Hardware
 
-- [Placa Waveshare ESP32-P4](https://www.waveshare.com/) com a tela MIPI-DSI de 8,8" (controlador OTA7290B).
+- [Placa Waveshare ESP32-P4](https://www.waveshare.com/esp32-p4-module-dev-kit.htm) com a tela MIPI-DSI de 8,8" (controlador OTA7290B).
 - Um transceptor CAN de 3,3 V ligado ao GPIO3 (TX) e ao GPIO2 (RX), no barramento de 500 kbit/s do carro. O
   controlador fica em modo listen-only.
 
