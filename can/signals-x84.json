@@ -1,7 +1,7 @@
 {
   "baud_rate": 500000,
   "endian": "Big",
-  "frame_count": 38,
+  "frame_count": 41,
   "messages": [
     {
       "name": "AIRBAGCrash",
@@ -36,6 +36,21 @@
           "choices": {
             "84": "54h = AIRBAG byte 1 value"
           }
+        },
+        {
+          "name": "AIRBAG crash order",
+          "start_bit": 7,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null,
+          "bases": [
+            "v84.12"
+          ],
+          "note": "Both AIRBAG bytes read as one 16-bit value"
         }
       ]
     },
@@ -411,8 +426,75 @@
             "1": "Full Load on"
           },
           "source": "complementary"
+        },
+        {
+          "name": "SBW actuator position display",
+          "start_bit": 27,
+          "length": 4,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0000 = parking",
+            "1": "0001 = reverse",
+            "2": "0010 = neutral",
+            "3": "0011 = drive",
+            "10": "1010 = intermediate",
+            "15": "1111 = unavailable or cable shift"
+          },
+          "bases": [
+            "v84.04",
+            "v84.05"
+          ]
+        },
+        {
+          "name": "Position display blinking",
+          "start_bit": 28,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = no blinking",
+            "1": "1 = blinking"
+          },
+          "bases": [
+            "v84.04",
+            "v84.05"
+          ]
+        },
+        {
+          "name": "AT buzzer",
+          "start_bit": 18,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = no buzzer",
+            "1": "001 = alert",
+            "2": "010 = speed threshold OK",
+            "3": "011 = reserved"
+          },
+          "bases": [
+            "v84.04",
+            "v84.05"
+          ],
+          "note": "Same bits as \"Automatic gearbox alert\" in v84.10 and v84.12; 1xx = reserved"
         }
-      ]
+      ],
+      "dlc_by_base": {
+        "v84.04": 4,
+        "v84.05": 4,
+        "v84.10": 5,
+        "v84.12": 5
+      }
     },
     {
       "name": "AT_TorqueControl",
@@ -679,6 +761,49 @@
             "3": "Not Used"
           },
           "source": "complementary"
+        },
+        {
+          "name": "AT actuator entry into P allowed",
+          "start_bit": 60,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = actuator entry into P not allowed",
+            "1": "1 = actuator entry into P allowed"
+          },
+          "bases": [
+            "v84.04",
+            "v84.05"
+          ]
+        },
+        {
+          "name": "AT actuator position exit allowed",
+          "start_bit": 63,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "000 = actuator position exit not allowed",
+            "1": "001 = exit from P allowed",
+            "2": "010 = exit from R allowed",
+            "3": "011 = exit from N allowed",
+            "4": "100 = exit from D allowed",
+            "5": "101 = reserved",
+            "6": "110 = reserved",
+            "7": "111 = reserved"
+          },
+          "bases": [
+            "v84.04",
+            "v84.05"
+          ],
+          "note": "Same bits as \"AT torque control type\" in v84.10 and v84.12"
         }
       ]
     },
@@ -1156,6 +1281,41 @@
             "8": "0xxxx = trunk, tailgate and opening rear window closed",
             "9": "1xxxx = trunk, tailgate or opening rear window open"
           }
+        },
+        {
+          "name": "Headlight washer pump activation",
+          "start_bit": 17,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = headlight washer pump not requested",
+            "1": "1 = headlight washer pump requested"
+          },
+          "bases": [
+            "v84.04"
+          ]
+        },
+        {
+          "name": "Headlight washer selection",
+          "start_bit": 54,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "0 = left or high pressure headlight washer selected",
+            "1": "1 = right headlight washer selected"
+          },
+          "bases": [
+            "v84.04"
+          ],
+          "note": "Same bit as \"DTRL request\" in the later bases"
         }
       ]
     },
@@ -1737,6 +1897,42 @@
             "1": "engine iddle speed request by cu"
           },
           "source": "complementary"
+        },
+        {
+          "name": "Tunnel detected",
+          "start_bit": 33,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "00 = no tunnel",
+            "1": "01 = tunnel detected",
+            "2": "10 = reserved",
+            "3": "11 = invalid"
+          },
+          "bases": [
+            "v84.04",
+            "v84.05"
+          ]
+        },
+        {
+          "name": "Solar intensity",
+          "start_bit": 47,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 1000.0,
+          "offset": 0.0,
+          "unit": "Lux",
+          "inferred_width": true,
+          "choices": null,
+          "bases": [
+            "v84.04",
+            "v84.05"
+          ],
+          "note": "Same byte as the child lock fault (bit 41) and the brake pad wear (bits 47-46) of the newer bases"
         }
       ]
     },
@@ -2574,7 +2770,13 @@
           },
           "source": "complementary"
         }
-      ]
+      ],
+      "dlc_by_base": {
+        "v84.04": 6,
+        "v84.05": 6,
+        "v84.10": 6,
+        "v84.12": 8
+      }
     },
     {
       "name": "CLUSTER_GeneralStatus",
@@ -2924,7 +3126,13 @@
           },
           "source": "complementary"
         }
-      ]
+      ],
+      "dlc_by_base": {
+        "v84.04": 3,
+        "v84.05": 3,
+        "v84.10": 5,
+        "v84.12": 5
+      }
     },
     {
       "name": "DSU_GeneralData",
@@ -3351,7 +3559,13 @@
           "inferred_width": true,
           "choices": null
         }
-      ]
+      ],
+      "dlc_by_base": {
+        "v84.04": 7,
+        "v84.05": 7,
+        "v84.10": 8,
+        "v84.12": 8
+      }
     },
     {
       "name": "ECM_SystemControl",
@@ -3513,7 +3727,13 @@
             "3": "11 = high speed start"
           }
         }
-      ]
+      ],
+      "dlc_by_base": {
+        "v84.04": 5,
+        "v84.05": 5,
+        "v84.10": 6,
+        "v84.12": 6
+      }
     },
     {
       "name": "ECM_TorqueControl",
@@ -3727,6 +3947,22 @@
           "unit": null,
           "inferred_width": false,
           "choices": null
+        },
+        {
+          "name": "Verlog question check field",
+          "start_bit": 2,
+          "length": 3,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null,
+          "bases": [
+            "v84.04",
+            "v84.05"
+          ],
+          "note": "At bits 3-0 (4 bits) in v84.10 and v84.12"
         }
       ]
     },
@@ -4095,7 +4331,13 @@
             "1": "1 = Not calibrated and not indexed (flashing at 8 Hz, highest priority)"
           }
         }
-      ]
+      ],
+      "dlc_by_base": {
+        "v84.04": 1,
+        "v84.05": 1,
+        "v84.10": 3,
+        "v84.12": 3
+      }
     },
     {
       "name": "ESCL3_to_UCH",
@@ -5754,7 +5996,13 @@
           "inferred_width": true,
           "choices": null
         }
-      ]
+      ],
+      "dlc_by_base": {
+        "v84.04": 4,
+        "v84.05": 4,
+        "v84.10": 6,
+        "v84.12": 6
+      }
     },
     {
       "name": "UPC_GeneralStatus",
@@ -6089,7 +6337,13 @@
             "1": "1 = APC lines distributed"
           }
         }
-      ]
+      ],
+      "dlc_by_base": {
+        "v84.04": 4,
+        "v84.05": 4,
+        "v84.10": 6,
+        "v84.12": 6
+      }
     },
     {
       "name": "Vehicle_Dynamic",
@@ -6131,6 +6385,206 @@
           "unit": "m/s2",
           "inferred_width": true,
           "choices": null
+        }
+      ]
+    },
+    {
+      "name": "ATCVT_CANHS_R_01",
+      "id": 376,
+      "id_hex": "178",
+      "dlc": 7,
+      "cycle_ms": 10,
+      "is_diagnostic": false,
+      "bases": [
+        "v84.12"
+      ],
+      "signals": [
+        {
+          "name": "Input shaft revolution",
+          "start_bit": 7,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null,
+          "bases": [
+            "v84.12"
+          ]
+        },
+        {
+          "name": "Output shaft revolution",
+          "start_bit": 23,
+          "length": 16,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": null,
+          "bases": [
+            "v84.12"
+          ]
+        },
+        {
+          "name": "Fuel cut requested engine speed",
+          "start_bit": 39,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 50.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null,
+          "bases": [
+            "v84.12"
+          ]
+        },
+        {
+          "name": "Manual mode state",
+          "start_bit": 47,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "not manual mode",
+            "1": "manual mode"
+          },
+          "bases": [
+            "v84.12"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ECMCVT_CANHS_R_01",
+      "id": 388,
+      "id_hex": "184",
+      "dlc": 2,
+      "cycle_ms": 10,
+      "is_diagnostic": false,
+      "bases": [
+        "v84.12"
+      ],
+      "signals": [
+        {
+          "name": "Drive style detection",
+          "start_bit": 7,
+          "length": 8,
+          "byte_order": "big_endian",
+          "factor": 0.392157,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": true,
+          "choices": null,
+          "bases": [
+            "v84.12"
+          ]
+        },
+        {
+          "name": "Grade logic flag",
+          "start_bit": 15,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "no slope",
+            "1": "slope"
+          },
+          "bases": [
+            "v84.12"
+          ]
+        },
+        {
+          "name": "Lock-up request",
+          "start_bit": 14,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "no request",
+            "1": "close lock-up",
+            "2": "open lock-up (slow)",
+            "3": "open lock-up (fast)"
+          },
+          "bases": [
+            "v84.12"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "UPA_GeneralStatus",
+      "id": 1741,
+      "id_hex": "6CD",
+      "dlc": 1,
+      "cycle_ms": 100,
+      "is_diagnostic": false,
+      "bases": [
+        "v84.12"
+      ],
+      "signals": [
+        {
+          "name": "Parking aid reset exit",
+          "start_bit": 7,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "no exit from reset (PAS)",
+            "1": "exit from reset (PAS)"
+          },
+          "bases": [
+            "v84.12"
+          ]
+        },
+        {
+          "name": "Parking aid failure display request",
+          "start_bit": 6,
+          "length": 1,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "no failure display request",
+            "1": "UPA failure display request"
+          },
+          "bases": [
+            "v84.12"
+          ]
+        },
+        {
+          "name": "Parking aid status display request",
+          "start_bit": 4,
+          "length": 2,
+          "byte_order": "big_endian",
+          "factor": 1.0,
+          "offset": 0.0,
+          "unit": null,
+          "inferred_width": false,
+          "choices": {
+            "0": "no UPA status display request",
+            "1": "UPA activated",
+            "2": "UPA deactivated"
+          },
+          "bases": [
+            "v84.12"
+          ]
         }
       ]
     }

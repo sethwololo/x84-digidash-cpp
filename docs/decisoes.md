@@ -19,6 +19,8 @@ documento registra o que veio de onde e onde o painel novo diverge do original d
 | Fonte | Onde | O que tem |
 |---|---|---|
 | Base de sinais | `can/*.json` do projeto Rust | sinais cuja descrição cita Stop ou Service |
+| Bases de CAN do DDT2000 | `~/Downloads/DDT2000data/ecus/`: `v84.04.xml`, `v84.05.xml`, `can_v84_10.xml`, `canv84.12.xml` | todas mapeadas em `can/signals-x84.json` (a `v84.10` traduzida, mais o que só existe nas outras, marcado em `bases`; o tamanho de cada frame por versão em `dlc_by_base`) |
+| Painel original no DDT2000 | `~/Downloads/DDT2000data/ecus/Tdb_BC85__EG_MG_84Phase2_Serie_rev6.xml` | configuração e lógica do painel: limiar do alerta de óleo, tabela da boia, frames ausentes |
 | Manual elétrico 2003 | `~/Documents/Megane Workshop Repairs 2003/MR364MEGANE8.pdf`, seção 83A (PDF p. 90 a 110) | lógica do próprio painel: luzes, mensagens, defect modes |
 | Injeção "petrol" (os níveis valem para o Hi-Flex, ver o pyren abaixo) | `~/Documents/Renault-Megane-2-workshop-manual-2003-2009/Engine & Peripherals/MR366X8417B*.pdf` | falha de injeção nível 1 e 2 |
 | ABS Bosch 8.0 | `.../Chassis/MR366X8438C000.pdf`, p. 38C-7 e 38C-8 | tabela das luzes do ABS |
