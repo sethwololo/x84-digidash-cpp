@@ -122,6 +122,30 @@ centrais que o original espera, depois que a ignição se firma:
 
 - **Consumo médio:** aparece depois de 400 m desde o reset, como o original (83A-17). Antes era 1 km.
 
+## Diagnóstico ativo (possibilidade, não implementado)
+
+Alguns dados que o painel original não mostra só saem perguntando à injeção. Ela não os manda sozinha na rede, e a
+base de sinais não tem nenhum sinal de álcool ou etanol. Os pedidos estão no banco do pyren (`SG0110294.p`, um
+pickle só com strings, sem código; conferido com `pickletools` antes de carregar):
+
+| Dado | Pedido (KWP2000, `0x7E0`, resposta em `0x7E8`) | Na resposta | Conversão |
+|---|---|---|---|
+| Taxa de álcool estimada no tanque | `21 A0` | bytes 27 e 28 (16 bits) | valor / 655,35 = % |
+| Consumo instantâneo | `21 A9` | bytes 3 e 4 (16 bits) | valor / 100 = L/h |
+
+A taxa de álcool só existe na versão `S3000_AD_CAN_1_X84_FLEXFUEL` (`FG0110294`); a de 2012 (`FG0110792`) não tem.
+
+Caminhos possíveis:
+
+1. **Escutar:** quando um scanner na porta OBD faz o pedido, o painel lê a resposta em `0x7E8` sem sair do modo
+   listen-only. Só funciona com o scanner ligado.
+2. **Perguntar:** o painel abre uma sessão de diagnóstico (`10 C0`), mantém-na viva (`3E 01` a cada 3 s, como o
+   pyren) e pede `21 A0` de tempos em tempos. Exige transmitir na rede do carro, o que muda a natureza do projeto:
+   sair do listen-only, conviver com a ferramenta da oficina ligada à mesma porta e garantir que um erro não
+   perturbe as centrais.
+
+O consumo instantâneo não precisa disso: sai dos contadores do `0x551` e do `0x354`, os mesmos do KM/L.
+
 ## Divergências de propósito
 
 | Original | Painel novo | Por quê |
