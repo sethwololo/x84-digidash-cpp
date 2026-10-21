@@ -6,7 +6,7 @@ A digital instrument cluster for the Renault Mégane II (X84 platform), written 
 Waveshare ESP32-P4 board with an 8.8" DSI display (480x1920, portrait) used in landscape (1920x480), and reads the
 car's CAN bus in listen-only mode: it never transmits.
 
-It is the C++ version of the Rust + Slint project `x84-digidash`: same screen, same CAN decoding, about twice the
+It is the C++ version of the private Rust + Slint project `x84-digidash`: same screen, same CAN decoding, about twice the
 frame rate.
 
 ![At night](docs/night.png)
