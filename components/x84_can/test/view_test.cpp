@@ -109,16 +109,62 @@ TEST_CASE("STOP and SERVICE only from documented signals")
         CHECK(lock(fault).service == Lamp::off);
     }
 
-    // Faults with their own lamp do not light STOP or SERVICE.
+    // Faults with their own lamp only do not light STOP or SERVICE.
     Frames frames;
     frames.ecm_general_status = engine();
     frames.ecm_general_status->coolant_temp_alert = true;
     frames.ecm_general_status->mil = MilLamp::on;
     frames.cluster_general_status = cluster();
-    frames.cluster_general_status->airbag_lamp = true;
     frames.cluster_general_status->brake_circuit_fault = true;
     CHECK(view(frames).lamps.stop == Lamp::off);
     CHECK(view(frames).lamps.service == Lamp::off);
+}
+
+TEST_CASE("STOP and SERVICE along with a system's own lamp")
+{
+    const auto injection = [](bool fault, bool severe) {
+        Frames frames;
+        frames.ecm_general_status = engine();
+        frames.ecm_general_status->injection_fault = fault;
+        frames.ecm_general_status->severe_injection_fault = severe;
+        return view(frames).lamps;
+    };
+    CHECK(injection(true, false).service == Lamp::on);
+    CHECK(injection(true, false).stop == Lamp::off);
+    CHECK(injection(false, true).stop == Lamp::on);
+
+    const auto brakes = [](AbsLamp abs, bool brake_fault) {
+        Frames frames = driving(800, 0, false);
+        frames.brake_general_data->abs_lamp = abs;
+        frames.cluster_general_status = cluster();
+        frames.cluster_general_status->brake_circuit_fault = brake_fault;
+        return view(frames).lamps;
+    };
+    CHECK(brakes(AbsLamp::fault, false).service == Lamp::on);
+    CHECK(brakes(AbsLamp::fault, false).stop == Lamp::off);
+    CHECK(brakes(AbsLamp::fault, true).service == Lamp::on);
+    CHECK(brakes(AbsLamp::fault, true).stop == Lamp::on);
+    for (auto abs : {AbsLamp::not_programmed, AbsLamp::calibration}) {
+        CHECK(brakes(abs, true).stop == Lamp::off);
+        CHECK(brakes(abs, true).service == Lamp::off);
+    }
+
+    // The battery lamp is lit before the engine starts: only a running engine makes it a charge fault.
+    const auto battery = [](int rpm) {
+        Frames frames = driving(rpm, 0, false);
+        frames.upc_general_status = power();
+        frames.upc_general_status->battery_lamp = true;
+        return view(frames).lamps;
+    };
+    CHECK(battery(0).stop == Lamp::off);
+    CHECK(battery(300).stop == Lamp::off);
+    CHECK(battery(800).stop == Lamp::on);
+
+    Frames airbag;
+    airbag.cluster_general_status = cluster();
+    airbag.cluster_general_status->airbag_lamp = true;
+    CHECK(view(airbag).lamps.service == Lamp::on);
+    CHECK(view(airbag).lamps.stop == Lamp::off);
 }
 
 TEST_CASE("lamp self-test lights everything")

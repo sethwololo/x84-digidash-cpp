@@ -65,5 +65,6 @@ estrutura: `README.pt-BR.md` (em inglês: `README.md`).
 
 1. Conferido no carro: mensagens do cabeçalho, marcha, cinto, trip (incluindo a gravação). Falta: polaridade da luz
    de óleo, MOTOR e REG/LIM contra o painel original, o brilho e o tema pelos faróis, a legibilidade do tema
-   claro sob o sol.
+   claro sob o sol. STOP/SERVICE junto com injeção, ABS e bateria vêm do manual de oficina (fontes no
+   `docs/can-plan.md` do Rust); só o SERVICE com o airbag foi visto no carro.
 2. O log de FPS só aparece quando há o que redesenhar (tela parada não gera quadros).
