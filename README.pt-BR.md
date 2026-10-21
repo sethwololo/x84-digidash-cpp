@@ -24,7 +24,8 @@ por segundo.
   ([docs/decisoes.md](docs/decisoes.md)).
 - As mensagens de texto do painel original no cabeçalho, com a gravidade de cada uma.
 - Distância e consumo do trip, guardados entre reinícios (NVS), e o hodômetro.
-- Dia e noite: com farol baixo ou alto aceso, tema escuro com backlight em 70 %; senão, tema claro em 100 %.
+- Dia e noite: com farol baixo ou alto aceso, tema escuro com o backlight pelo reostato do
+  painel (entre 10 e 70 %); senão, tema claro em 100 %.
 - Estado do CAN no rodapé: frames por segundo, erros no barramento, bus-off ou silêncio.
 - 50 a 61 fps no pior caso (todos os dígitos mudando a cada quadro); firmware de cerca de 0,9 MB.
 

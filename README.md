@@ -23,7 +23,8 @@ frame rate.
   ([docs/decisoes.md](docs/decisoes.md), in Portuguese).
 - The cluster's text messages in the header, with their severity.
 - Trip distance and fuel economy, kept across restarts (NVS), and the odometer.
-- Day and night: with the low or high beam on, a dark theme at 70 % backlight; otherwise a light theme at 100 %.
+- Day and night: with the low or high beam on, a dark theme with the backlight following the
+  cluster's rheostat (10 to 70 %); otherwise a light theme at 100 %.
 - CAN status in the footer: frames per second, bus errors, bus-off or silence.
 - 50 to 61 fps in the worst case (every digit changing every frame); about 0.9 MB of firmware.
 

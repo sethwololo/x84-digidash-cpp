@@ -9,7 +9,8 @@ namespace x84 {
 namespace {
 
 // Which state of the oil pressure switch lights the oil lamp. The descriptions only say "switch open" / "switch
-// closed": check against the original cluster (ignition on, engine off, the lamp must be lit).
+// closed": the car's switch reads closed with the ignition on and the engine stopped (capture of 2026-10-21), and the
+// original cluster's DDT2000 definition calls its oil fault "switch closed and engine speed above the threshold".
 constexpr bool OIL_LAMP_WHEN_SWITCH_CLOSED = true;
 // Step of the RPM shown. Rounding keeps the digits from flickering; 50 looked too coarse in the car.
 constexpr int RPM_STEP = 25;
@@ -27,9 +28,13 @@ constexpr uint32_t GEAR_NONE_DEBOUNCE_MS = 400;
 // With the clutch pressed, a lost gear or neutral is a shift in progress: the last gear stays on screen this long.
 // 400 ms was shorter than a calm shift in the car, which flashed "-" and "N".
 constexpr uint32_t GEAR_SHIFT_HOLD_MS = 1500;
-// Backlight with the low or high beam on. The cluster's night dimmer (0x645) did not follow the rheostat in the
-// car, so the headlights decide.
-constexpr int NIGHT_BACKLIGHT_PERCENT = 70;
+// Backlight with the low or high beam on: the original cluster's rheostat (0x645 night dimmer, which follows it in the
+// car), kept between these. Without that frame, the ceiling.
+constexpr int NIGHT_BACKLIGHT_MAX_PERCENT = 70;
+constexpr int NIGHT_BACKLIGHT_MIN_PERCENT = 10;
+// The original cluster's oil pressure fault: the switch reads no pressure above this engine speed (its configuration
+// CFG_SEUILPH, 1600 rpm by default; DDT2000 Tdb_BC85__EG_MG_84Phase2). Below it, only the oil lamp.
+constexpr int OIL_FAULT_MIN_RPM = 1600;
 // How long after the ignition comes on before a missing frame counts: the computers start at their own pace. Not
 // in the manual: check in the car that no warning flashes at the start.
 constexpr uint32_t IGNITION_SETTLE_MS = 3000;
@@ -308,14 +313,18 @@ View view(const Frames &f, bool ignition_settled)
     // STOP and SERVICE along with a system's own lamp or message, as the original cluster lights them (workshop
     // manual 83A-18 to 83A-20, 17B, 38C, 87G; docs/decisoes.md). The brake circuit incident is the brake fluid
     // level, which the original cluster reads by wire.
+    // The child lock fault is left out: in the car the original cluster only beeps for it (the UCH's buzzer request),
+    // whatever 83A-18 says. The header still shows it.
     const bool child_lock_fault = f.uch_system_control && f.uch_system_control->child_lock_fault == true;
+    const bool oil_pressure_fault =
+        v.lamps.oil_pressure == Lamp::on && engine && engine->engine_speed_rpm >= OIL_FAULT_MIN_RPM;
     const bool abs_fault = f.brake_general_data && f.brake_general_data->abs_lamp == AbsLamp::fault;
     const bool brake_fluid_low = f.cluster_general_status && f.cluster_general_status->brake_circuit_fault;
-    if (severe_injection_fault || brake_fluid_low || v.lamps.oil_pressure == Lamp::on || v.lamps.battery == Lamp::on) {
+    if (severe_injection_fault || brake_fluid_low || oil_pressure_fault || v.lamps.battery == Lamp::on) {
         v.lamps.stop = Lamp::on;
     }
     if (injection_fault || abs_fault || v.lamps.airbag == Lamp::on || v.oil_alert || fuel_gauge_fault || column_lock ||
-        child_lock_fault || wiper_fault || (keyless && severity(*keyless) == Severity::service)) {
+        wiper_fault || (keyless && severity(*keyless) == Severity::service)) {
         v.lamps.service = Lamp::on;
     }
 
@@ -371,7 +380,13 @@ View view(const Frames &f, bool ignition_settled)
 
     // From the lamps the car switched on, before the self-test below lights them all.
     v.night = v.lamps.headlights == Headlights::low_beam || v.lamps.headlights == Headlights::high_beam;
-    v.backlight_percent = v.night ? NIGHT_BACKLIGHT_PERCENT : 100;
+    if (v.night) {
+        const auto &cluster = f.cluster_general_status_2;
+        const int rheostat = cluster ? (cluster->night_dimmer_permille + 5) / 10 : NIGHT_BACKLIGHT_MAX_PERCENT;
+        v.backlight_percent = std::clamp(rheostat, NIGHT_BACKLIGHT_MIN_PERCENT, NIGHT_BACKLIGHT_MAX_PERCENT);
+    } else {
+        v.backlight_percent = 100;
+    }
 
     // The original cluster tests its lamps: light them all, in step with it.
     if (self_test) {

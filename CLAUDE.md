@@ -46,8 +46,8 @@ diverge dele de propósito: `docs/decisoes.md` (mantenha-o ao mudar uma regra de
 ## Dia e noite
 
 - `View::night` = farol baixo ou alto aceso (o estado real, de `0x625`, não o do autoteste das lâmpadas). Noite:
-  backlight 70 % e paleta escura; dia (farol desligado ou só lanternas): 100 % e paleta clara. O reostato do
-  painel original (`0x645`) não acompanhou no carro e não é usado.
+  backlight pelo reostato do painel original (`0x645`, que acompanha no carro), entre 10 e 70 %, e paleta escura;
+  dia (farol desligado ou só lanternas): 100 % e paleta clara.
 - `theme.h` tem as duas paletas (`DARK`, `LIGHT`) com os mesmos papéis de cor; os widgets leem
   `theme::palette()`. Na troca, `Dashboard` reconstrói a tela inteira na outra paleta.
 - Paleta clara: fundo cinza-claro (`#e6e6e6`) e acentos saturados (um canal cheio, outro zerado). Tons escuros, que
@@ -64,7 +64,8 @@ diverge dele de propósito: `docs/decisoes.md` (mantenha-o ao mudar uma regra de
 
 ## Próximos passos
 
-1. Conferido no carro: mensagens do cabeçalho, marcha, cinto, trip (incluindo a gravação). Falta: polaridade da luz
-   de óleo, MOTOR e REG/LIM contra o painel original, o brilho e o tema pelos faróis, a legibilidade do tema
-   claro sob o sol, e a lista "A conferir no carro" de `docs/decisoes.md` (STOP/SERVICE e frames ausentes).
+1. Conferido no carro: mensagens do cabeçalho, marcha, cinto, trip (incluindo a gravação), a polaridade da luz de
+   óleo e o reostato (captura). Falta: MOTOR e REG/LIM contra o painel original, o brilho e o tema pelos faróis no
+   painel novo, a legibilidade do tema claro sob o sol, e a lista "A conferir no carro" de `docs/decisoes.md`
+   (STOP/SERVICE e frames ausentes).
 2. O log de FPS só aparece quando há o que redesenhar (tela parada não gera quadros).

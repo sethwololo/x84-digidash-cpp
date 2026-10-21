@@ -52,7 +52,7 @@ O painel original acende o STOP (vermelho, com bipe) ou o SERVICE (laranja) junt
 | STOP | `Défaillance verrouillage colonne` = 001 (UCH/STOP) | `60D` | base de sinais |
 | STOP | falha de injeção gravidade 2 | `551` | 17B; 83A-19 "Faulty injection", "Engine overheating" |
 | STOP | `Incident circuit frein` (nível do fluido de freio) | `5C5` | 83A-18 III; 38C "Brake faults" |
-| STOP | luz da pressão do óleo | `625` | 83A-18 III |
+| STOP | luz da pressão do óleo com o motor a 1600 rpm ou mais | `625` + `181` | 83A-18 III; DDT2000 do painel (falha de pressão: "contato fechado e rotação > limiar", `CFG_SEUILPH`, 1600 rpm de fábrica) |
 | STOP | luz da bateria | `625` | 83A-18 III; 87G |
 | SERVICE | `Défaut DAE` = 01 (falha menor da direção) | `5E4` | base de sinais; 36B |
 | SERVICE | `Défaillance verrouillage colonne` = 110 (UCH/SERV) | `60D` | base de sinais |
@@ -72,8 +72,9 @@ Ficam de fora:
 - **Imobilizador (SERVICE em 83A-18):** não há sinal no CAN para a falha dele.
 - **ESP, pneus, câmbio automático, filtro de partículas:** o carro não tem.
 
-Com a ignição ligada e o motor parado, a luz do óleo acende e leva o STOP junto. É o comportamento do original: o
-manual do proprietário diz que o STOP "apaga-se com o motor em funcionamento".
+Com a ignição ligada e o motor parado, ou em marcha lenta, a luz do óleo acende sozinha: o painel original só declara
+a falha de pressão acima do limiar de rotação. A captura de 21/10/2026 confirmou a polaridade: o pressostato fica
+"fechado" com a ignição ligada e o motor parado.
 
 ## Mensagens
 
@@ -89,7 +90,9 @@ A cor da mensagem no cabeçalho segue a tabela de 83A-19 e 83A-20: Stop é a cor
 | FALHA NA DIREÇÃO (nova) | — | falha, com a falha maior da direção ou o frame dela ausente |
 | FALHA ELETRÔNICA (nova) | — | SERVICE, com frame ausente da injeção ou da UPC |
 
-A trava das crianças e o limpador não estão na tabela, mas 83A-18 II diz que acendem o SERVICE com bipe.
+O limpador não está na tabela, mas 83A-18 II diz que acende o SERVICE com bipe. O mesmo item diz isso da trava das
+crianças, mas no carro o painel original só bipa (três vezes, na partida, pelo pedido de buzzer da UCH no `60D`): o
+painel novo mostra FALHA TRAVA DE CRIANÇA sem acender o SERVICE.
 
 ## Frames ausentes
 
@@ -119,6 +122,12 @@ centrais que o original espera, depois que a ignição se firma:
   Ausentes, os valores deles mostram `--`.
 - **Log:** o firmware registra no log os frames esperados que faltam sempre que a lista muda (`missing frames:
   0x5E4`). É o que conferir no carro: com tudo funcionando, a lista deve ficar vazia.
+
+## Backlight
+
+À noite (farol baixo ou alto), o backlight segue o reostato do painel original (`0x645`, porcentagem máxima de noite),
+arredondado e limitado entre 10 % e 70 %; sem o frame, 70 %. A captura de 21/10/2026 mostrou o reostato indo de 95 %
+a 4 % (o byte de dia fica em 255). De dia, 100 %.
 
 ## Computador de bordo
 
@@ -155,6 +164,7 @@ O consumo instantâneo não precisa disso: sai dos contadores do `0x551` e do `0
 | ponteiros vão a zero com o frame ausente (velocímetro, conta-giros, temperatura) | `--` | zero parece um valor real; `--` diz que não há dado |
 | sem a UCH: símbolo de portas aceso e setas acesas | não mostra | são estados inventados; o SERVICE já avisa da falha |
 | boia em falha: luz de reserva piscando | só o SERVICE e o nível em `--` | a moldura RESERVA diria que falta combustível, o que não se sabe |
+| falha da trava das crianças: só os bipes | a mensagem FALHA TRAVA DE CRIANÇA, sem SERVICE | mostra o que a UCH já sabe, sem um alerta que o original não dá |
 | frame da direção ausente: "faulty steering" com SERVICE | FALHA NA DIREÇÃO na cor de falha, com SERVICE | a mensagem do manual é a da falha maior; a cor segue a mensagem |
 
 ## A conferir no carro
@@ -162,5 +172,4 @@ O consumo instantâneo não precisa disso: sai dos contadores do `0x551` e do `0
 1. Com a ignição ligada e tudo normal, o log diz `no expected frame missing`. A direção e o airbag estão na rede da
    porta OBD (banco do pyren); se mesmo assim o `0x5E4` ou o `0x651` não chegarem, a regra deles precisa sair.
 2. Na partida, nenhum aviso pisca: se piscar, aumentar `IGNITION_SETTLE_MS`.
-3. Ignição ligada e motor parado: o STOP acende junto com a luz do óleo, como no original.
-4. A polaridade da luz do óleo (`OIL_LAMP_WHEN_SWITCH_CLOSED`) continua a conferir, e agora também leva o STOP.
+3. Ignição ligada e motor parado: a luz do óleo acende sem o STOP, como no original.

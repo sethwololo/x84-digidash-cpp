@@ -165,13 +165,19 @@ TEST_CASE("STOP and SERVICE along with a system's own lamp or message")
     };
     CHECK(power_with([](UpcGeneralStatus &p) { p.battery_lamp = true; }).stop == Lamp::on);
     CHECK(power_with([](UpcGeneralStatus &p) { p.battery_lamp = false; }).stop == Lamp::off);
-    // The oil lamp, lit with the ignition on and the engine stopped, brings STOP along.
-    const auto oil = power_with([](UpcGeneralStatus &p) {
-        p.apc_distributed = true;
-        p.oil_pressure_switch_closed = true; // lights the lamp, as in "oil lamp only with the ignition on"
-    });
-    CHECK(oil.oil_pressure == Lamp::on);
-    CHECK(oil.stop == Lamp::on);
+    // The oil lamp brings STOP along only from 1600 rpm: with the engine stopped or idling, the lamp alone.
+    const auto oil = [](int rpm) {
+        Frames frames = driving(rpm, 0, false);
+        frames.upc_general_status = power();
+        frames.upc_general_status->apc_distributed = true;
+        frames.upc_general_status->oil_pressure_switch_closed = true; // no pressure, as in "oil lamp only with..."
+        return view(frames).lamps;
+    };
+    CHECK(oil(0).oil_pressure == Lamp::on);
+    CHECK(oil(0).stop == Lamp::off);
+    CHECK(oil(800).stop == Lamp::off);
+    CHECK(oil(1599).stop == Lamp::off);
+    CHECK(oil(1600).stop == Lamp::on);
 
     Frames oil_level;
     oil_level.cluster_backup = ClusterBackup{};
@@ -192,7 +198,9 @@ TEST_CASE("STOP and SERVICE along with a system's own lamp or message")
 
     Frames child_lock;
     child_lock.uch_system_control = UchSystemControl{std::nullopt, true};
-    CHECK(view(child_lock).lamps.service == Lamp::on);
+    // The original cluster only beeps for it.
+    CHECK(view(child_lock).lamps.service == Lamp::off);
+    CHECK(view(child_lock).notice == Notice::child_lock_fault);
 }
 
 TEST_CASE("power steering messages")
@@ -607,9 +615,23 @@ TEST_CASE("night and backlight follow the headlights")
     // Off or position lamps: day.
     CHECK(lights(false, false, false) == std::pair(false, 100));
     CHECK(lights(true, false, false) == std::pair(false, 100));
-    // Low or high beam: night.
+    // Low or high beam: night, at the ceiling without the cluster's rheostat.
     CHECK(lights(true, true, false) == std::pair(true, 70));
     CHECK(lights(false, false, true) == std::pair(true, 70));
+    // At night the rheostat sets it, between 10 and 70 %; by day it does not count.
+    const auto rheostat = [](int raw, bool low_beam) {
+        Frames frames;
+        frames.upc_general_status = power();
+        frames.upc_general_status->low_beam = low_beam;
+        frames.cluster_general_status_2 = cluster2(SeatBeltLamp::off, false, raw * 4);
+        return view(frames).backlight_percent;
+    };
+    CHECK(rheostat(238, true) == 70); // 95 %, the rheostat at its top
+    CHECK(rheostat(100, true) == 40);
+    CHECK(rheostat(97, true) == 39);  // 38.8 % rounds up
+    CHECK(rheostat(10, true) == 10);  // 4 %, its bottom
+    CHECK(rheostat(0, true) == 10);
+    CHECK(rheostat(100, false) == 100);
     // The lamp self-test lights the high beam on screen, but it is still day.
     CHECK(lights(false, false, false, true) == std::pair(false, 100));
     CHECK(view(Frames{}).backlight_percent == 100);
