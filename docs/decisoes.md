@@ -20,13 +20,24 @@ documento registra o que veio de onde e onde o painel novo diverge do original d
 |---|---|---|
 | Base de sinais | `can/*.json` do projeto Rust | sinais cuja descrição cita Stop ou Service |
 | Manual elétrico 2003 | `~/Documents/Megane Workshop Repairs 2003/MR364MEGANE8.pdf`, seção 83A (PDF p. 90 a 110) | lógica do próprio painel: luzes, mensagens, defect modes |
-| Injeção "petrol" (vale para o Hi-Flex) | `~/Documents/Renault-Megane-2-workshop-manual-2003-2009/Engine & Peripherals/MR366X8417B*.pdf` | falha de injeção nível 1 e 2 |
+| Injeção "petrol" (os níveis valem para o Hi-Flex, ver o pyren abaixo) | `~/Documents/Renault-Megane-2-workshop-manual-2003-2009/Engine & Peripherals/MR366X8417B*.pdf` | falha de injeção nível 1 e 2 |
 | ABS Bosch 8.0 | `.../Chassis/MR366X8438C000.pdf`, p. 38C-7 e 38C-8 | tabela das luzes do ABS |
 | Central do motor | `.../Electrical Equipment/MR366X8487G050.pdf` | falha de carga da bateria |
 | Direção elétrica | `.../Chassis/MR366X8436B000.pdf` | SERVICE e "Check steering" |
 | Manual do proprietário | `~/Downloads/Manual de Proprietário Megane Sedan e Gran Tour.pdf`, p. 1.31 a 1.39 | descrição genérica das luzes |
+| Diagnóstico (pyren) | `~/Downloads/pyrendata_247_and_Lada_and_OldRenault/`: `EcuRenault/Uces.xml`, `Sessions/FG0110294.xml` e `FG0110792.xml` (injeção S3000 Flex do X84), `Vehicles/TCOM_086.xml` (Mégane II) | centrais do carro e o que a ferramenta de diagnóstico lê de cada uma |
 
 A seção 83A do manual de 2003 é a referência principal: descreve o painel, não cada central.
+
+O banco do pyren descreve o diagnóstico (perguntas da ferramenta e respostas da central), não as mensagens que as
+centrais trocam sozinhas na rede. Dele vêm duas confirmações:
+
+- A injeção S3000 Flex do X84 fase 2 (`FG0110792.xml`) tem os estados "DEFAUT INJECTION GRAVITE 1" e "GRAVITE 2":
+  os níveis do manual 17B valem para o Hi-Flex.
+- O Mégane II tem na mesma rede de diagnóstico, a da porta OBD, a direção elétrica (endereço `04`), o airbag (`2C`),
+  a UCH (`26`), a UPC (`27`), o painel (`51`), o ABS (`01`), o ar-condicionado (`29`) e a injeção (`7A`).
+
+Os `.p` do pyren são pickles de Python (abri-los pode executar código) e não foram abertos.
 
 ## STOP e SERVICE
 
@@ -122,8 +133,8 @@ centrais que o original espera, depois que a ignição se firma:
 
 ## A conferir no carro
 
-1. Com a ignição ligada e tudo normal, o log diz `no expected frame missing`. Se o `0x5E4` ou o `0x651` não chegarem
-   pela porta OBD, a regra deles precisa sair.
+1. Com a ignição ligada e tudo normal, o log diz `no expected frame missing`. A direção e o airbag estão na rede da
+   porta OBD (banco do pyren); se mesmo assim o `0x5E4` ou o `0x651` não chegarem, a regra deles precisa sair.
 2. Na partida, nenhum aviso pisca: se piscar, aumentar `IGNITION_SETTLE_MS`.
 3. Ignição ligada e motor parado: o STOP acende junto com a luz do óleo, como no original.
 4. A polaridade da luz do óleo (`OIL_LAMP_WHEN_SWITCH_CLOSED`) continua a conferir, e agora também leva o STOP.
