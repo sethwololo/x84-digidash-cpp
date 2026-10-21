@@ -49,6 +49,9 @@ const char *notice_text(x84::Notice notice)
     case x84::Notice::wiper_fault: return "FALHA LIMPADOR";
     case x84::Notice::injection_fault: return "VERIFICAR INJEÇÃO";
     case x84::Notice::severe_injection_fault: return "FALHA GRAVE INJEÇÃO";
+    case x84::Notice::check_steering: return "VERIFICAR DIREÇÃO";
+    case x84::Notice::steering_fault: return "FALHA NA DIREÇÃO";
+    case x84::Notice::electronic_fault: return "FALHA ELETRÔNICA";
     }
     return "";
 }

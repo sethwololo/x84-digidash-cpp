@@ -6,6 +6,7 @@
 
 #include <cstdint>
 #include <optional>
+#include <vector>
 
 #include "frames.h"
 
@@ -50,6 +51,9 @@ enum class Notice {
     wiper_fault,
     injection_fault,
     severe_injection_fault,
+    check_steering,   // power steering minor fault (0x5E4)
+    steering_fault,   // power steering major fault, or its frame is missing
+    electronic_fault, // a frame of the injection or the fuse box is missing
 };
 
 // How a notice is shown: an instruction or information, a fault that does not stop the car (SERVICE color), or
@@ -124,9 +128,25 @@ struct View {
     std::optional<uint32_t> odometer_km; // the original cluster's odometer (0x5C5 Odometer)
 };
 
-// What the dashboard shows, from the valid frames. Every value and lamp comes from a documented signal, and a
-// missing frame never lights a warning (docs/can-plan.md of the Rust version).
-View view(const Frames &frames);
+// What the dashboard shows, from the valid frames. Every value and lamp comes from a documented signal or the
+// original cluster's documented behavior (docs/decisoes.md). With `ignition_settled` (IgnitionSettle), a missing
+// frame of the car's computers lights the lamps the original cluster lights for it.
+View view(const Frames &frames, bool ignition_settled = false);
+
+// The frames the original cluster expects from the car's computers with the ignition on (workshop manual 83A-22 and
+// 83A-23) that are missing from `frames`.
+std::vector<uint16_t> missing_frames(const Frames &frames);
+
+// Whether the ignition has been on for IGNITION_SETTLE_MS: long enough for every computer to be sending. The
+// ignition is the fuse box's APC state (0x625), or, without that frame, any frame the engine side only sends with
+// the ignition on.
+class IgnitionSettle {
+public:
+    bool update(const Frames &frames, uint32_t now_ms);
+
+private:
+    std::optional<uint32_t> on_since_ms_;
+};
 
 // How long a frame stays valid after it arrives: about 5 cycles, at least 500 ms.
 uint32_t timeout_ms(uint16_t frame_id);

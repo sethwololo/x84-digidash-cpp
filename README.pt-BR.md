@@ -19,7 +19,9 @@ por segundo.
   do óleo.
 - Portas e porta-malas abertos numa vista de cima do carro; setas.
 - Doze luzes de aviso (farol, cinto, neblina dianteira e traseira, freio, óleo, motor, bateria, ABS, STOP, revisão,
-  airbag), fixas ou piscando como o carro manda.
+  airbag), fixas ou piscando como o carro manda. O STOP e a revisão (SERVICE) acendem junto com os outros sistemas,
+  como no painel original, e um frame que some acende os alertas que o original acenderia
+  ([docs/decisoes.md](docs/decisoes.md)).
 - As mensagens de texto do painel original no cabeçalho, com a gravidade de cada uma.
 - Distância e consumo do trip, guardados entre reinícios (NVS), e o hodômetro.
 - Dia e noite: com farol baixo ou alto aceso, tema escuro com backlight em 70 %; senão, tema claro em 100 %.

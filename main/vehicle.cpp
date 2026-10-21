@@ -1,5 +1,8 @@
 #include "vehicle.h"
 
+#include <cstdio>
+#include <string>
+
 #include "esp_log.h"
 #include "esp_timer.h"
 
@@ -39,7 +42,10 @@ Vehicle::Vehicle(can::Bus &bus) : bus_(bus)
 ui::Screen Vehicle::update(uint32_t now_ms)
 {
     decode_new_frames(now_ms);
-    x84::View view = x84::view(fresh_frames(now_ms));
+    const x84::Frames fresh = fresh_frames(now_ms);
+    const bool ignition_settled = ignition_settle_.update(fresh, now_ms);
+    log_missing_frames(ignition_settled ? x84::missing_frames(fresh) : std::vector<uint16_t>{});
+    x84::View view = x84::view(fresh, ignition_settled);
     view.gear = gear_debounce_.update(view.gear, view.clutch_pressed, now_ms);
     update_trip(view, now_ms);
 
@@ -94,6 +100,20 @@ x84::Frames Vehicle::fresh_frames(uint32_t now_ms) const
         if (sequences_[i] == 0 || now_ms - received_at_ms_[i] >= x84::timeout_ms(frame_id)) fresh.clear(frame_id);
     }
     return fresh;
+}
+
+void Vehicle::log_missing_frames(std::vector<uint16_t> missing)
+{
+    if (missing == missing_frames_) return;
+    missing_frames_ = std::move(missing);
+    std::string ids;
+    for (uint16_t frame_id : missing_frames_) {
+        char id[8];
+        snprintf(id, sizeof id, " 0x%03X", frame_id);
+        ids += id;
+    }
+    if (ids.empty()) ESP_LOGI(TAG, "no expected frame missing");
+    else ESP_LOGW(TAG, "missing frames:%s", ids.c_str());
 }
 
 void Vehicle::update_trip(const x84::View &view, uint32_t now_ms)

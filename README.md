@@ -18,7 +18,9 @@ frame rate.
 - Coolant temperature, battery voltage and outside temperature; fuel level with a reserve alert; oil level.
 - Open doors and trunk on a top view of the car; turn signals.
 - Twelve warning lights (headlights, seat belt, front and rear fog lights, brake, oil, engine, battery, ABS, STOP,
-  service, airbag), steady or blinking as the car sends them.
+  service, airbag), steady or blinking as the car sends them. STOP and SERVICE light along with the other systems,
+  as in the original cluster, and a missing frame lights the warnings the original would
+  ([docs/decisoes.md](docs/decisoes.md), in Portuguese).
 - The cluster's text messages in the header, with their severity.
 - Trip distance and fuel economy, kept across restarts (NVS), and the odometer.
 - Day and night: with the low or high beam on, a dark theme at 70 % backlight; otherwise a light theme at 100 %.

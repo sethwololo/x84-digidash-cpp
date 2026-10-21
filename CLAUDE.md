@@ -3,7 +3,8 @@
 Painel digital do Renault Mégane II (X84) em C++20 + LVGL 9.5 sobre ESP-IDF 6.0.2, numa Waveshare ESP32-P4 com
 tela DSI de 8,8" (480x1920, OTA7290B) usada em paisagem. Port do projeto Rust + Slint em `~/dev/rust/x84-digidash`,
 que é a referência de layout (`ui/*.slint`) e de regras do CAN (`x84-can/`, `docs/can-plan.md`). Comandos e
-estrutura: `README.pt-BR.md` (em inglês: `README.md`).
+estrutura: `README.pt-BR.md` (em inglês: `README.md`). O que replica o painel original, de qual manual, e onde
+diverge dele de propósito: `docs/decisoes.md` (mantenha-o ao mudar uma regra de luz, mensagem ou frame).
 
 ## Convenções
 
@@ -65,6 +66,5 @@ estrutura: `README.pt-BR.md` (em inglês: `README.md`).
 
 1. Conferido no carro: mensagens do cabeçalho, marcha, cinto, trip (incluindo a gravação). Falta: polaridade da luz
    de óleo, MOTOR e REG/LIM contra o painel original, o brilho e o tema pelos faróis, a legibilidade do tema
-   claro sob o sol. STOP/SERVICE junto com injeção, ABS e bateria vêm do manual de oficina (fontes no
-   `docs/can-plan.md` do Rust); só o SERVICE com o airbag foi visto no carro.
+   claro sob o sol, e a lista "A conferir no carro" de `docs/decisoes.md` (STOP/SERVICE e frames ausentes).
 2. O log de FPS só aparece quando há o que redesenhar (tela parada não gera quadros).

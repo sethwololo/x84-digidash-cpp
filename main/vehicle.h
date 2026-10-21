@@ -5,6 +5,7 @@
 
 #include <array>
 #include <cstdint>
+#include <vector>
 
 #include "can.h"
 #include "nvs.h"
@@ -22,6 +23,7 @@ public:
 private:
     void decode_new_frames(uint32_t now_ms);
     x84::Frames fresh_frames(uint32_t now_ms) const;
+    void log_missing_frames(std::vector<uint16_t> missing);
     void update_trip(const x84::View &view, uint32_t now_ms);
     void save_trip();
 
@@ -31,6 +33,9 @@ private:
     uint32_t saved_distance_step_ = 0;
     uint32_t saved_fuel_step_ = 0;
     x84::GearDebounce gear_debounce_;
+    x84::IgnitionSettle ignition_settle_;
+    // The expected frames missing with the ignition settled, logged when they change: what to check in the car.
+    std::vector<uint16_t> missing_frames_;
 
     // The latest decoded frame of each identifier, and when it arrived; a frame too short to decode leaves the
     // previous one.

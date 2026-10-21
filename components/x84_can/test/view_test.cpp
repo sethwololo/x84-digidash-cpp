@@ -104,23 +104,24 @@ TEST_CASE("STOP and SERVICE only from documented signals")
     };
     CHECK(lock(ColumnLockFault::stop).stop == Lamp::on);
     CHECK(lock(ColumnLockFault::service).service == Lamp::on);
-    for (auto fault : {ColumnLockFault::not_locked, ColumnLockFault::not_unlocked, ColumnLockFault::reserved}) {
+    // Steering locked / not locked: Service in the message table.
+    for (auto fault : {ColumnLockFault::not_locked, ColumnLockFault::not_unlocked}) {
         CHECK(lock(fault).stop == Lamp::off);
-        CHECK(lock(fault).service == Lamp::off);
+        CHECK(lock(fault).service == Lamp::on);
     }
+    CHECK(lock(ColumnLockFault::reserved).stop == Lamp::off);
+    CHECK(lock(ColumnLockFault::reserved).service == Lamp::off);
 
     // Faults with their own lamp only do not light STOP or SERVICE.
     Frames frames;
     frames.ecm_general_status = engine();
     frames.ecm_general_status->coolant_temp_alert = true;
     frames.ecm_general_status->mil = MilLamp::on;
-    frames.cluster_general_status = cluster();
-    frames.cluster_general_status->brake_circuit_fault = true;
     CHECK(view(frames).lamps.stop == Lamp::off);
     CHECK(view(frames).lamps.service == Lamp::off);
 }
 
-TEST_CASE("STOP and SERVICE along with a system's own lamp")
+TEST_CASE("STOP and SERVICE along with a system's own lamp or message")
 {
     const auto injection = [](bool fault, bool severe) {
         Frames frames;
@@ -133,36 +134,172 @@ TEST_CASE("STOP and SERVICE along with a system's own lamp")
     CHECK(injection(true, false).stop == Lamp::off);
     CHECK(injection(false, true).stop == Lamp::on);
 
-    const auto brakes = [](AbsLamp abs, bool brake_fault) {
+    const auto abs = [](AbsLamp lamp) {
         Frames frames = driving(800, 0, false);
-        frames.brake_general_data->abs_lamp = abs;
-        frames.cluster_general_status = cluster();
-        frames.cluster_general_status->brake_circuit_fault = brake_fault;
+        frames.brake_general_data->abs_lamp = lamp;
         return view(frames).lamps;
     };
-    CHECK(brakes(AbsLamp::fault, false).service == Lamp::on);
-    CHECK(brakes(AbsLamp::fault, false).stop == Lamp::off);
-    CHECK(brakes(AbsLamp::fault, true).service == Lamp::on);
-    CHECK(brakes(AbsLamp::fault, true).stop == Lamp::on);
-    for (auto abs : {AbsLamp::not_programmed, AbsLamp::calibration}) {
-        CHECK(brakes(abs, true).stop == Lamp::off);
-        CHECK(brakes(abs, true).service == Lamp::off);
-    }
+    CHECK(abs(AbsLamp::fault).service == Lamp::on);
+    CHECK(abs(AbsLamp::fault).stop == Lamp::off);
+    // Only in the workshop.
+    CHECK(abs(AbsLamp::not_programmed).service == Lamp::off);
+    CHECK(abs(AbsLamp::calibration).service == Lamp::off);
 
-    const auto battery = [](bool lamp) {
+    const auto cluster_with = [](auto set) {
+        Frames frames;
+        frames.cluster_general_status = cluster();
+        set(*frames.cluster_general_status);
+        return view(frames).lamps;
+    };
+    CHECK(cluster_with([](ClusterGeneralStatus &c) { c.brake_circuit_fault = true; }).stop == Lamp::on);
+    CHECK(cluster_with([](ClusterGeneralStatus &c) { c.airbag_lamp = true; }).service == Lamp::on);
+    CHECK(cluster_with([](ClusterGeneralStatus &c) { c.airbag_lamp = true; }).stop == Lamp::off);
+    CHECK(cluster_with([](ClusterGeneralStatus &c) { c.fuel_gauge = FuelGauge::open_circuit; }).service == Lamp::on);
+    CHECK(cluster_with([](ClusterGeneralStatus &c) { c.fuel_gauge = FuelGauge::short_circuit; }).service == Lamp::on);
+
+    const auto power_with = [](auto set) {
         Frames frames;
         frames.upc_general_status = power();
-        frames.upc_general_status->battery_lamp = lamp;
+        set(*frames.upc_general_status);
         return view(frames).lamps;
     };
-    CHECK(battery(true).stop == Lamp::on);
-    CHECK(battery(false).stop == Lamp::off);
+    CHECK(power_with([](UpcGeneralStatus &p) { p.battery_lamp = true; }).stop == Lamp::on);
+    CHECK(power_with([](UpcGeneralStatus &p) { p.battery_lamp = false; }).stop == Lamp::off);
+    // The oil lamp, lit with the ignition on and the engine stopped, brings STOP along.
+    const auto oil = power_with([](UpcGeneralStatus &p) {
+        p.apc_distributed = true;
+        p.oil_pressure_switch_closed = true; // lights the lamp, as in "oil lamp only with the ignition on"
+    });
+    CHECK(oil.oil_pressure == Lamp::on);
+    CHECK(oil.stop == Lamp::on);
 
-    Frames airbag;
-    airbag.cluster_general_status = cluster();
-    airbag.cluster_general_status->airbag_lamp = true;
-    CHECK(view(airbag).lamps.service == Lamp::on);
-    CHECK(view(airbag).lamps.stop == Lamp::off);
+    Frames oil_level;
+    oil_level.cluster_backup = ClusterBackup{};
+    oil_level.cluster_backup->oil_alert = true;
+    CHECK(view(oil_level).lamps.service == Lamp::on);
+
+    const auto body_with = [](auto set) {
+        Frames frames;
+        frames.uch_general_status = body();
+        set(*frames.uch_general_status);
+        return view(frames).lamps;
+    };
+    CHECK(body_with([](UchGeneralStatus &b) { b.wiper_fault = true; }).service == Lamp::on);
+    CHECK(body_with([](UchGeneralStatus &b) { b.keyless_display = 6; }).service == Lamp::on);      // card not detected
+    CHECK(body_with([](UchGeneralStatus &b) { b.keyless_display = 11; }).service == Lamp::off);    // restricted mode
+    CHECK(body_with([](UchGeneralStatus &b) { b.card_battery_low = true; }).service == Lamp::off);
+    CHECK(body_with([](UchGeneralStatus &b) { b.column_lock_fault = ColumnLockFault::not_locked; }).service == Lamp::on);
+
+    Frames child_lock;
+    child_lock.uch_system_control = UchSystemControl{std::nullopt, true};
+    CHECK(view(child_lock).lamps.service == Lamp::on);
+}
+
+TEST_CASE("power steering messages")
+{
+    const auto steering = [](SteeringFault fault) {
+        Frames frames;
+        frames.eps_general_status = EpsGeneralStatus{fault};
+        return view(frames).notice;
+    };
+    CHECK(steering(SteeringFault::service) == Notice::check_steering);
+    CHECK(steering(SteeringFault::stop) == Notice::steering_fault);
+    CHECK_FALSE(steering(SteeringFault::none).has_value());
+    CHECK(severity(Notice::check_steering) == Severity::service);
+    CHECK(severity(Notice::steering_fault) == Severity::fault);
+}
+
+// Every expected frame, with the ignition on and nothing wrong.
+Frames all_expected()
+{
+    Frames frames = driving(800, 0, false);
+    frames.ecm_general_status = engine();
+    frames.eps_general_status = EpsGeneralStatus{SteeringFault::none};
+    frames.uch_general_status = body();
+    frames.upc_general_status = power();
+    frames.upc_general_status->apc_distributed = true;
+    frames.upc_general_status->oil_pressure_switch_closed = false; // oil pressure: lamp off
+    frames.airbag_general_status = AirbagGeneralStatus{false, false, false};
+    return frames;
+}
+
+TEST_CASE("missing frames light what the original cluster lights")
+{
+    const Frames complete = all_expected();
+    CHECK(missing_frames(complete).empty());
+    const View fine = view(complete, true);
+    CHECK(fine.lamps.service == Lamp::off);
+    CHECK(fine.lamps.stop == Lamp::off);
+    CHECK_FALSE(fine.notice.has_value());
+
+    Frames airbag = complete;
+    airbag.airbag_general_status.reset();
+    CHECK(missing_frames(airbag) == std::vector<uint16_t>{id::AIRBAG_GENERAL_STATUS});
+    CHECK(view(airbag, true).lamps.airbag == Lamp::on);
+    CHECK(view(airbag, true).lamps.service == Lamp::on);
+    // Not before the ignition settles.
+    CHECK(view(airbag, false).lamps.airbag == Lamp::off);
+    CHECK(view(airbag, false).lamps.service == Lamp::off);
+
+    Frames abs = complete;
+    abs.brake_general_data.reset();
+    CHECK(view(abs, true).lamps.brake == Lamp::on);
+    CHECK(view(abs, true).lamps.abs == Lamp::on);
+    CHECK(view(abs, true).lamps.service == Lamp::off);
+    CHECK(view(abs, true).lamps.stop == Lamp::off);
+
+    Frames engine_speed = complete;
+    engine_speed.ecm_torque_control.reset();
+    const View no_engine = view(engine_speed, true);
+    CHECK(no_engine.notice == Notice::electronic_fault);
+    CHECK(no_engine.lamps.service == Lamp::on);
+    CHECK(no_engine.lamps.oil_pressure == Lamp::on);
+    CHECK(no_engine.lamps.battery == Lamp::on);
+    CHECK(no_engine.coolant_temp_alert);
+    CHECK(no_engine.lamps.stop == Lamp::off);
+    CHECK_FALSE(no_engine.rpm.has_value());
+
+    for (auto clear : {+[](Frames &f) { f.ecm_general_status.reset(); }, +[](Frames &f) { f.upc_general_status.reset(); }}) {
+        Frames frames = complete;
+        clear(frames);
+        CHECK(view(frames, true).notice == Notice::electronic_fault);
+        CHECK(view(frames, true).lamps.service == Lamp::on);
+    }
+
+    Frames steering = complete;
+    steering.eps_general_status.reset();
+    CHECK(view(steering, true).notice == Notice::steering_fault);
+    CHECK(view(steering, true).lamps.service == Lamp::on);
+    CHECK(view(steering, true).lamps.stop == Lamp::off);
+
+    Frames body_missing = complete;
+    body_missing.uch_general_status.reset();
+    CHECK(view(body_missing, true).lamps.service == Lamp::on);
+    CHECK_FALSE(view(body_missing, true).doors.any_open());
+}
+
+TEST_CASE("ignition settle")
+{
+    IgnitionSettle settle;
+    Frames off = all_expected();
+    off.upc_general_status->apc_distributed = false;
+    CHECK_FALSE(settle.update(off, 0));
+    const Frames on = all_expected();
+    CHECK_FALSE(settle.update(on, 1000));
+    CHECK_FALSE(settle.update(on, 3999));
+    CHECK(settle.update(on, 4000));
+    // Switched off: not expected any more, and the wait starts over.
+    CHECK_FALSE(settle.update(off, 5000));
+    CHECK_FALSE(settle.update(on, 6000));
+    CHECK(settle.update(on, 9000));
+
+    // Without the fuse box frame, the engine side tells the ignition is on.
+    IgnitionSettle no_fuse_box;
+    Frames engine_only = all_expected();
+    engine_only.upc_general_status.reset();
+    CHECK_FALSE(no_fuse_box.update(engine_only, 0));
+    CHECK(no_fuse_box.update(engine_only, 3000));
+    CHECK_FALSE(no_fuse_box.update(Frames{}, 3100));
 }
 
 TEST_CASE("lamp self-test lights everything")
@@ -237,7 +374,9 @@ TEST_CASE("notice priority")
     remove_card.ecm_general_status->severe_injection_fault = true;
     CHECK(view(remove_card).notice == Notice::severe_injection_fault);
     CHECK(severity(Notice::severe_injection_fault) == Severity::fault);
-    CHECK(severity(Notice::card_battery_low) == Severity::service);
+    CHECK(severity(Notice::card_battery_low) == Severity::info);
+    CHECK(severity(Notice::card_not_detected) == Severity::service);
+    CHECK(severity(Notice::electronic_fault) == Severity::service);
     CHECK(severity(Notice::remove_card) == Severity::info);
 }
 

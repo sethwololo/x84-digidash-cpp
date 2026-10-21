@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <array>
+#include <utility>
 
 namespace x84 {
 
@@ -29,6 +30,9 @@ constexpr uint32_t GEAR_SHIFT_HOLD_MS = 1500;
 // Backlight with the low or high beam on. The cluster's night dimmer (0x645) did not follow the rheostat in the
 // car, so the headlights decide.
 constexpr int NIGHT_BACKLIGHT_PERCENT = 70;
+// How long after the ignition comes on before a missing frame counts: the computers start at their own pace. Not
+// in the manual: check in the car that no warning flashes at the start.
+constexpr uint32_t IGNITION_SETTLE_MS = 3000;
 
 // Keyless information display. Empty for 00000 = no display, the reserved and undocumented values, 01111 = gearbox
 // in P or N (automatic gearbox only) and 11100 = Full HMI - cluster extinction.
@@ -95,17 +99,20 @@ std::optional<int> forward_gear(int rpm, int speed_centi_kmh)
 Severity severity(Notice notice)
 {
     switch (notice) {
+    // As the original cluster's message table (workshop manual 83A-19, 83A-20): Stop, Service, or no lamp.
     case Notice::severe_injection_fault:
+    case Notice::steering_fault:
         return Severity::fault;
+    case Notice::card_not_detected:
     case Notice::hands_free_fault:
     case Notice::card_reader_fault:
-    case Notice::restricted_card_mode:
-    case Notice::card_battery_low:
     case Notice::column_not_locked:
     case Notice::column_not_unlocked:
     case Notice::child_lock_fault:
     case Notice::wiper_fault:
     case Notice::injection_fault:
+    case Notice::check_steering:
+    case Notice::electronic_fault:
         return Severity::service;
     default:
         return Severity::info;
@@ -118,7 +125,38 @@ uint32_t timeout_ms(uint16_t frame_id)
                                           : 500;  // 10 to 100 ms cycles
 }
 
-View view(const Frames &f)
+std::vector<uint16_t> missing_frames(const Frames &f)
+{
+    const std::pair<bool, uint16_t> expected[] = {
+        {f.ecm_torque_control.has_value(), id::ECM_TORQUE_CONTROL},
+        {f.brake_general_data.has_value(), id::BRAKE_GENERAL_DATA},
+        {f.ecm_general_status.has_value(), id::ECM_GENERAL_STATUS},
+        {f.eps_general_status.has_value(), id::EPS_GENERAL_STATUS},
+        {f.uch_general_status.has_value(), id::UCH_GENERAL_STATUS},
+        {f.upc_general_status.has_value(), id::UPC_GENERAL_STATUS},
+        {f.airbag_general_status.has_value(), id::AIRBAG_GENERAL_STATUS},
+    };
+    std::vector<uint16_t> missing;
+    for (const auto &[present, frame_id] : expected) {
+        if (!present) missing.push_back(frame_id);
+    }
+    return missing;
+}
+
+bool IgnitionSettle::update(const Frames &f, uint32_t now_ms)
+{
+    const bool on = f.upc_general_status ? f.upc_general_status->apc_distributed
+                                         : f.ecm_torque_control || f.ecm_general_status || f.brake_general_data ||
+                                               f.airbag_general_status || f.eps_general_status;
+    if (!on) {
+        on_since_ms_.reset();
+        return false;
+    }
+    if (!on_since_ms_) on_since_ms_ = now_ms;
+    return now_ms - *on_since_ms_ >= IGNITION_SETTLE_MS;
+}
+
+View view(const Frames &f, bool ignition_settled)
 {
     View v;
     v.online = f.ecm_torque_control || f.ecm_to_at || f.upc_fast_frame || f.brake_general_data || f.uch_system_control ||
@@ -206,9 +244,16 @@ View view(const Frames &f)
         wiper_fault = body->wiper_fault;
     }
 
-    if (const auto &steering = f.eps_general_status) {
-        if (steering->steering_fault == SteeringFault::stop) v.lamps.stop = Lamp::on;
-        if (steering->steering_fault == SteeringFault::service) v.lamps.service = Lamp::on;
+    // With the original display's messages for it (83A-19: Faulty steering, Check steering).
+    std::optional<Notice> steering;
+    if (const auto &eps = f.eps_general_status) {
+        if (eps->steering_fault == SteeringFault::stop) {
+            v.lamps.stop = Lamp::on;
+            steering = Notice::steering_fault;
+        } else if (eps->steering_fault == SteeringFault::service) {
+            v.lamps.service = Lamp::on;
+            steering = Notice::check_steering;
+        }
     }
 
     if (const auto &power = f.upc_general_status) {
@@ -227,8 +272,11 @@ View view(const Frames &f)
     }
 
     bool self_test = false;
+    bool fuel_gauge_fault = false;
     if (const auto &cluster = f.cluster_general_status) {
         if (cluster->fuel_gauge == FuelGauge::ok) v.fuel_liters = cluster->fuel_liters;
+        fuel_gauge_fault =
+            cluster->fuel_gauge == FuelGauge::open_circuit || cluster->fuel_gauge == FuelGauge::short_circuit;
         v.fuel_low = cluster->fuel_low;
         v.lamps.brake = lamp(cluster->parking_brake || cluster->brake_circuit_fault);
         v.lamps.airbag = lamp(cluster->airbag_lamp);
@@ -257,22 +305,57 @@ View view(const Frames &f)
                         : cluster_belt == SeatBeltLamp::on || unbuckled ? Lamp::on
                                                                         : Lamp::off;
 
-    // STOP and SERVICE that the original cluster lights along with a system's own lamp, from the workshop manual:
-    // 17B petrol injection (level 1 SERVICE, level 2 STOP), 38C ABS 8.0 warning light table (ABS fault SERVICE; with
-    // the brake fault too, STOP) and 87G engine compartment unit (battery charge fault STOP). The 38C rows for an
-    // unprogrammed ABS unit or its fault finding mode only happen in the workshop and are left out. The airbag is in
-    // no manual: the cluster lit SERVICE with it in the car.
+    // STOP and SERVICE along with a system's own lamp or message, as the original cluster lights them (workshop
+    // manual 83A-18 to 83A-20, 17B, 38C, 87G; docs/decisoes.md). The brake circuit incident is the brake fluid
+    // level, which the original cluster reads by wire.
+    const bool child_lock_fault = f.uch_system_control && f.uch_system_control->child_lock_fault == true;
     const bool abs_fault = f.brake_general_data && f.brake_general_data->abs_lamp == AbsLamp::fault;
-    const bool brake_fault = f.cluster_general_status && f.cluster_general_status->brake_circuit_fault;
-    if (severe_injection_fault || (abs_fault && brake_fault) || v.lamps.battery == Lamp::on) v.lamps.stop = Lamp::on;
-    if (injection_fault || abs_fault || v.lamps.airbag == Lamp::on) v.lamps.service = Lamp::on;
+    const bool brake_fluid_low = f.cluster_general_status && f.cluster_general_status->brake_circuit_fault;
+    if (severe_injection_fault || brake_fluid_low || v.lamps.oil_pressure == Lamp::on || v.lamps.battery == Lamp::on) {
+        v.lamps.stop = Lamp::on;
+    }
+    if (injection_fault || abs_fault || v.lamps.airbag == Lamp::on || v.oil_alert || fuel_gauge_fault || column_lock ||
+        child_lock_fault || wiper_fault || (keyless && severity(*keyless) == Severity::service)) {
+        v.lamps.service = Lamp::on;
+    }
+
+    // A missing frame, with the ignition settled, lights what the original cluster lights for it (83A-22, 83A-23),
+    // and only that: the lamps of a missing injection frame do not bring STOP along. Its values stay empty ("--")
+    // instead of the original's needles at 0, and the made-up states (doors open, turn signals on with the UCH
+    // missing) are left out.
+    bool electronic_fault = false;
+    if (ignition_settled) {
+        if (!f.airbag_general_status) {
+            v.lamps.airbag = Lamp::on;
+            v.lamps.service = Lamp::on;
+        }
+        if (!f.brake_general_data) {
+            v.lamps.brake = Lamp::on;
+            v.lamps.abs = Lamp::on;
+        }
+        if (!f.ecm_torque_control) {
+            electronic_fault = true;
+            v.lamps.oil_pressure = Lamp::on;
+            v.lamps.battery = Lamp::on;
+            v.coolant_temp_alert = true;
+        }
+        if (!f.ecm_general_status || !f.upc_general_status) electronic_fault = true;
+        if (!f.eps_general_status) {
+            v.lamps.service = Lamp::on;
+            steering = Notice::steering_fault;
+        }
+        if (!f.uch_general_status) v.lamps.service = Lamp::on;
+        if (electronic_fault) v.lamps.service = Lamp::on;
+    }
 
     // The original display's message (0x60D VSC) is what the driver needs right now (start, remove the card): only a
     // fault that stops the car comes before it. The lasting service faults come after.
-    const bool child_lock_fault = f.uch_system_control && f.uch_system_control->child_lock_fault == true;
     if (severe_injection_fault) v.notice = Notice::severe_injection_fault;
+    else if (steering == Notice::steering_fault) v.notice = steering;
     else if (keyless) v.notice = keyless;
     else if (injection_fault) v.notice = Notice::injection_fault;
+    else if (steering) v.notice = steering;
+    else if (electronic_fault) v.notice = Notice::electronic_fault;
     else if (column_lock) v.notice = column_lock;
     else if (child_lock_fault) v.notice = Notice::child_lock_fault;
     else if (wiper_fault) v.notice = Notice::wiper_fault;
