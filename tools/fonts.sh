@@ -23,6 +23,5 @@ font nordwand_regular_18 NordwandMono-Regular.ttf 18 "$TEXT"
 font nordwand_semibold_14 NordwandMono-SemiBold.ttf 14 "$TEXT"
 font nordwand_semibold_18 NordwandMono-SemiBold.ttf 18 "$TEXT"
 font nordwand_semibold_24 NordwandMono-SemiBold.ttf 24 "$TEXT"
-font nordwand_semibold_40 NordwandMono-SemiBold.ttf 40 "$DIGITS,0x4E,0x52" # gear: digits, N, R
-font nordwand_semibold_80 NordwandMono-SemiBold.ttf 80 "$DIGITS"
+font nordwand_semibold_80 NordwandMono-SemiBold.ttf 80 "$DIGITS,0x4E,0x52" # RPM and gear: digits, "-", N, R
 font nordwand_semibold_190 NordwandMono-SemiBold.ttf 190 "$DIGITS"

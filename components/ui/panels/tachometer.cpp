@@ -38,32 +38,42 @@ int32_t unit_x(size_t digits)
     return X + static_cast<int32_t>(digits * 0.6f * RPM_SIZE) + 12;
 }
 
+// The gear, one glyph of the RPM font, ends at the column's right edge; "MARCHA" ends 12 px before it, on the same
+// baseline as "RPM".
+constexpr int32_t GEAR_X = X + WIDTH - static_cast<int32_t>(0.6f * RPM_SIZE);
+constexpr const char *GEAR_LABEL = "MARCHA";
+const int32_t GEAR_LABEL_WIDTH =
+    static_cast<int32_t>(6 * 0.6f * theme::TEXT_VALUE.size) + 5 * theme::SPACING_CAPTION; // 6 letters, spaced
+const int32_t GEAR_LABEL_X = GEAR_X - 12 - GEAR_LABEL_WIDTH;
+const int32_t UNIT_TOP = RPM_TOP + static_cast<int32_t>(theme::BASELINE * (RPM_SIZE - theme::TEXT_VALUE.size));
+
 } // namespace
 
 Tachometer::Tachometer(lv_obj_t *screen)
     : rpm_(text(screen, theme::TEXT_RPM, theme::palette().value, X, RPM_TOP, "--")),
       // On the digits' baseline.
-      rpm_unit_(text(screen, theme::TEXT_VALUE, theme::palette().label, unit_x(2),
-                     RPM_TOP + static_cast<int32_t>(theme::BASELINE * (RPM_SIZE - theme::TEXT_VALUE.size)), "RPM")),
+      rpm_unit_(text(screen, theme::TEXT_VALUE, theme::palette().label, unit_x(2), UNIT_TOP, "RPM")),
       bar_(screen, X, BAR_Y, WIDTH, BAR_HEIGHT),
       // Around the digits, the bar and the scale under it.
       redline_(screen, X - 8, GAUGE_Y - 12, WIDTH + 16, 156),
-      gear_(screen, X, BOX_Y, theme::TEXT_GEAR),
-      cruise_(screen, X + BOX_STEP, BOX_Y, theme::TEXT_READOUT),
-      engine_temp_(screen, X + 2 * BOX_STEP, BOX_Y, theme::TEXT_READOUT),
-      battery_(screen, X + 3 * BOX_STEP, BOX_Y, theme::TEXT_VALUE_BOLD),
-      outside_temp_(screen, X + 4 * BOX_STEP, BOX_Y, theme::TEXT_READOUT)
+      gear_(text(screen, theme::TEXT_RPM, theme::palette().value, GEAR_X, RPM_TOP, "-")),
+      gear_label_(text(screen, theme::TEXT_VALUE, theme::palette().label, GEAR_LABEL_X, UNIT_TOP, GEAR_LABEL)),
+      cruise_(screen, X, BOX_Y, theme::TEXT_READOUT),
+      engine_temp_(screen, X + BOX_STEP, BOX_Y, theme::TEXT_READOUT),
+      battery_(screen, X + 2 * BOX_STEP, BOX_Y, theme::TEXT_VALUE_BOLD),
+      outside_temp_(screen, X + 3 * BOX_STEP, BOX_Y, theme::TEXT_READOUT),
+      evaporator_temp_(screen, X + 4 * BOX_STEP, BOX_Y, theme::TEXT_VALUE_BOLD)
 {
     scale(screen, X, BAR_Y + BAR_HEIGHT + 12, WIDTH, {"0", "1", "2", "3", "4", "5", "6", "7"});
     // Rule between this column and the speed.
     fill(screen, X + theme::SIDE_WIDTH - 1, Y, 1, theme::CONTENT_HEIGHT, theme::palette().border);
 
-    gear_.set_label("MARCHA");
-    gear_.space_label(theme::SPACING_LABEL);
     spaced(rpm_unit_, theme::SPACING_CAPTION);
+    spaced(gear_label_, theme::SPACING_CAPTION);
     engine_temp_.set_label("TMP MOTOR");
     battery_.set_label("BATERIA");
     outside_temp_.set_label("TMP EXT");
+    evaporator_temp_.set_label("TMP EVAP");
 }
 
 bool Tachometer::alert(const Screen &screen) const
@@ -86,7 +96,11 @@ void Tachometer::show(const Screen &screen, bool blink_on)
     redline_.show(redline);
 
     const auto &gear = view.gear;
-    gear_.set(!gear ? "-" : *gear == x84::NEUTRAL ? "N" : *gear == x84::REVERSE ? "R" : std::to_string(*gear).c_str());
+    const std::string gear_text = !gear                       ? "-"
+                                  : *gear == x84::NEUTRAL      ? "N"
+                                  : *gear == x84::REVERSE      ? "R"
+                                                               : std::to_string(*gear);
+    set_text(gear_, gear_text.c_str());
 
     const x84::Cruise &cruise = view.cruise;
     cruise_.set_label(cruise.mode == x84::CruiseMode::limiter     ? "LIMITADOR"
@@ -104,6 +118,7 @@ void Tachometer::show(const Screen &screen, bool blink_on)
     battery_.set(view.battery_decivolts ? (tenths(*view.battery_decivolts) + "V").c_str() : "--",
                  view.battery_low ? Readout::State::fault : Readout::State::normal);
     outside_temp_.set(reading(view.outside_temp_c, "°").c_str());
+    evaporator_temp_.set(view.evaporator_temp_tenths ? (tenths(*view.evaporator_temp_tenths) + "°").c_str() : "--");
 }
 
 } // namespace ui

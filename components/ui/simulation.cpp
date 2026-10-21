@@ -10,6 +10,8 @@ constexpr uint32_t SCENARIO_MS = 12000;
 
 // Per scenario: normal driving, high-RPM warning, low fuel.
 constexpr int OUTSIDE_TEMP_C[] = {18, 24, 9};
+// A/C on, on, off (the evaporator then warms up with the cabin).
+constexpr int EVAPORATOR_TEMP_TENTHS[] = {45, 60, 215};
 constexpr int COOLANT_TEMP_C[] = {89, 118, 91};
 constexpr int BATTERY_DECIVOLTS[] = {126, 138, 119};
 constexpr int FUEL_LITERS[] = {31, 27, 4};
@@ -56,6 +58,7 @@ Screen Simulation::screen(uint32_t now_ms)
     view.speed_kmh = static_cast<int>(speed);
     view.gear = gear_for(static_cast<int>(speed));
     view.outside_temp_c = OUTSIDE_TEMP_C[scenario];
+    view.evaporator_temp_tenths = EVAPORATOR_TEMP_TENTHS[scenario];
     view.coolant_temp_c = COOLANT_TEMP_C[scenario];
     view.coolant_temp_alert = warning;
     view.battery_decivolts = BATTERY_DECIVOLTS[scenario];

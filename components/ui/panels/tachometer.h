@@ -1,6 +1,7 @@
 #pragma once
 
-// Left column: the tachometer (digits, bar and scale) and the row of readouts (gear, cruise, temperatures, battery).
+// Left column: the tachometer (digits, with the gear at the right end of their row, bar and scale) and the row of
+// readouts (cruise, engine temperature, battery, outside and evaporator temperatures).
 
 #include "lvgl.h"
 #include "screen.h"
@@ -22,11 +23,13 @@ private:
     lv_obj_t *rpm_unit_;
     LevelBar bar_;
     AlertFrame redline_;
-    Readout gear_;
+    lv_obj_t *gear_;
+    lv_obj_t *gear_label_;
     Readout cruise_;
     Readout engine_temp_;
     Readout battery_;
     Readout outside_temp_;
+    Readout evaporator_temp_;
 };
 
 } // namespace ui

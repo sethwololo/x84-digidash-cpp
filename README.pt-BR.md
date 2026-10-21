@@ -15,8 +15,8 @@ por segundo.
 ## Recursos
 
 - Rotação com barra e faixa vermelha, velocidade, marcha (com debounce), piloto automático e limitador.
-- Temperatura do motor, tensão da bateria e temperatura externa; nível de combustível com alerta de reserva; nível
-  do óleo.
+- Temperatura do motor, tensão da bateria, temperatura externa e a do evaporador do ar-condicionado; nível de
+  combustível com alerta de reserva; nível do óleo.
 - Portas e porta-malas abertos numa vista de cima do carro; setas.
 - Doze luzes de aviso (farol, cinto, neblina dianteira e traseira, freio, óleo, motor, bateria, ABS, STOP, revisão,
   airbag), fixas ou piscando como o carro manda. O STOP e a revisão (SERVICE) acendem junto com os outros sistemas,

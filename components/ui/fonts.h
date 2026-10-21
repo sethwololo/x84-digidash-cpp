@@ -10,6 +10,5 @@ LV_FONT_DECLARE(nordwand_regular_18)
 LV_FONT_DECLARE(nordwand_semibold_14)
 LV_FONT_DECLARE(nordwand_semibold_18)
 LV_FONT_DECLARE(nordwand_semibold_24)
-LV_FONT_DECLARE(nordwand_semibold_40) // digits, N and R only
-LV_FONT_DECLARE(nordwand_semibold_80) // digits and "-" only
+LV_FONT_DECLARE(nordwand_semibold_80) // digits, "-", N and R only (RPM and gear)
 LV_FONT_DECLARE(nordwand_semibold_190) // digits and "-" only

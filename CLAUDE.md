@@ -27,7 +27,8 @@ diverge dele de propósito: `docs/decisoes.md` (mantenha-o ao mudar uma regra de
   que sai de um contorno (as portas do carro) é desenhado ao lado, não dentro. As listras de perigo (10x10) ficam
   dentro da borda da moldura de alerta, e o rótulo dela (RESERVA) termina antes delas.
 - **Fontes por tamanho e conjunto de glifos:** `tools/fonts.sh` (Nordwand Mono). Texto com ASCII + maiúsculas
-  acentuadas + `°` (a Nordwand não tem `·`); 80/190 px só dígitos (o de 190 px completo custaria ~1,5 MB).
+  acentuadas + `°` (a Nordwand não tem `·`); 80/190 px só dígitos e `-`
+  (o de 80 px também tem N e R, para a marcha; o de 190 px completo custaria ~1,5 MB).
 - **Imagens A8** (`tools/images.mjs`): só opacidade, a cor vem de `image_recolor` (`ui::image`).
 - **Desenho só por software:** o PPA do LVGL (`CONFIG_LV_USE_PPA`) roda ao lado da unidade de software e
   sincroniza o cache em linhas inteiras de 128 B, apagando pixels que ela desenhava ao lado (pedaços de letras

@@ -15,7 +15,8 @@ frame rate.
 ## Features
 
 - Engine speed with a bar and a red line, road speed, gear (debounced), cruise control and speed limiter.
-- Coolant temperature, battery voltage and outside temperature; fuel level with a reserve alert; oil level.
+- Coolant temperature, battery voltage, outside temperature and the A/C evaporator temperature; fuel level with a
+  reserve alert; oil level.
 - Open doors and trunk on a top view of the car; turn signals.
 - Twelve warning lights (headlights, seat belt, front and rear fog lights, brake, oil, engine, battery, ABS, STOP,
   service, airbag), steady or blinking as the car sends them. STOP and SERVICE light along with the other systems,
