@@ -165,8 +165,11 @@ View view(const Frames &f, bool ignition_settled)
 {
     View v;
     v.online = f.ecm_torque_control || f.ecm_to_at || f.upc_fast_frame || f.brake_general_data || f.uch_system_control ||
+               f.clim_control_frame ||
                f.ecm_general_status || f.cluster_general_status || f.eps_general_status || f.uch_general_status ||
                f.upc_general_status || f.cluster_general_status_2 || f.airbag_general_status || f.cluster_backup;
+
+    if (f.clim_control_frame) v.evaporator_temp_tenths = f.clim_control_frame->evaporator_temp_tenths;
 
     const auto &engine = f.ecm_torque_control;
     if (engine) v.rpm = (engine->engine_speed_rpm + RPM_STEP / 2) / RPM_STEP * RPM_STEP;

@@ -104,6 +104,7 @@ struct View {
     std::optional<int> coolant_temp_c;
     bool coolant_temp_alert = false;
     std::optional<int> outside_temp_c;
+    std::optional<int> evaporator_temp_tenths; // the air conditioning's evaporator (0x374), in tenths of a degree
     std::optional<int> battery_decivolts;
     bool battery_low = false;
     std::optional<int> fuel_liters;

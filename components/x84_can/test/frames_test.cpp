@@ -23,6 +23,7 @@ const Position POSITIONS[] = {
     {0x181, "Clutch switch", CLUTCH},
     {0x161, "Cruise control and speed limiter states", CRUISE_STATE},
     {0x215, "Neutral", NEUTRAL},
+    {0x374, "Evaporator temperature", EVAPORATOR_TEMP},
     {0x354, "ABS lamp state", ABS_LAMP},
     {0x354, "Distance travelled", DISTANCE},
     {0x354, "Vehicle speed (front wheel average)", WHEEL_SPEED},
@@ -287,6 +288,11 @@ TEST_CASE("small frames")
 {
     CHECK(EcmToAt::decode(frame(5, {{CRUISE_STATE, 0b10}}))->cruise_state == CruiseState::active);
     CHECK(UpcFastFrame::decode(frame(6, {{NEUTRAL, 0b10}}))->neutral == NeutralSwitch::not_equipped);
+    // 0.5 °C from -40 °C; 0xFF while the car switches off.
+    CHECK(ClimControlFrame::decode(frame(3, {{EVAPORATOR_TEMP, 153}}))->evaporator_temp_tenths == 365);
+    CHECK(ClimControlFrame::decode(frame(3, {{EVAPORATOR_TEMP, 70}}))->evaporator_temp_tenths == -50);
+    CHECK_FALSE(ClimControlFrame::decode(frame(3, {{EVAPORATOR_TEMP, 0xFF}}))->evaporator_temp_tenths.has_value());
+    CHECK_FALSE(ClimControlFrame::decode(frame(2, {})).has_value());
     CHECK(UchSystemControl::decode(frame(8, {{BRAKE_PAD_WEAR, 0b10}})).brake_pad_wear == 0b10);
     CHECK_FALSE(UchSystemControl::decode(std::vector<uint8_t>(5)).brake_pad_wear.has_value());
     CHECK(UchSystemControl::decode(frame(8, {{CHILD_LOCK_FAULT, 1}})).child_lock_fault == true);

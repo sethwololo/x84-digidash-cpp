@@ -690,3 +690,14 @@ TEST_CASE("turn signals")
     CHECK(signals(TurnSignals::both) == std::pair(true, true));
     CHECK(signals(TurnSignals::invalid) == std::pair(false, false));
 }
+
+TEST_CASE("evaporator temperature")
+{
+    Frames frames;
+    CHECK_FALSE(view(frames).evaporator_temp_tenths.has_value());
+    frames.clim_control_frame = ClimControlFrame{365};
+    CHECK(view(frames).evaporator_temp_tenths == 365);
+    CHECK(view(frames).online);
+    frames.clim_control_frame = ClimControlFrame{std::nullopt};
+    CHECK_FALSE(view(frames).evaporator_temp_tenths.has_value());
+}

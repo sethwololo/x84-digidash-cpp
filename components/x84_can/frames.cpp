@@ -77,6 +77,14 @@ UchSystemControl UchSystemControl::decode(Data data)
                             flag(CHILD_LOCK_FAULT.raw(data))};
 }
 
+std::optional<ClimControlFrame> ClimControlFrame::decode(Data data)
+{
+    const auto evaporator = EVAPORATOR_TEMP.raw(data);
+    if (!evaporator) return std::nullopt;
+    if (*evaporator == 0xFF) return ClimControlFrame{std::nullopt};
+    return ClimControlFrame{static_cast<int>(*evaporator) * 5 - 400};
+}
+
 std::optional<EcmGeneralStatus> EcmGeneralStatus::decode(Data data)
 {
     constexpr CruiseDisplay DISPLAYS[] = {
@@ -271,6 +279,7 @@ bool Frames::store(uint16_t frame_id, Data data)
     case id::UPC_FAST_FRAME: return keep(upc_fast_frame, UpcFastFrame::decode(data));
     case id::BRAKE_GENERAL_DATA: return keep(brake_general_data, BrakeGeneralData::decode(data));
     case id::UCH_SYSTEM_CONTROL: return keep(uch_system_control, std::optional(UchSystemControl::decode(data)));
+    case id::CLIM_CONTROL_FRAME: return keep(clim_control_frame, ClimControlFrame::decode(data));
     case id::ECM_GENERAL_STATUS: return keep(ecm_general_status, EcmGeneralStatus::decode(data));
     case id::CLUSTER_GENERAL_STATUS: return keep(cluster_general_status, ClusterGeneralStatus::decode(data));
     case id::EPS_GENERAL_STATUS: return keep(eps_general_status, EpsGeneralStatus::decode(data));
@@ -291,6 +300,7 @@ void Frames::clear(uint16_t frame_id)
     case id::UPC_FAST_FRAME: upc_fast_frame.reset(); break;
     case id::BRAKE_GENERAL_DATA: brake_general_data.reset(); break;
     case id::UCH_SYSTEM_CONTROL: uch_system_control.reset(); break;
+    case id::CLIM_CONTROL_FRAME: clim_control_frame.reset(); break;
     case id::ECM_GENERAL_STATUS: ecm_general_status.reset(); break;
     case id::CLUSTER_GENERAL_STATUS: cluster_general_status.reset(); break;
     case id::EPS_GENERAL_STATUS: eps_general_status.reset(); break;

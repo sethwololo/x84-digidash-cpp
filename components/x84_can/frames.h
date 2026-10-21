@@ -21,6 +21,7 @@ constexpr uint16_t ECM_TO_AT = 0x161;
 constexpr uint16_t UPC_FAST_FRAME = 0x215;
 constexpr uint16_t BRAKE_GENERAL_DATA = 0x354;
 constexpr uint16_t UCH_SYSTEM_CONTROL = 0x35D;
+constexpr uint16_t CLIM_CONTROL_FRAME = 0x374;
 constexpr uint16_t ECM_GENERAL_STATUS = 0x551;
 constexpr uint16_t CLUSTER_GENERAL_STATUS = 0x5C5;
 constexpr uint16_t EPS_GENERAL_STATUS = 0x5E4;
@@ -34,7 +35,7 @@ constexpr uint16_t CLUSTER_BACKUP = 0x715;
 constexpr uint16_t ALL[] = {
     ECM_TORQUE_CONTROL, ECM_TO_AT,          UPC_FAST_FRAME,     BRAKE_GENERAL_DATA,      UCH_SYSTEM_CONTROL,
     ECM_GENERAL_STATUS, CLUSTER_GENERAL_STATUS, EPS_GENERAL_STATUS, UCH_GENERAL_STATUS, UPC_GENERAL_STATUS,
-    CLUSTER_GENERAL_STATUS_2, AIRBAG_GENERAL_STATUS, CLUSTER_BACKUP,
+    CLUSTER_GENERAL_STATUS_2, AIRBAG_GENERAL_STATUS, CLUSTER_BACKUP, CLIM_CONTROL_FRAME,
 };
 } // namespace id
 
@@ -54,6 +55,8 @@ constexpr Signal WHEEL_SPEED{7, 16};
 // 0x35D UCH_SystemControl
 constexpr Signal BRAKE_PAD_WEAR{47, 2}; // only in the complementary signal database
 constexpr Signal CHILD_LOCK_FAULT{41, 1};
+// 0x374 CLIM_ControlFrame
+constexpr Signal EVAPORATOR_TEMP{23, 8};
 // 0x551 ECM_GeneralStatus
 constexpr Signal COOLANT_TEMP{7, 8};
 constexpr Signal COOLANT_TEMP_ALERT{28, 1};
@@ -191,6 +194,14 @@ struct UchSystemControl {
     static UchSystemControl decode(Data data);
 };
 
+// 0x374 CLIM_ControlFrame (50 ms), the air conditioning.
+struct ClimControlFrame {
+    // Evaporator temperature, 0.5 °C per unit from -40 °C, in tenths of a degree; empty for 0xFF, which the car
+    // sends while it switches off (seen in the car).
+    std::optional<int> evaporator_temp_tenths;
+    static std::optional<ClimControlFrame> decode(Data data);
+};
+
 // 0x551 ECM_GeneralStatus (100 ms).
 struct EcmGeneralStatus {
     int coolant_temp_c;       // Engine coolant temperature
@@ -306,6 +317,7 @@ struct Frames {
     std::optional<UpcFastFrame> upc_fast_frame;
     std::optional<BrakeGeneralData> brake_general_data;
     std::optional<UchSystemControl> uch_system_control;
+    std::optional<ClimControlFrame> clim_control_frame;
     std::optional<EcmGeneralStatus> ecm_general_status;
     std::optional<ClusterGeneralStatus> cluster_general_status;
     std::optional<EpsGeneralStatus> eps_general_status;
