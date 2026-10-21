@@ -29,8 +29,6 @@ constexpr uint32_t GEAR_SHIFT_HOLD_MS = 1500;
 // Backlight with the low or high beam on. The cluster's night dimmer (0x645) did not follow the rheostat in the
 // car, so the headlights decide.
 constexpr int NIGHT_BACKLIGHT_PERCENT = 70;
-// Above cranking and below idle (about 750 rpm): the engine is running, so a lit battery lamp is a charge fault.
-constexpr int RUNNING_RPM = 500;
 
 // Keyless information display. Empty for 00000 = no display, the reserved and undocumented values, 01111 = gearbox
 // in P or N (automatic gearbox only) and 11100 = Full HMI - cluster extinction.
@@ -266,10 +264,7 @@ View view(const Frames &f)
     // no manual: the cluster lit SERVICE with it in the car.
     const bool abs_fault = f.brake_general_data && f.brake_general_data->abs_lamp == AbsLamp::fault;
     const bool brake_fault = f.cluster_general_status && f.cluster_general_status->brake_circuit_fault;
-    const bool engine_running = engine && engine->engine_speed_rpm >= RUNNING_RPM;
-    if (severe_injection_fault || (abs_fault && brake_fault) || (v.lamps.battery == Lamp::on && engine_running)) {
-        v.lamps.stop = Lamp::on;
-    }
+    if (severe_injection_fault || (abs_fault && brake_fault) || v.lamps.battery == Lamp::on) v.lamps.stop = Lamp::on;
     if (injection_fault || abs_fault || v.lamps.airbag == Lamp::on) v.lamps.service = Lamp::on;
 
     // The original display's message (0x60D VSC) is what the driver needs right now (start, remove the card): only a

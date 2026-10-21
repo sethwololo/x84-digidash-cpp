@@ -149,16 +149,14 @@ TEST_CASE("STOP and SERVICE along with a system's own lamp")
         CHECK(brakes(abs, true).service == Lamp::off);
     }
 
-    // The battery lamp is lit before the engine starts: only a running engine makes it a charge fault.
-    const auto battery = [](int rpm) {
-        Frames frames = driving(rpm, 0, false);
+    const auto battery = [](bool lamp) {
+        Frames frames;
         frames.upc_general_status = power();
-        frames.upc_general_status->battery_lamp = true;
+        frames.upc_general_status->battery_lamp = lamp;
         return view(frames).lamps;
     };
-    CHECK(battery(0).stop == Lamp::off);
-    CHECK(battery(300).stop == Lamp::off);
-    CHECK(battery(800).stop == Lamp::on);
+    CHECK(battery(true).stop == Lamp::on);
+    CHECK(battery(false).stop == Lamp::off);
 
     Frames airbag;
     airbag.cluster_general_status = cluster();
